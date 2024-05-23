@@ -1,6 +1,6 @@
 const StatusComponent = () => {
   return (
-    <div className="w-full h-full bg-green-500 items-center p-10">
+    <div className="w-full h-full  items-center p-10">
       <div className="flex flex-col w-full h-full bg-white">
         {/* 상단 */}
         <div className="flex flex-col w-full min-h-[200px] bg-slate-300">

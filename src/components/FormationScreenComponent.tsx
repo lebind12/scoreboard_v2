@@ -2,7 +2,7 @@ import TeamFormationComponent from "./TeamForamtionComponent";
 
 const FormationScreenComponent = () => {
   return (
-    <div className="flex flex-col w-full h-full bg-green-500 items-center">
+    <div className="flex flex-col w-full h-full items-center">
       {/* 홈 포메이션 */}
       <div className="h-1/2">
         <TeamFormationComponent />
