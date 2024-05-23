@@ -1,5 +1,17 @@
+import BottomLayout from "./BottomLayout";
+import ScreenLayout from "./ScreenLayout";
+
 const MainLayout = () => {
-  return <div className="text-4xl">메인 레이아웃</div>;
+  return (
+    <div className="flex flex-col w-full h-full">
+      <div className="w-full h-3/4">
+        <ScreenLayout></ScreenLayout>
+      </div>
+      <div className="w-full h-1/4">
+        <BottomLayout></BottomLayout>
+      </div>
+    </div>
+  );
 };
 
 export default MainLayout;
