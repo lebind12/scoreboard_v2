@@ -1,0 +1,21 @@
+@keyframes move_left {
+  from {
+    left: 0%;
+  }
+  to {
+    left: 100%;
+  }
+}
+
+.move_left {
+  animation: move_left;
+}
+
+.move_right {
+}
+
+.move_up {
+}
+
+.move_down {
+}
