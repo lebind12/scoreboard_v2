@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "BMHANNA";
+  font-weight: normal;
+  src: url("./fonts/BMHANNA_11yrs_ttf.ttf") format("truetype");
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
