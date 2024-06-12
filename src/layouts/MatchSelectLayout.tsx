@@ -1,9 +1,11 @@
 import API from "../utils/apis/api/api";
 import { MatchDetail } from "../types/apiReturnType";
 import { useEffect, useState } from "react";
+import { useBoardContext } from "../context/ScoreboardContext";
 
 const MatchSelectLayout = () => {
   const [matches, setMatches] = useState([]);
+  const { matchId, setMatchId, selected, setSelected } = useBoardContext();
 
   useEffect(() => {
     const res = API.get("/match/list").then((res) => {
@@ -14,16 +16,32 @@ const MatchSelectLayout = () => {
       }
     });
   }, []);
-
   return (
-    <div className="absolute m-auto h-[300px] overflow-scroll top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white z-10 rounded-lg">
+    <div
+      className={`${
+        selected
+          ? "hidden"
+          : "absolute m-auto w-auto p-4 h-[400px] overflow-y-scroll\
+                    top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2\
+                    z-10 rounded-lg bg-slate-800\
+                    outline-white outline-double outline-[16px]"
+      }`}
+    >
       <ul>
         {matches.map((v: MatchDetail, idx) => {
           return (
-            <li key={idx}>
-              <span className="font-['BMHANNA'] text-6xl">
-                {v.home} : {v.away}
-              </span>
+            <li key={idx} className="bg-slate-800">
+              <button
+                className="w-full"
+                onClick={() => {
+                  setMatchId(v.id);
+                  setSelected(true);
+                }}
+              >
+                <span className="font-['Jua'] text-6xl text-zinc-50">
+                  {v.home} : {v.away}
+                </span>
+              </button>
             </li>
           );
         })}
