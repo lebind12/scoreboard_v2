@@ -4,6 +4,8 @@ import API from "../utils/apis/api/api";
 
 const PlayerComponent = ({
   teamId,
+  playerTextColor,
+  goalkeeperTextColor,
   playerId,
   matchId,
   isHome,
@@ -13,6 +15,7 @@ const PlayerComponent = ({
   const [playerName, setPlayerName] = useState("");
   // const [goalKeeper, setGoalKeeper] = useState(false);
   const [url, setURL] = useState("player/fancy");
+  const [backColor, setBackColor] = useState(playerTextColor);
 
   useEffect(() => {
     // setPlayerName(playerId.toString());
@@ -25,7 +28,10 @@ const PlayerComponent = ({
   }, [playerId]);
 
   useEffect(() => {
-    if (isGoaley == "G") setURL("goalkeeper/fancy");
+    if (isGoaley == "G") {
+      setURL("goalkeeper/fancy");
+      setBackColor(goalkeeperTextColor);
+    }
   }, [isGoaley]);
 
   return (
@@ -41,10 +47,13 @@ const PlayerComponent = ({
             }
             className="w-[32px] object-center"
           ></img>
-          <span className="absolute text-lg font-['TAEBAEKfont']">
+          <span
+            className="absolute text-lg font-['TAEBAEKfont'] drop-shadow-[0_4.2px_2.2px_rgba(0,0,0,0.2)]"
+            style={{ color: backColor }}
+          >
             {playerNumber.toString()}
           </span>
-          <span className="font-['MangoDdobak-B'] text-pretty text-center">
+          <span className="font-['MangoDdobak-B'] text-pretty text-center drop-shadow-[0_4.2px_2.2px_rgba(0,0,0,0.2)]">
             {playerName}
           </span>
         </div>
@@ -59,10 +68,13 @@ const PlayerComponent = ({
             }
             className="w-[32px] object-center"
           ></img>
-          <span className="absolute text-lg text-white font-['TAEBAEKfont']">
+          <span
+            className="absolute text-lg font-['TAEBAEKfont'] drop-shadow-[0_4.2px_2.2px_rgba(0,0,0,0.2)]"
+            style={{ color: backColor }}
+          >
             {playerNumber.toString()}
           </span>
-          <span className="font-['MangoDdobak-B'] text-pretty text-center">
+          <span className="font-['MangoDdobak-B'] text-pretty text-center drop-shadow-[0_4.2px_2.2px_rgba(0,0,0,0.2)]">
             {playerName}
           </span>
         </div>

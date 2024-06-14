@@ -14,6 +14,8 @@ const TeamFormationComponent = ({
   teamFormation,
   teamLineup,
   isHome,
+  teamTextColor,
+  goalkeeperTextColor,
 }: TeamFormationComponentProps) => {
   const [lineupByFormation, setLineupByFormation] = useState<Array<any>>([]);
   const [loaded, setLoaded] = useState<boolean>(false);
@@ -63,7 +65,9 @@ const TeamFormationComponent = ({
                     // playerId={1111}
                     isHome={isHome}
                     matchId={matchId}
-                    playerNumber={parseInt(p.player.jerseyNumber)}
+                    playerTextColor={"#" + teamTextColor}
+                    goalkeeperTextColor={"#" + goalkeeperTextColor}
+                    playerNumber={parseInt(p.jerseyNumber)}
                     // matchId={12226495}
                     isGoaley={p.player.position}
                   ></PlayerComponent>

@@ -16,6 +16,10 @@ const ScreenLayout = ({
   const [awayPlayers, setAwayPlayers] = useState([]);
   const [homeFormation, setHomeFormation] = useState("");
   const [awayFormation, setAwayFormation] = useState("");
+  const [homeTextColor, setHomeTextColor] = useState("");
+  const [awayTextColor, setAwayTextColor] = useState("");
+  const [homeGoalkeeperTextColor, setHomeGoalkeeperTextColor] = useState("");
+  const [awayGoalkeeperTextColor, setAwayGoalkeeperTextColor] = useState("");
 
   useEffect(() => {
     let url =
@@ -30,6 +34,10 @@ const ScreenLayout = ({
         setAwayPlayers(res.data.away.players);
         setHomeFormation(res.data.home.formation);
         setAwayFormation(res.data.away.formation);
+        setHomeTextColor(res.data.home.playerColor.fancyNumber);
+        setAwayTextColor(res.data.away.playerColor.fancyNumber);
+        setHomeGoalkeeperTextColor(res.data.away.goalkeeperColor.fancyNumber);
+        setAwayGoalkeeperTextColor(res.data.away.goalkeeperColor.fancyNumber);
       })
       .catch((err) => {
         console.log(err);
@@ -58,6 +66,10 @@ const ScreenLayout = ({
           awayLineup={awayPlayers}
           homeFormation={homeFormation}
           awayFormation={awayFormation}
+          homeTextColor={homeTextColor}
+          awayTextColor={awayTextColor}
+          homeGoalkeeperTextColor={homeGoalkeeperTextColor}
+          awayGoalkeeperTextColor={awayGoalkeeperTextColor}
           matchId={matchId}
         />
       </div>

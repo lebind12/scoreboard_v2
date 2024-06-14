@@ -61,6 +61,10 @@ export interface FormationScreenComponentProps {
   awayLineup: Array<any>;
   homeFormation: string;
   awayFormation: string;
+  homeTextColor: string;
+  awayTextColor: string;
+  homeGoalkeeperTextColor: string;
+  awayGoalkeeperTextColor: string;
   matchId: number;
 }
 
@@ -70,7 +74,9 @@ export interface TeamFormationComponentProps {
   teamId: number;
   teamFormation: string;
   teamLineup: Array<any>;
+  teamTextColor: string;
   isHome: boolean;
+  goalkeeperTextColor: string;
 }
 
 export interface PlayerComponentProps {
@@ -80,6 +86,8 @@ export interface PlayerComponentProps {
   matchId: number;
   playerNumber: number;
   isGoaley: string;
+  playerTextColor: string;
+  goalkeeperTextColor: string;
 }
 
 export interface LineupDetail {
