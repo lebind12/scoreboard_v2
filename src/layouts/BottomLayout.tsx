@@ -4,43 +4,22 @@ import API from "../utils/apis/api/api";
 import qs from "qs";
 import { useEffect, useState } from "react";
 import { useBoardContext } from "../context/ScoreboardContext";
+import { BottomLayoutProps } from "../types/propsType";
 
-const BottomLayout = () => {
-  const { matchId, setMatchId, selected, setSelected } = useBoardContext();
-  const [home, setHome] = useState("");
-  const [away, setAway] = useState("");
-  const [homeId, setHomeId] = useState(4695);
-  const [awayId, setAwayId] = useState(4695);
-  const [sofaMatchId, setSofaMatchId] = useState(0);
-
-  useEffect(() => {
-    if (matchId != 99) {
-      let params = { match_id: matchId };
-      let test = API.get("/match/id", { params });
-      console.log(
-        test.then((res) => {
-          if (res.status == 200) {
-            console.log(res.data);
-            setHome(res.data.home);
-            setAway(res.data.away);
-            setHomeId(res.data.homeid);
-            setAwayId(res.data.awayid);
-            setSofaMatchId(res.data.sofascoredid);
-          } else {
-            console.log("Cannot use Backend 1");
-          }
-        })
-      );
-    }
-  }, [matchId]);
-
+const BottomLayout = ({
+  homeName,
+  awayName,
+  matchId,
+  homeId,
+  awayId,
+}: BottomLayoutProps) => {
   return (
     <div className="flex w-full h-full bg-amber-600 ">
       <div className="w-1/4 bg-gray-500">
         <ScoreComponent
-          homeName={home}
-          awayName={away}
-          matchId={sofaMatchId}
+          homeName={homeName}
+          awayName={awayName}
+          matchId={matchId}
           homeId={homeId}
           awayId={awayId}
         />
