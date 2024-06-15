@@ -11,6 +11,8 @@ const MainLayout = () => {
   const [homeId, setHomeId] = useState(4695);
   const [awayId, setAwayId] = useState(4695);
   const [sofaMatchId, setSofaMatchId] = useState(0);
+  const [naverId, setNaverId] = useState("");
+  const [id, setId] = useState(0);
 
   useEffect(() => {
     if (matchId != 99) {
@@ -25,6 +27,8 @@ const MainLayout = () => {
             setHomeId(res.data.homeid);
             setAwayId(res.data.awayid);
             setSofaMatchId(res.data.sofascoredid);
+            setId(res.data.id);
+            setNaverId(res.data.naverid);
           } else {
             console.log("Cannot use Backend 1");
           }
@@ -45,6 +49,7 @@ const MainLayout = () => {
       <div className="w-full h-3/4">
         <ScreenLayout
           matchId={sofaMatchId}
+          naverId={naverId}
           homeId={homeId}
           awayId={awayId}
           home={home}
@@ -58,6 +63,8 @@ const MainLayout = () => {
           matchId={sofaMatchId}
           homeId={homeId}
           awayId={awayId}
+          naverId={naverId}
+          id={id}
         ></BottomLayout>
       </div>
     </div>

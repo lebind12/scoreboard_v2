@@ -4,9 +4,12 @@ import "animate.css";
 import { ScreenLayoutProps } from "../types/propsType";
 import { useEffect, useState } from "react";
 import sofaAPI from "../utils/apis/api/sofaApi";
+import PlayerStatusComponent from "../components/PlayerStatusComponent";
+import "../styles/animate.css";
 
 const ScreenLayout = ({
   matchId,
+  naverId,
   homeId,
   awayId,
   home,
@@ -27,8 +30,13 @@ const ScreenLayout = ({
       matchId.toString() +
       "/lineups";
     // let url = "https://www.sofascore.com/api/v1/event/12226495/lineups";
+    let h = {
+      "Cache-Control": "no-cache",
+      Pragma: "no-cache",
+      Expires: "0",
+    };
     sofaAPI
-      .get(url)
+      .get(url, { headers: h })
       .then((res) => {
         setHomePlayers(res.data.home.players);
         setAwayPlayers(res.data.away.players);
@@ -46,17 +54,29 @@ const ScreenLayout = ({
 
   return (
     <div className="flex w-full h-full bg-slate-400">
-      <div className="flex w-1/4 h-full  items-center animate__animated animate__backInLeft">
-        <StatusComponent
-          homeId={homeId}
-          awayId={awayId}
-          home={home}
-          away={away}
-          matchId={matchId}
-        />
+      <div className="w-1/4 h-full items-center">
+        <div
+          id="GameStatistics"
+          className="w-full h-full items-center go_behind_animation"
+        >
+          <StatusComponent
+            homeId={homeId}
+            awayId={awayId}
+            home={home}
+            away={away}
+            matchId={matchId}
+          />
+        </div>
+
+        <div
+          id="PlayerStatistics"
+          className="absolute w-1/4 top-3 h-3/4 animate__animated animate__backInLeft"
+        >
+          <PlayerStatusComponent matchId={matchId}></PlayerStatusComponent>
+        </div>
       </div>
       <div className="w-1/2 h-full bg-slate-400"></div>
-      <div className="flex flex-1 w-1/4 h-full items-center animate__animated animate__backInRight">
+      <div className="flex flex-1 w-1/4 h-full items-center animate__animated animate__backInRight ">
         <FormationScreenComponent
           home={home}
           away={away}

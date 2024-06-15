@@ -1,3 +1,10 @@
+import {
+  DefenderStatistics,
+  ForwardStatistics,
+  GoalkeeperStatistics,
+  MidfielderStatistics,
+} from "./apiReturnType";
+
 export interface SelectProps {
   selected: boolean;
 }
@@ -17,7 +24,11 @@ export interface TeamComponentProps {
 }
 
 export interface CommentComponentProps {
-  nationId: number;
+  homeId: number;
+  awayId: number;
+  matchId: number;
+  naverId: string;
+  id: number;
 }
 
 export interface BottomLayoutProps {
@@ -26,10 +37,13 @@ export interface BottomLayoutProps {
   matchId: number;
   homeId: number;
   awayId: number;
+  naverId: string;
+  id: number;
 }
 
 export interface ScreenLayoutProps {
   matchId: number;
+  naverId: string;
   homeId: number;
   awayId: number;
   home: string;
@@ -46,9 +60,9 @@ export interface StatusComponentProps {
 
 export interface StatusGraphComponentProps {
   homeStatGrade: number;
-  homeStat: string;
+  homeStat: string | undefined;
   statName: string;
-  awayStat: string;
+  awayStat: string | undefined;
   awayStatGrade: number;
 }
 
@@ -111,4 +125,12 @@ export interface PlayerDetail {
   shortName: string;
   slug: string;
   userCount: number;
+}
+
+export interface PlayerStatusComponentProps {
+  matchId: number;
+}
+export interface StatisticsComponentProps {
+  position: string;
+  statistics: any;
 }

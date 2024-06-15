@@ -3,6 +3,7 @@ import StatusGraphComponent from "./StatusGraphComponent";
 import sofaAPI from "../utils/apis/api/sofaApi";
 import { useEffect, useState } from "react";
 import { StatusDetail } from "../types/apiReturnType";
+import useInterval from "../hooks/intervalHook";
 
 const StatusComponent = ({
   homeId,
@@ -23,20 +24,65 @@ const StatusComponent = ({
     renderType: -99,
     key: "no data",
   };
-  const [possession, setPossession] = useState<StatusDetail>(defaultData);
-  const [exg, setExg] = useState<StatusDetail>(defaultData);
-  const [bigChance, setBigChance] = useState<StatusDetail>(defaultData);
-  const [shooting, setShooting] = useState<StatusDetail>(defaultData);
-  const [conerkick, setConerkick] = useState<StatusDetail>(defaultData);
-  const [freekick, setFreekick] = useState<StatusDetail>(defaultData);
-  const [foul, setFoul] = useState<StatusDetail>(defaultData);
-  const [yellowCard, setYellowCard] = useState<StatusDetail>(defaultData);
+  // TODO
+  // 10초마다 경기기록 갱신
+
+  useInterval(() => {
+    if (matchId !== 0) {
+      let url = "event/" + matchId.toString() + "/statistics";
+      let h = {
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
+        Expires: "0",
+      };
+
+      sofaAPI
+        .get(url, { headers: h })
+        .then((res) => {
+          setPossession(res.data.statistics[0].groups[0].statisticsItems[0]);
+          setExg(res.data.statistics[0].groups[0].statisticsItems[1]);
+          setBigChance(res.data.statistics[0].groups[0].statisticsItems[2]);
+          setShooting(res.data.statistics[0].groups[0].statisticsItems[3]);
+          setConerkick(res.data.statistics[0].groups[0].statisticsItems[5]);
+          setFreekick(res.data.statistics[0].groups[0].statisticsItems[9]);
+          setFoul(res.data.statistics[0].groups[0].statisticsItems[6]);
+          setYellowCard(res.data.statistics[0].groups[0].statisticsItems[10]);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, 10000);
+
+  const [possession, setPossession] = useState<StatusDetail | undefined>(
+    defaultData
+  );
+  const [exg, setExg] = useState<StatusDetail | undefined>(defaultData);
+  const [bigChance, setBigChance] = useState<StatusDetail | undefined>(
+    defaultData
+  );
+  const [shooting, setShooting] = useState<StatusDetail | undefined>(
+    defaultData
+  );
+  const [conerkick, setConerkick] = useState<StatusDetail | undefined>(
+    defaultData
+  );
+  const [freekick, setFreekick] = useState<StatusDetail | undefined>(
+    defaultData
+  );
+  const [foul, setFoul] = useState<StatusDetail | undefined>(defaultData);
+  const [yellowCard, setYellowCard] = useState<StatusDetail | undefined>(
+    defaultData
+  );
   useEffect(() => {
     let url = "event/" + matchId.toString() + "/statistics";
-    // 테스트용.
-    // let url = "event/11352523/statistics";
+    let h = {
+      "Cache-Control": "no-cache",
+      Pragma: "no-cache",
+      Expires: "0",
+    };
     sofaAPI
-      .get(url)
+      .get(url, { headers: h })
       .then((res) => {
         setPossession(res.data.statistics[0].groups[0].statisticsItems[0]);
         setExg(res.data.statistics[0].groups[0].statisticsItems[1]);
@@ -53,7 +99,7 @@ const StatusComponent = ({
   }, [matchId]);
 
   return (
-    <div className="flex w-full h-full items-center justify-center">
+    <div className="flex w-full h-full items-center justify-center animate__animated animate__backInLeft">
       <div className="flex flex-col w-5/6 h-5/6 bg-white outline-offset-[-3px] outline-none outline-black outline-8 rounded-xl">
         {/* 상단 */}
         <div className="flex flex-col w-full min-h-[200px] bg-slate-300">
@@ -89,58 +135,58 @@ const StatusComponent = ({
         <div className="flex flex-col w-full h-full items-center justify-center bg-slate-100 font-['MangoDdobak-B']">
           <StatusGraphComponent
             homeStatGrade={70}
-            homeStat={possession.home}
+            homeStat={possession?.home}
             statName={"점유율"}
-            awayStat={possession.away}
+            awayStat={possession?.away}
             awayStatGrade={30}
           ></StatusGraphComponent>
           <StatusGraphComponent
             homeStatGrade={70}
-            homeStat={exg.home}
+            homeStat={exg?.home}
             statName={"예상 골"}
-            awayStat={exg.away}
+            awayStat={exg?.away}
             awayStatGrade={30}
           ></StatusGraphComponent>
           <StatusGraphComponent
             homeStatGrade={70}
-            homeStat={bigChance.home}
+            homeStat={bigChance?.home}
             statName={"빅 찬스"}
-            awayStat={bigChance.away}
+            awayStat={bigChance?.away}
             awayStatGrade={30}
           ></StatusGraphComponent>
           <StatusGraphComponent
             homeStatGrade={70}
-            homeStat={shooting.home}
+            homeStat={shooting?.home}
             statName={"전체 슈팅"}
-            awayStat={shooting.away}
+            awayStat={shooting?.away}
             awayStatGrade={30}
           ></StatusGraphComponent>
           <StatusGraphComponent
             homeStatGrade={70}
-            homeStat={conerkick.home}
+            homeStat={conerkick?.home}
             statName={"코너킥"}
-            awayStat={conerkick.away}
+            awayStat={conerkick?.away}
             awayStatGrade={30}
           ></StatusGraphComponent>
           <StatusGraphComponent
             homeStatGrade={70}
-            homeStat={freekick.home}
+            homeStat={freekick?.home}
             statName={"프리킥"}
-            awayStat={freekick.away}
+            awayStat={freekick?.away}
             awayStatGrade={30}
           ></StatusGraphComponent>
           <StatusGraphComponent
             homeStatGrade={70}
-            homeStat={foul.home}
+            homeStat={foul?.home}
             statName={"파울"}
-            awayStat={foul.away}
+            awayStat={foul?.away}
             awayStatGrade={30}
           ></StatusGraphComponent>
           <StatusGraphComponent
             homeStatGrade={70}
-            homeStat={yellowCard.home}
+            homeStat={yellowCard?.home}
             statName={"옐로우 카드"}
-            awayStat={yellowCard.away}
+            awayStat={yellowCard?.away}
             awayStatGrade={30}
           ></StatusGraphComponent>
         </div>

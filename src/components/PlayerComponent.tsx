@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { PlayerComponentProps } from "../types/propsType";
 import API from "../utils/apis/api/api";
+import { usePlayerContext } from "../context/ScoreboardContext";
 
 const PlayerComponent = ({
   teamId,
@@ -16,6 +17,15 @@ const PlayerComponent = ({
   // const [goalKeeper, setGoalKeeper] = useState(false);
   const [url, setURL] = useState("player/fancy");
   const [backColor, setBackColor] = useState(playerTextColor);
+  const { pId, setPId } = usePlayerContext();
+
+  const selectPlayer = () => {
+    setPId(playerId);
+    let gameElement = document.getElementById("#GameStatistics");
+    let playerElement = document.getElementById("#PlayerStatistics");
+
+    // playerElement?.className.
+  };
 
   useEffect(() => {
     // setPlayerName(playerId.toString());
@@ -38,45 +48,55 @@ const PlayerComponent = ({
     <>
       {isHome ? (
         <div className="flex flex-col w-full items-center">
-          <img
-            src={
-              "https://api.sofascore.app/api/v1/event/" +
-              matchId.toString() +
-              "/jersey/home/" +
-              url
-            }
-            className="w-[32px] object-center"
-          ></img>
-          <span
-            className="absolute text-lg font-['TAEBAEKfont'] drop-shadow-[0_4.2px_2.2px_rgba(0,0,0,0.2)]"
-            style={{ color: backColor }}
+          <button
+            className="flex flex-col w-full items-center"
+            onClick={() => selectPlayer()}
           >
-            {playerNumber.toString()}
-          </span>
-          <span className="font-['MangoDdobak-B'] text-pretty text-center drop-shadow-[0_4.2px_2.2px_rgba(0,0,0,0.2)]">
-            {playerName}
-          </span>
+            <img
+              src={
+                "https://api.sofascore.app/api/v1/event/" +
+                matchId.toString() +
+                "/jersey/home/" +
+                url
+              }
+              className="w-[32px] object-center"
+            ></img>
+            <span
+              className="absolute text-lg font-['TAEBAEKfont'] drop-shadow-[0_4.2px_2.2px_rgba(0,0,0,0.2)]"
+              style={{ color: backColor }}
+            >
+              {playerNumber.toString()}
+            </span>
+            <span className="font-['MangoDdobak-B'] text-pretty text-center drop-shadow-[0_4.2px_2.2px_rgba(0,0,0,0.2)]">
+              {playerName}
+            </span>
+          </button>
         </div>
       ) : (
         <div className="flex flex-col w-full items-center">
-          <img
-            src={
-              "https://api.sofascore.app/api/v1/event/" +
-              matchId.toString() +
-              "/jersey/away/" +
-              url
-            }
-            className="w-[32px] object-center"
-          ></img>
-          <span
-            className="absolute text-lg font-['TAEBAEKfont'] drop-shadow-[0_4.2px_2.2px_rgba(0,0,0,0.2)]"
-            style={{ color: backColor }}
+          <button
+            className="flex flex-col w-full items-center"
+            onClick={() => selectPlayer()}
           >
-            {playerNumber.toString()}
-          </span>
-          <span className="font-['MangoDdobak-B'] text-pretty text-center drop-shadow-[0_4.2px_2.2px_rgba(0,0,0,0.2)]">
-            {playerName}
-          </span>
+            <img
+              src={
+                "https://api.sofascore.app/api/v1/event/" +
+                matchId.toString() +
+                "/jersey/away/" +
+                url
+              }
+              className="w-[32px] object-center"
+            ></img>
+            <span
+              className="absolute text-lg font-['TAEBAEKfont'] drop-shadow-[0_4.2px_2.2px_rgba(0,0,0,0.2)]"
+              style={{ color: backColor }}
+            >
+              {playerNumber.toString()}
+            </span>
+            <span className="font-['MangoDdobak-B'] text-pretty text-center drop-shadow-[0_4.2px_2.2px_rgba(0,0,0,0.2)]">
+              {playerName}
+            </span>
+          </button>
         </div>
       )}
     </>

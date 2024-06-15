@@ -41,3 +41,37 @@
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: left top, left bottom;
 }
+
+.go_behind_animation {
+  animation-name: _go_behind;
+  animation-duration: 300ms;
+  animation-fill-mode: forwards;
+}
+
+@keyframes _go_behind {
+  from {
+    scale: 100%;
+    filter: brightness(100%);
+  }
+  to {
+    scale: 50%;
+    filter: brightness(50%);
+  }
+}
+
+.go_toward_animation {
+  animation-name: _go_toward;
+  animation-duration: 300ms;
+  animation-fill-mode: forwards;
+}
+
+@keyframes _go_toward {
+  from {
+    scale: 50%;
+    filter: brightness(50%);
+  }
+  to {
+    scale: 100%;
+    filter: brightness(100%);
+  }
+}
