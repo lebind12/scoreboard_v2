@@ -51,7 +51,7 @@ const StatisticsComponent = ({
   };
 
   return (
-    <div className="flex flex-col pt-4 pb-2 justify-center h-full w-full justify-center, text-center text-lg">
+    <div className="flex flex-col justify-center w-full justify-center, text-center text-lg">
       {Object.entries(statistics).map(([key, value]) => {
         if (key in stasticsMatching) {
           return (

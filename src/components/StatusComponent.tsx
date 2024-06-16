@@ -129,7 +129,7 @@ const StatusComponent = ({
           </div>
         </div>
         {/* 내용 */}
-        <div className="flex flex-col w-full h-full items-center justify-center bg-slate-100 font-['MangoDdobak-B']">
+        <div className="flex flex-col h-full w-full items-center justify-center bg-slate-100 font-['MangoDdobak-B']">
           {typeof gameStatistics !== undefined && gameStatistics.length > 0
             ? gameStatistics.map((res: StatusDetail) => {
                 if (res.name in statMatchMap)
