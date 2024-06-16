@@ -42,7 +42,7 @@ const MainLayout = () => {
       id="MainLayout"
       className={`${
         selected
-          ? "flex flex-col flex-none w-full h-full"
+          ? "flex flex-col flex-none w-full h-full "
           : "flex flex-col flex-none w-full h-full brightness-50 blur-sm"
       }`}
     >

@@ -21,6 +21,7 @@ export interface TeamComponentProps {
   teamName: string;
   matchId: number;
   teamId: number;
+  score: number;
 }
 
 export interface CommentComponentProps {
@@ -133,4 +134,9 @@ export interface PlayerStatusComponentProps {
 export interface StatisticsComponentProps {
   position: string;
   statistics: any;
+}
+
+export interface PlayerStatisticDetailComponentProps {
+  name: string;
+  value: string | unknown;
 }

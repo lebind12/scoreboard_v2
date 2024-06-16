@@ -23,3 +23,17 @@ export const usePlayerContext = create<PlayerContext>((set) => ({
   pId: 1,
   setPId: (newId) => set({ pId: newId }),
 }));
+
+interface ScoreContext {
+  HomeScore: number;
+  AwayScore: number;
+  setHomeScore: (newScore: number) => void;
+  setAwayScore: (newScore: number) => void;
+}
+
+export const useScoreContext = create<ScoreContext>((set) => ({
+  HomeScore: 0,
+  AwayScore: 0,
+  setHomeScore: (newScore) => set({ HomeScore: newScore }),
+  setAwayScore: (newScore) => set({ AwayScore: newScore }),
+}));

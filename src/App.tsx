@@ -5,7 +5,7 @@ import MatchSelectLayout from "./layouts/MatchSelectLayout";
 
 function App() {
   return (
-    <div className="flex w-screen h-screen overflow-hidden">
+    <div className="flex w-screen h-screen overflow-hidden ">
       <MatchSelectLayout></MatchSelectLayout>
       <MainLayout></MainLayout>
     </div>

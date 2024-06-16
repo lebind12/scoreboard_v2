@@ -24,8 +24,19 @@ const StatusComponent = ({
     renderType: -99,
     key: "no data",
   };
-  // TODO
-  // 10초마다 경기기록 갱신
+
+  const statMatchMap: { [key: string]: string } = {
+    "Ball possession": "볼 점유율",
+    "Expected goals": "예상득점",
+    "Big chances": "빅 찬스",
+    "Total shots": "전체 슈팅",
+    "Goalkeeper saves": "골키퍼 선방",
+    "Corner kicks": "코너킥",
+    // prettier-ignore
+    "Fouls": "파울",
+    "Yellow cards": "옐로우카드",
+  };
+  const [gameStatistics, setGameStatistics] = useState<Array<StatusDetail>>([]);
 
   useInterval(() => {
     if (matchId !== 0) {
@@ -39,41 +50,15 @@ const StatusComponent = ({
       sofaAPI
         .get(url, { headers: h })
         .then((res) => {
-          setPossession(res.data.statistics[0].groups[0].statisticsItems[0]);
-          setExg(res.data.statistics[0].groups[0].statisticsItems[1]);
-          setBigChance(res.data.statistics[0].groups[0].statisticsItems[2]);
-          setShooting(res.data.statistics[0].groups[0].statisticsItems[3]);
-          setConerkick(res.data.statistics[0].groups[0].statisticsItems[5]);
-          setFreekick(res.data.statistics[0].groups[0].statisticsItems[9]);
-          setFoul(res.data.statistics[0].groups[0].statisticsItems[6]);
-          setYellowCard(res.data.statistics[0].groups[0].statisticsItems[10]);
+          setGameStatistics(
+            res.data?.statistics[0]?.groups[0]?.statisticsItems
+          );
         })
         .catch((error) => {
           console.log(error);
         });
     }
   }, 10000);
-
-  const [possession, setPossession] = useState<StatusDetail | undefined>(
-    defaultData
-  );
-  const [exg, setExg] = useState<StatusDetail | undefined>(defaultData);
-  const [bigChance, setBigChance] = useState<StatusDetail | undefined>(
-    defaultData
-  );
-  const [shooting, setShooting] = useState<StatusDetail | undefined>(
-    defaultData
-  );
-  const [conerkick, setConerkick] = useState<StatusDetail | undefined>(
-    defaultData
-  );
-  const [freekick, setFreekick] = useState<StatusDetail | undefined>(
-    defaultData
-  );
-  const [foul, setFoul] = useState<StatusDetail | undefined>(defaultData);
-  const [yellowCard, setYellowCard] = useState<StatusDetail | undefined>(
-    defaultData
-  );
   useEffect(() => {
     let url = "event/" + matchId.toString() + "/statistics";
     let h = {
@@ -84,14 +69,8 @@ const StatusComponent = ({
     sofaAPI
       .get(url, { headers: h })
       .then((res) => {
-        setPossession(res.data.statistics[0].groups[0].statisticsItems[0]);
-        setExg(res.data.statistics[0].groups[0].statisticsItems[1]);
-        setBigChance(res.data.statistics[0].groups[0].statisticsItems[2]);
-        setShooting(res.data.statistics[0].groups[0].statisticsItems[3]);
-        setConerkick(res.data.statistics[0].groups[0].statisticsItems[5]);
-        setFreekick(res.data.statistics[0].groups[0].statisticsItems[9]);
-        setFoul(res.data.statistics[0].groups[0].statisticsItems[6]);
-        setYellowCard(res.data.statistics[0].groups[0].statisticsItems[10]);
+        setGameStatistics(res.data?.statistics[0]?.groups[0]?.statisticsItems);
+        console.log(res.data?.statistics[0]?.groups[0]?.statisticsItems);
       })
       .catch((error) => {
         console.log(error);
@@ -118,80 +97,62 @@ const StatusComponent = ({
                 }`}
               ></img>
             </div>
-            <div className="absolute top-12 left-1/2 -translate-x-1/2 -translate-y-1/2 font-['MoveSans-Bold'] text-6xl">
+            <div
+              className="absolute top-12 left-1/2 -translate-x-1/2 -translate-y-1/2 font-['MoveSans-Bold'] text-6xl "
+              style={{
+                textShadow:
+                  "-3px -3px 0 white, 3px -3px 0 white, -3px 3px 0 white, 3px 3px 0 white",
+              }}
+            >
               VS
             </div>
           </div>
           <div className="flex w-full ">
-            <div className="flex flex-col w-full bg-blue-600 items-center justify-center text-4xl font-['Freesentation-9Black']">
+            <div
+              className="flex flex-col w-full bg-blue-600 items-center justify-center text-4xl font-['Freesentation-9Black']"
+              style={{
+                textShadow:
+                  "-2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white",
+              }}
+            >
               {home}
             </div>
-            <div className="flex flex-col w-full bg-blue-200 items-center justify-center text-4xl font-['Freesentation-9Black']">
+            <div
+              className="flex flex-col w-full bg-blue-200 items-center justify-center text-4xl font-['Freesentation-9Black']"
+              style={{
+                textShadow:
+                  "-2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white",
+              }}
+            >
               {away}
             </div>
           </div>
         </div>
         {/* 내용 */}
         <div className="flex flex-col w-full h-full items-center justify-center bg-slate-100 font-['MangoDdobak-B']">
-          <StatusGraphComponent
-            homeStatGrade={70}
-            homeStat={possession?.home}
-            statName={"점유율"}
-            awayStat={possession?.away}
-            awayStatGrade={30}
-          ></StatusGraphComponent>
-          <StatusGraphComponent
-            homeStatGrade={70}
-            homeStat={exg?.home}
-            statName={"예상 골"}
-            awayStat={exg?.away}
-            awayStatGrade={30}
-          ></StatusGraphComponent>
-          <StatusGraphComponent
-            homeStatGrade={70}
-            homeStat={bigChance?.home}
-            statName={"빅 찬스"}
-            awayStat={bigChance?.away}
-            awayStatGrade={30}
-          ></StatusGraphComponent>
-          <StatusGraphComponent
-            homeStatGrade={70}
-            homeStat={shooting?.home}
-            statName={"전체 슈팅"}
-            awayStat={shooting?.away}
-            awayStatGrade={30}
-          ></StatusGraphComponent>
-          <StatusGraphComponent
-            homeStatGrade={70}
-            homeStat={conerkick?.home}
-            statName={"코너킥"}
-            awayStat={conerkick?.away}
-            awayStatGrade={30}
-          ></StatusGraphComponent>
-          <StatusGraphComponent
-            homeStatGrade={70}
-            homeStat={freekick?.home}
-            statName={"프리킥"}
-            awayStat={freekick?.away}
-            awayStatGrade={30}
-          ></StatusGraphComponent>
-          <StatusGraphComponent
-            homeStatGrade={70}
-            homeStat={foul?.home}
-            statName={"파울"}
-            awayStat={foul?.away}
-            awayStatGrade={30}
-          ></StatusGraphComponent>
-          <StatusGraphComponent
-            homeStatGrade={70}
-            homeStat={yellowCard?.home}
-            statName={"옐로우 카드"}
-            awayStat={yellowCard?.away}
-            awayStatGrade={30}
-          ></StatusGraphComponent>
+          {typeof gameStatistics !== undefined && gameStatistics.length > 0
+            ? gameStatistics.map((res: StatusDetail) => {
+                if (res.name in statMatchMap)
+                  return (
+                    <StatusGraphComponent
+                      homeStatGrade={0}
+                      homeStat={res.home}
+                      statName={statMatchMap[res.name]}
+                      awayStat={res.away}
+                      awayStatGrade={0}
+                    ></StatusGraphComponent>
+                  );
+              })
+            : "경기 집계중입니다."}
         </div>
         {/* 하단 */}
-        <div className="flex flex-col w-full min-h-[70px] bg-black"></div>
+        {/* <div className="flex flex-col w-full min-h-[70px] bg-black items-center justify-center">
+          <div className="flex w-full bg-white text-center">
+            <div className="w-full">{managers.homeManager}</div>
+            <div className="w-full">{managers.awayManager}</div>
+          </div>
+          <div className="w-full bg-white text-center">{judge.JudgeName}</div>
+        </div> */}
       </div>
     </div>
   );

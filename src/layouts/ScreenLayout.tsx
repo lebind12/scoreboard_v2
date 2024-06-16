@@ -53,11 +53,11 @@ const ScreenLayout = ({
   }, [matchId]);
 
   return (
-    <div className="flex w-full h-full bg-slate-400">
+    <div className="flex w-full h-full bg-[#00ff00]">
       <div className="w-1/4 h-full items-center">
         <div
           id="GameStatistics"
-          className="w-full h-full items-center go_behind_animation"
+          className="w-full h-full items-center go_toward_animation"
         >
           <StatusComponent
             homeId={homeId}
@@ -70,13 +70,13 @@ const ScreenLayout = ({
 
         <div
           id="PlayerStatistics"
-          className="absolute w-1/4 top-3 h-3/4 animate__animated animate__backInLeft"
+          className="absolute w-1/4 top-0 h-3/4 animate__animated animate__fadeOutLeftBig"
         >
           <PlayerStatusComponent matchId={matchId}></PlayerStatusComponent>
         </div>
       </div>
-      <div className="w-1/2 h-full bg-slate-400"></div>
-      <div className="flex flex-1 w-1/4 h-full items-center animate__animated animate__backInRight ">
+      <div className="w-1/2 h-full bg-[#00ff00]"></div>
+      <div className="flex flex-1 w-1/4 h-full items-center animate__animated animate__backInRight bg-gray-600">
         <FormationScreenComponent
           home={home}
           away={away}

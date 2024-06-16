@@ -3,6 +3,7 @@ import { ScoreComponentProps } from "../types/propsType";
 import useContextMenu from "../hooks/contextMenuHook";
 import { useState } from "react";
 import useInterval from "../hooks/intervalHook";
+import { useScoreContext } from "../context/ScoreboardContext";
 
 const ScoreComponent = ({
   homeName,
@@ -13,6 +14,8 @@ const ScoreComponent = ({
 }: ScoreComponentProps) => {
   // TODO
   //
+  const { HomeScore, AwayScore, setHomeScore, setAwayScore } =
+    useScoreContext();
   const [time, setTime] = useState("00:00");
   const [second, setSecond] = useState(0);
   const [minute, setMinute] = useState(0);
@@ -48,7 +51,7 @@ const ScoreComponent = ({
         <div className="flex w-full h-full items-center rounded-lg">
           <span
             id="Timer"
-            className="grid text-5xl w-full h-full font-bold bg-white z-10 items-center text-center"
+            className="grid text-5xl w-full h-full font-bold bg-white z-10 items-center text-center font-['LABDigital']"
           >
             {makeMinute(minute)}:{makeSecond(second)}
           </span>
@@ -78,6 +81,7 @@ const ScoreComponent = ({
               teamName={homeName}
               matchId={matchId}
               teamId={homeId}
+              score={HomeScore}
             />
           </button>
         </div>
@@ -87,6 +91,7 @@ const ScoreComponent = ({
               teamName={awayName}
               matchId={matchId}
               teamId={awayId}
+              score={AwayScore}
             />
           </button>
         </div>

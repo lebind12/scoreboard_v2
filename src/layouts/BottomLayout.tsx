@@ -5,6 +5,7 @@ import qs from "qs";
 import { useEffect, useState } from "react";
 import { useBoardContext } from "../context/ScoreboardContext";
 import { BottomLayoutProps } from "../types/propsType";
+import wallpaper from "../assets/wallpaper.png";
 
 const BottomLayout = ({
   homeName,
@@ -16,7 +17,7 @@ const BottomLayout = ({
   id,
 }: BottomLayoutProps) => {
   return (
-    <div className="flex w-full h-full bg-amber-600 ">
+    <div className="flex w-full h-full overflow-hidden">
       <div className="w-1/4 bg-gray-500">
         <ScoreComponent
           homeName={homeName}
@@ -26,7 +27,7 @@ const BottomLayout = ({
           awayId={awayId}
         />
       </div>
-      <div className="p-4 flex justify-center items-center w-2/4 bg-gray-50">
+      <div className="p-4 flex justify-center items-center w-2/4 overflow-hidden">
         <CommentComponent
           homeId={homeId}
           awayId={awayId}
@@ -35,7 +36,7 @@ const BottomLayout = ({
           id={id}
         />
       </div>
-      <div className="w-1/4 bg-gray-950"></div>
+      <div className="w-1/4 bg-[#00ff00]"></div>
     </div>
   );
 };

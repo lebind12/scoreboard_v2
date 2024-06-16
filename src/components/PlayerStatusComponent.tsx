@@ -34,28 +34,28 @@ const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
     goalsPrevented: -0.25,
   };
   const defaultForwardStatistics = {
-    totalPass: 49,
-    accuratePass: 44,
-    totalLongBalls: 2,
-    duelLost: 5,
-    duelWon: 6,
-    challengeLost: 1,
-    dispossessed: 3,
-    totalContest: 3,
-    wonContest: 2,
-    totalTackle: 2,
-    wasFouled: 2,
-    totalOffside: 1,
-    minutesPlayed: 75,
-    touches: 61,
-    rating: 6.9,
-    possessionLostCtrl: 10,
-    keyPass: 1,
+    totalPass: 9999,
+    accuratePass: 1,
+    totalLongBalls: 9999,
+    duelLost: 9999,
+    duelWon: 9999,
+    challengeLost: 9999,
+    dispossessed: 9999,
+    totalContest: 9999,
+    wonContest: 9999,
+    totalTackle: 9999,
+    wasFouled: 9999,
+    totalOffside: 9999,
+    minutesPlayed: 9999,
+    touches: 9999,
+    rating: 9999.9999,
+    possessionLostCtrl: 9999,
+    keyPass: 9999,
     ratingVersions: {
-      original: 6.9,
-      alternative: 6.7,
+      original: 9999.9999,
+      alternative: 9999.9999,
     },
-    expectedAssists: 0.0542089,
+    expectedAssists: 9999.9999,
   };
   const defaultDefenderStatistics = {
     totalPass: 45,
@@ -171,7 +171,7 @@ const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
             </div>
           </div>
           <div className="flex w-full ">
-            <div className="flex flex-col w-full bg-blue-600 items-center justify-center text-xl font-['Freesentation-9Black']">
+            <div className="flex flex-col w-full bg-blue-600 items-center justify-center text-xl font-['Freesentation-9Black'] text-white">
               {playerBirthYear}년생
             </div>
             <div className="flex flex-col w-full bg-blue-200 items-center justify-center text-xl font-['Freesentation-9Black']">
@@ -191,7 +191,27 @@ const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
         </div>
         {/* 하단 */}
         <div className="flex flex-col justify-center items-center w-full min-h-[70px] bg-black">
-          <button className="w-fit bg-white"> 닫기 </button>
+          <button
+            className="w-1/3 text-2xl bg-white rounded-xl font-['TAEBAEKfont']"
+            onClick={() => {
+              document
+                .getElementById("GameStatistics")
+                ?.classList.remove("go_behind_animation");
+              document
+                .getElementById("GameStatistics")
+                ?.classList.add("go_toward_animation");
+              document
+                .getElementById("PlayerStatistics")
+                ?.classList.remove("animate__backInLeft");
+              document
+                .getElementById("PlayerStatistics")
+                ?.classList.add("animate__fadeOutLeftBig");
+            }}
+          >
+            {"  "}
+            닫기
+            {"  "}
+          </button>
         </div>
       </div>
     </div>

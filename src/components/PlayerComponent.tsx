@@ -50,7 +50,21 @@ const PlayerComponent = ({
         <div className="flex flex-col w-full items-center">
           <button
             className="flex flex-col w-full items-center"
-            onClick={() => selectPlayer()}
+            onClick={() => {
+              selectPlayer();
+              document
+                .getElementById("GameStatistics")
+                ?.classList.remove("go_toward_animation");
+              document
+                .getElementById("GameStatistics")
+                ?.classList.add("go_behind_animation");
+              document
+                .getElementById("PlayerStatistics")
+                ?.classList.remove("animate__fadeOutLeftBig");
+              document
+                .getElementById("PlayerStatistics")
+                ?.classList.add("animate__backInLeft");
+            }}
           >
             <img
               src={
@@ -67,7 +81,13 @@ const PlayerComponent = ({
             >
               {playerNumber.toString()}
             </span>
-            <span className="font-['MangoDdobak-B'] text-pretty text-center drop-shadow-[0_4.2px_2.2px_rgba(0,0,0,0.2)]">
+            <span
+              className="font-['MangoDdobak-B'] text-pretty text-center"
+              style={{
+                textShadow:
+                  "-0.5px -0.5px 0 white, 0.5px -0.5px 0 white, -0.5px 0.5px 0 white, 0.5px 0.5px 0 white",
+              }}
+            >
               {playerName}
             </span>
           </button>
@@ -76,7 +96,21 @@ const PlayerComponent = ({
         <div className="flex flex-col w-full items-center">
           <button
             className="flex flex-col w-full items-center"
-            onClick={() => selectPlayer()}
+            onClick={() => {
+              selectPlayer();
+              document
+                .getElementById("GameStatistics")
+                ?.classList.remove("go_toward_animation");
+              document
+                .getElementById("GameStatistics")
+                ?.classList.add("go_behind_animation");
+              document
+                .getElementById("PlayerStatistics")
+                ?.classList.remove("animate__fadeOutLeftBig");
+              document
+                .getElementById("PlayerStatistics")
+                ?.classList.add("animate__backInLeft");
+            }}
           >
             <img
               src={
@@ -93,7 +127,13 @@ const PlayerComponent = ({
             >
               {playerNumber.toString()}
             </span>
-            <span className="font-['MangoDdobak-B'] text-pretty text-center drop-shadow-[0_4.2px_2.2px_rgba(0,0,0,0.2)]">
+            <span
+              className="font-['MangoDdobak-B'] text-pretty text-center"
+              style={{
+                textShadow:
+                  "-0.5px -0.5px 0 white, 0.5px -0.5px 0 white, -0.5px 0.5px 0 white, 0.5px 0.5px 0 white",
+              }}
+            >
               {playerName}
             </span>
           </button>
