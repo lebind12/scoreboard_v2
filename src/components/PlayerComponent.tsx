@@ -47,7 +47,10 @@ const PlayerComponent = ({
   return (
     <>
       {isHome ? (
-        <div className="flex flex-col w-full items-center">
+        <div
+          id={"player" + playerId.toString()}
+          className="flex flex-col w-full items-center"
+        >
           <button
             className="flex flex-col w-full items-center"
             onClick={() => {
@@ -81,6 +84,11 @@ const PlayerComponent = ({
             >
               {playerNumber.toString()}
             </span>
+            <div className="relative hidden">
+              <div className="absolute -top-[16px] -left-6 text-[10px] text-yellow-400 bg-yellow-400 z-10">
+                !!!
+              </div>
+            </div>
             <span
               className="font-['MangoDdobak-B'] text-pretty text-center"
               style={{
@@ -93,7 +101,10 @@ const PlayerComponent = ({
           </button>
         </div>
       ) : (
-        <div className="flex flex-col w-full items-center">
+        <div
+          id={"player" + playerId.toString()}
+          className="flex flex-col w-full items-center"
+        >
           <button
             className="flex flex-col w-full items-center"
             onClick={() => {
@@ -127,6 +138,11 @@ const PlayerComponent = ({
             >
               {playerNumber.toString()}
             </span>
+            <div className="relative hidden">
+              <div className="absolute -top-[16px] -left-6 text-[10px] text-yellow-400 bg-yellow-400 z-10">
+                !!!
+              </div>
+            </div>
             <span
               className="font-['MangoDdobak-B'] text-pretty text-center"
               style={{
