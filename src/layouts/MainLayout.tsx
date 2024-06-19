@@ -46,7 +46,7 @@ const MainLayout = () => {
           : "flex flex-col flex-none w-full h-full brightness-50 blur-sm"
       }`}
     >
-      <div className="w-full h-[150px]">
+      <div className="w-full h-1/4">
         <BottomLayout
           homeName={home}
           awayName={away}
@@ -57,7 +57,7 @@ const MainLayout = () => {
           id={id}
         ></BottomLayout>
       </div>
-      <div className="w-full h-full">
+      <div className="w-full h-full bg-[#00ff00]">
         <ScreenLayout
           matchId={sofaMatchId}
           naverId={naverId}

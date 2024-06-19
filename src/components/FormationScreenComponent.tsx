@@ -18,10 +18,10 @@ const FormationScreenComponent = ({
   matchId,
 }: FormationScreenComponentProps) => {
   return (
-    <div className="flex flex-col w-full h-full z-10 justify-center items-center">
-      <img src={FieldBoard} className="absolute"></img>
+    <div className="flex flex-col w-[480px] h-full z-10 justify-end items-center">
+      <img src={FieldBoard} className="absolute h-full pt-12 pb-12"></img>
       {/* 홈 포메이션 */}
-      <div className="flex w-full h-1/2 justify-center pt-12 pb-8">
+      <div className="flex w-full h-1/2 justify-end pt-20">
         <TeamFormationComponent
           teamName={home}
           matchId={matchId}
@@ -34,7 +34,7 @@ const FormationScreenComponent = ({
         />
       </div>
       {/* 어웨이 포메이션 */}
-      <div className="flex w-full h-1/2 justify-center pt-8 pb-12">
+      <div className="flex w-full h-1/2 justify-center pb-14 pt-2">
         <TeamFormationComponent
           teamName={away}
           teamId={awayId}

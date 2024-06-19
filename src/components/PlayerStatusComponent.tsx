@@ -10,6 +10,7 @@ import {
   MidfielderStatistics,
 } from "../types/apiReturnType";
 import StatisticsComponent from "./StatisticsComponent";
+import "../styles/animate.css";
 
 const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
   const defaultGoalkeeperStatistics = {
@@ -154,12 +155,12 @@ const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
   }, [pId]);
 
   return (
-    <div className="flex w-full h-full items-center justify-center">
-      <div className="flex flex-col w-5/6 h-5/6 bg-white outline-offset-[-3px] outline-none outline-black outline-8 rounded-xl">
+    <div className="flex w-full h-full items-end justify-center">
+      <div className="flex flex-col w-5/6 h-5/6 outline-offset-[-3px] outline-none outline-[#02074B] outline-8 rounded-xl flag_background">
         {/* 상단 */}
-        <div className="flex flex-col w-full min-h-[200px] bg-slate-300">
-          <div className="flex w-full h-full bg-slate-700">
-            <div className="grid w-full bg-slate-200 items-center justify-center">
+        <div className="flex flex-col w-full min-h-[200px]">
+          <div className="flex w-full h-full">
+            <div className="grid w-full items-center justify-center">
               <img
                 src={
                   "https://api.sofascore.app/api/v1/player/" +
@@ -171,28 +172,28 @@ const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
             </div>
           </div>
           <div className="flex w-full ">
-            <div className="flex flex-col w-full bg-blue-600 items-center justify-center text-xl font-['Freesentation-9Black'] text-white">
-              {playerBirthYear}년생
+            <div className="flex flex-col w-full items-center justify-center text-xl font-['Freesentation-9Black'] text-white bg-[#05096C]  drop-shadow-[2px_0_0px_rgba(255,255,255,1)]">
+              <span>{playerBirthYear}년생</span>
             </div>
-            <div className="flex flex-col w-full bg-blue-200 items-center justify-center text-xl font-['Freesentation-9Black']">
-              {playerName}
+            <div className="flex flex-col w-full items-center justify-center text-xl font-['Freesentation-9Black'] text-white bg-[#05096C]">
+              <span>{playerName}</span>
             </div>
-            <div className="flex flex-col w-full bg-blue-400 items-center justify-center text-xl font-['Freesentation-9Black']">
-              {playerPosition}
+            <div className="flex flex-col w-full items-center justify-center text-xl font-['Freesentation-9Black'] text-white bg-[#05096C]  drop-shadow-[-2px_0_0px_rgba(255,255,255,1)]">
+              <span>{playerPosition}</span>
             </div>
           </div>
         </div>
         {/* 내용 */}
-        <div className="flex flex-col w-full h-full items-center justify-center bg-slate-100 font-['MangoDdobak-B']">
+        <div className="flex flex-col w-full h-full items-center justify-center font-['MangoDdobak-B'] text-white">
           <StatisticsComponent
             position={playerPosition}
             statistics={playerDetail}
           ></StatisticsComponent>
         </div>
         {/* 하단 */}
-        <div className="flex flex-col justify-center items-center w-full min-h-[70px] bg-black">
+        <div className="flex flex-col justify-center items-center w-full min-h-[70px] bg-[#05096C]">
           <button
-            className="w-1/3 text-2xl bg-white rounded-xl font-['TAEBAEKfont']"
+            className="w-1/3 text-2xl text-white rounded-xl font-['TAEBAEKfont'] bg-[#062D86]"
             onClick={() => {
               document
                 .getElementById("GameStatistics")

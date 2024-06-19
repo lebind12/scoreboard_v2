@@ -8,38 +8,63 @@ const TeamComponent = ({
   matchId,
   teamId,
   score,
+  isHome,
 }: TeamComponentProps) => {
   return (
-    <div className="flex w-full h-full p-2">
-      <div className="w-1/6 h-full bg-white">
-        <img
-          src={`${
-            "https://api.sofascore.app/api/v1/team/" +
-            teamId.toString() +
-            "/image"
-          }`}
-          className="w-full h-full"
-        ></img>
-      </div>
-      <div
-        className="grid w-4/6 h-full bg-blue-400 font-['ONE-Mobile-POP'] text-5xl items-center text-center"
-        style={{
-          textShadow:
-            "-3px -3px 0 white, 3px -3px 0 white, -3px 3px 0 white, 3px 3px 0 white",
-        }}
-      >
-        {teamName}
-      </div>
-      <div
-        className="grid w-1/6 h-full bg-white font-['Jua'] text-5xl items-center text-center"
-        style={{
-          textShadow:
-            "-3px -3px 0 white, 3px -3px 0 white, -3px 3px 0 white, 3px 3px 0 white",
-        }}
-      >
-        {score}
-      </div>
-    </div>
+    <>
+      {isHome ? (
+        <div className="flex w-full h-full">
+          <div className="relative w-1/6 bg-[#05096C] overflow-hidden">
+            <img
+              src={`${
+                "https://api.sofascore.app/api/v1/team/" +
+                teamId.toString() +
+                "/image"
+              }`}
+              className="absolute w-[100px] object-center -top-4"
+            ></img>
+          </div>
+          <div className="grid w-4/6 h-full text-white bg-[#133DDA] font-['ONE-Mobile-POP'] text-4xl items-center text-center">
+            {teamName}
+          </div>
+          <div
+            className="grid w-1/6 h-full bg-white font-['Jua'] text-5xl items-center text-center"
+            style={{
+              textShadow:
+                "-3px -3px 0 white, 3px -3px 0 white, -3px 3px 0 white, 3px 3px 0 white",
+            }}
+          >
+            {score}
+          </div>
+        </div>
+      ) : (
+        <div className="flex w-full h-full">
+          <div
+            className="grid w-1/6 bg-white font-['Jua'] text-5xl items-center text-center"
+            style={{
+              textShadow:
+                "-3px -3px 0 white, 3px -3px 0 white, -3px 3px 0 white, 3px 3px 0 white",
+            }}
+          >
+            {score}
+          </div>
+          <div className="grid w-4/6 h-full text-white bg-[#133DDA] font-['ONE-Mobile-POP'] text-4xl items-center text-center">
+            {teamName}
+          </div>
+
+          <div className="relative w-1/6 h-full bg-[#05096C] overflow-hidden ">
+            <img
+              src={`${
+                "https://api.sofascore.app/api/v1/team/" +
+                teamId.toString() +
+                "/image"
+              }`}
+              className="absolute w-[100px] object-center -top-4 z-10"
+            ></img>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

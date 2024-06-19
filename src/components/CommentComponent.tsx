@@ -264,27 +264,29 @@ const CommentComponent = ({
   }, 10000);
 
   return (
-    <div className="flex justify-center items-end flex-col h-full w-full animate__animated animate__backInUp">
-      <div className="flex flex-col rounded-xl h-1/2 justify-center items-center w-full -outline-offset-2 outline-none outline-8 outline-black">
+    <div className="flex justify-center items-center flex-col h-full w-full animate__animated animate__backInUp">
+      <div className="flex flex-col rounded-xl h-1/2 justify-center items-center w-5/6 -outline-offset-2 outline-none outline-8 outline-black">
         <div
-          className="grid w-full h-full bg-yellow-300 rounded-t-2xl items-center justify-center text-3xl font-['Jua']"
+          className="grid w-full h-full rounded-t-2xl items-center justify-center text-3xl font-['Jua']"
           style={{
             textShadow:
               "-1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white",
+            backgroundColor: "rgba(32,128,191,1)",
           }}
         >
           {isEmptyRelay ? "경기 시작 전입니다." : makeSubject(commentRelayData)}
         </div>
         <div
-          className="grid w-full h-full bg-yellow-600 rounded-b-2xl items-center justify-center text-2xl font-['Jua'] "
+          className="grid w-full h-full  rounded-b-2xl items-center justify-center text-2xl font-['Jua'] "
           style={{
             textShadow:
               "-1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white",
+            backgroundColor: "rgba(24,53,136,1)",
           }}
         >
           {isEmptyRelay ? "경기 시작 전입니다." : makeText(commentRelayData)}
         </div>
-        <div className="absolute left-0 outline-none outline-8 outline-black rounded-full -outline-offset-2 bg-white">
+        <div className="absolute left-10 outline-none outline-8 outline-black rounded-full -outline-offset-[4px] bg-white">
           {makeFlag(commentRelayData)}
         </div>
       </div>

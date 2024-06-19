@@ -22,6 +22,7 @@ export interface TeamComponentProps {
   matchId: number;
   teamId: number;
   score: number;
+  isHome: boolean;
 }
 
 export interface CommentComponentProps {

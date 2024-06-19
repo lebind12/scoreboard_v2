@@ -7,6 +7,7 @@ import sofaAPI from "../utils/apis/api/sofaApi";
 import PlayerStatusComponent from "../components/PlayerStatusComponent";
 import "../styles/animate.css";
 import CommentComponent from "../components/CommentComponent";
+import statusBackground from "../assets/4.png";
 
 const ScreenLayout = ({
   matchId,
@@ -55,8 +56,8 @@ const ScreenLayout = ({
   }, [matchId]);
 
   return (
-    <div className="flex w-full h-full bg-[#00ff00]">
-      <div className="w-1/4 h-full items-center">
+    <div className="flex w-full h-full">
+      <div className="w-1/4 h-full items-center bg-[#00ff00]">
         <div
           id="GameStatistics"
           className="w-full h-full items-center go_toward_animation"
@@ -72,7 +73,7 @@ const ScreenLayout = ({
 
         <div
           id="PlayerStatistics"
-          className="absolute w-1/4 top-1/4 h-3/4 animate__animated animate__fadeOutLeftBig"
+          className="absolute w-1/4 bottom-14 h-5/6 animate__animated animate__fadeOutLeftBig bg-[#00ff00]"
         >
           <PlayerStatusComponent matchId={matchId}></PlayerStatusComponent>
         </div>

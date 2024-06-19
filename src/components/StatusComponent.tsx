@@ -78,19 +78,19 @@ const StatusComponent = ({
   }, [matchId]);
 
   return (
-    <div className="flex w-full h-full items-center justify-center animate__animated animate__backInLeft">
-      <div className="flex flex-col w-5/6 h-5/6 bg-white outline-offset-[-3px] outline-none outline-black outline-8 rounded-xl">
+    <div className="flex w-full h-full items-center justify-center animate__animated animate__backInLeft ">
+      <div className="flex flex-col w-5/6 h-5/6 bg-transparent outline-offset-[-3px] outline-none outline-[#05096C] outline-8 rounded-xl pt-3 flag_background">
         {/* 상단 */}
-        <div className="flex flex-col w-full min-h-[200px] bg-slate-300">
-          <div className="flex w-full h-full bg-slate-700">
-            <div className="grid w-full bg-slate-100 items-center justify-center ">
+        <div className="flex flex-col w-full min-h-[200px]">
+          <div className="flex w-full h-full bg-transparent">
+            <div className="grid w-full bg-transparent items-center justify-center ">
               <img
                 src={`${
                   "https://api.sofascore.app/api/v1/team/" + homeId + "/image"
                 }`}
               ></img>
             </div>
-            <div className="grid w-full bg-slate-200 items-center justify-center">
+            <div className="grid w-full bg-transparent items-center justify-center">
               <img
                 src={`${
                   "https://api.sofascore.app/api/v1/team/" + awayId + "/image"
@@ -109,7 +109,7 @@ const StatusComponent = ({
           </div>
           <div className="flex w-full ">
             <div
-              className="flex flex-col w-full bg-blue-600 items-center justify-center text-4xl font-['Freesentation-9Black']"
+              className="flex flex-col w-full bg-[#05096C] items-center justify-center text-4xl font-['Freesentation-9Black'] drop-shadow-[2px_0_0px_rgba(255,255,255,1)]"
               style={{
                 textShadow:
                   "-2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white",
@@ -118,7 +118,7 @@ const StatusComponent = ({
               {home}
             </div>
             <div
-              className="flex flex-col w-full bg-blue-200 items-center justify-center text-4xl font-['Freesentation-9Black']"
+              className="flex flex-col w-full bg-[#05096C] items-center justify-center text-4xl font-['Freesentation-9Black']"
               style={{
                 textShadow:
                   "-2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white",
@@ -129,7 +129,7 @@ const StatusComponent = ({
           </div>
         </div>
         {/* 내용 */}
-        <div className="flex flex-col h-full w-full items-center justify-center bg-slate-100 font-['MangoDdobak-B']">
+        <div className="flex flex-col h-full w-full items-center justify-center bg-transparent font-['MangoDdobak-B']">
           {typeof gameStatistics !== undefined && gameStatistics.length > 0
             ? gameStatistics.map((res: StatusDetail) => {
                 if (res.name in statMatchMap)
