@@ -47,24 +47,8 @@ const ScoreComponent = ({
 
   return (
     <div className="flex flex-col w-full h-full p-2">
-      <div className="flex w-full h-1/4">
-        <div className="flex w-full h-full items-center rounded-lg">
-          <span
-            id="Timer"
-            className="grid text-5xl w-full h-full font-bold bg-white z-10 items-center text-center font-['LABDigital']"
-          >
-            {makeMinute(minute)}:{makeSecond(second)}
-          </span>
-          <h2 className="text-2xl h-full items-center font-bold bg-pink-400 p-2 rounded-r-lg animate__animated animate__slideInLeft">
-            +9
-          </h2>
-        </div>
-        <div className="flex w-full text-4xl items-center justify-center font-['Freesentation-9Black']">
-          <input className="bg-transparent w-full text-center"></input>
-        </div>
-      </div>
-      <div className="h-3/4">
-        <div className="w-full h-1/2 bg-amber-300">
+      <div className="flex h-full items-center">
+        <div className="w-full h-full bg-amber-300">
           <button
             className="w-full h-full"
             onClick={() => {
@@ -85,7 +69,7 @@ const ScoreComponent = ({
             />
           </button>
         </div>
-        <div className="w-full h-1/2 bg-amber-900">
+        <div className="w-full h-full bg-amber-900">
           <button className="w-full h-full">
             <TeamComponent
               teamName={awayName}
@@ -95,6 +79,22 @@ const ScoreComponent = ({
             />
           </button>
         </div>
+      </div>
+      <div className="flex w-full justify-center">
+        <div className="flex w-1/6 h-full items-center rounded-lg">
+          <span
+            id="Timer"
+            className="grid text-5xl w-full h-full font-bold bg-white z-10 items-center text-center font-['LABDigital']"
+          >
+            {makeMinute(minute)}:{makeSecond(second)}
+          </span>
+          <h2 className="text-2xl h-full items-center font-bold bg-pink-400 p-2 rounded-r-lg animate__animated animate__slideInLeft">
+            +9
+          </h2>
+        </div>
+        {/* <div className="flex w-full text-4xl items-center justify-center font-['Freesentation-9Black']">
+          <input className="bg-transparent w-full text-center"></input>
+        </div> */}
       </div>
     </div>
   );

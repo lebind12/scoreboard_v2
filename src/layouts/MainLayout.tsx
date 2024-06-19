@@ -46,17 +46,7 @@ const MainLayout = () => {
           : "flex flex-col flex-none w-full h-full brightness-50 blur-sm"
       }`}
     >
-      <div className="w-full h-3/4">
-        <ScreenLayout
-          matchId={sofaMatchId}
-          naverId={naverId}
-          homeId={homeId}
-          awayId={awayId}
-          home={home}
-          away={away}
-        ></ScreenLayout>
-      </div>
-      <div className="w-full h-1/4">
+      <div className="w-full h-[150px]">
         <BottomLayout
           homeName={home}
           awayName={away}
@@ -66,6 +56,17 @@ const MainLayout = () => {
           naverId={naverId}
           id={id}
         ></BottomLayout>
+      </div>
+      <div className="w-full h-full">
+        <ScreenLayout
+          matchId={sofaMatchId}
+          naverId={naverId}
+          homeId={homeId}
+          awayId={awayId}
+          home={home}
+          away={away}
+          id={id}
+        ></ScreenLayout>
       </div>
     </div>
   );

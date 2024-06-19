@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import sofaAPI from "../utils/apis/api/sofaApi";
 import PlayerStatusComponent from "../components/PlayerStatusComponent";
 import "../styles/animate.css";
+import CommentComponent from "../components/CommentComponent";
 
 const ScreenLayout = ({
   matchId,
@@ -14,6 +15,7 @@ const ScreenLayout = ({
   awayId,
   home,
   away,
+  id,
 }: ScreenLayoutProps) => {
   const [homePlayers, setHomePlayers] = useState([]);
   const [awayPlayers, setAwayPlayers] = useState([]);
@@ -70,13 +72,24 @@ const ScreenLayout = ({
 
         <div
           id="PlayerStatistics"
-          className="absolute w-1/4 top-0 h-3/4 animate__animated animate__fadeOutLeftBig"
+          className="absolute w-1/4 top-1/4 h-3/4 animate__animated animate__fadeOutLeftBig"
         >
           <PlayerStatusComponent matchId={matchId}></PlayerStatusComponent>
         </div>
       </div>
-      <div className="w-1/2 h-full bg-[#00ff00]"></div>
-      <div className="flex flex-1 w-1/4 h-full items-center animate__animated animate__backInRight bg-gray-600">
+      <div className="w-1/2 h-full bg-[#00ff00]">
+        <div className="h-3/4"></div>
+        <div className="flex justify-center items-center w-full h-1/4">
+          <CommentComponent
+            homeId={homeId}
+            awayId={awayId}
+            matchId={matchId}
+            naverId={naverId}
+            id={id}
+          />
+        </div>
+      </div>
+      <div className="flex flex-1 w-1/4 h-full items-center animate__animated animate__backInRight bg-[#00ff00]">
         <FormationScreenComponent
           home={home}
           away={away}

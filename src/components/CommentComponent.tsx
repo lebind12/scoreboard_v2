@@ -264,8 +264,8 @@ const CommentComponent = ({
   }, 10000);
 
   return (
-    <div className="flex  justify-center items-end flex-col h-full w-full animate__animated animate__backInUp">
-      <div className="flex flex-col rounded-xl h-1/2 justify-center items-center w-5/6 -outline-offset-2 outline-none outline-8 outline-black">
+    <div className="flex justify-center items-end flex-col h-full w-full animate__animated animate__backInUp">
+      <div className="flex flex-col rounded-xl h-1/2 justify-center items-center w-full -outline-offset-2 outline-none outline-8 outline-black">
         <div
           className="grid w-full h-full bg-yellow-300 rounded-t-2xl items-center justify-center text-3xl font-['Jua']"
           style={{

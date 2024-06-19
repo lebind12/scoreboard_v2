@@ -49,6 +49,7 @@ export interface ScreenLayoutProps {
   awayId: number;
   home: string;
   away: string;
+  id: number;
 }
 
 export interface StatusComponentProps {

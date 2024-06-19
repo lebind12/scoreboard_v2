@@ -18,22 +18,14 @@ const BottomLayout = ({
 }: BottomLayoutProps) => {
   return (
     <div className="flex w-full h-full overflow-hidden">
-      <div className="w-1/4 bg-gray-500">
+      <div className="w-1/4 bg-[#00ff00]"></div>
+      <div className="justify-center items-center w-1/2 bg-[#00ff00]">
         <ScoreComponent
           homeName={homeName}
           awayName={awayName}
           matchId={matchId}
           homeId={homeId}
           awayId={awayId}
-        />
-      </div>
-      <div className="p-4 flex justify-center items-center w-2/4 overflow-hidden">
-        <CommentComponent
-          homeId={homeId}
-          awayId={awayId}
-          matchId={matchId}
-          naverId={naverId}
-          id={id}
         />
       </div>
       <div className="w-1/4 bg-[#00ff00]"></div>
