@@ -4,6 +4,7 @@ import sofaAPI from "../utils/apis/api/sofaApi";
 import { useEffect, useState } from "react";
 import { StatusDetail } from "../types/apiReturnType";
 import useInterval from "../hooks/intervalHook";
+import topImage from "../assets/4_top.png";
 
 const StatusComponent = ({
   homeId,
@@ -79,15 +80,17 @@ const StatusComponent = ({
 
   return (
     <div className="flex w-full h-full items-center justify-center animate__animated animate__backInLeft ">
-      <div className="flex flex-col w-5/6 h-5/6 bg-transparent outline-offset-[-3px] outline-none outline-[#05096C] outline-8 rounded-xl pt-3 flag_background">
+      <div className="flex flex-col w-5/6 h-5/6 bg-transparent outline-offset-[-3px] outline-none outline-[#05096C] outline-8 rounded-xl flag_background">
         {/* 상단 */}
-        <div className="flex flex-col w-full min-h-[200px]">
+        <img className="absolute w-5/6" src={topImage}></img>
+        <div className="flex flex-col w-full min-h-[200px] z-10">
           <div className="flex w-full h-full bg-transparent">
             <div className="grid w-full bg-transparent items-center justify-center ">
               <img
                 src={`${
                   "https://api.sofascore.app/api/v1/team/" + homeId + "/image"
                 }`}
+                className="pt-6 w-[120px]"
               ></img>
             </div>
             <div className="grid w-full bg-transparent items-center justify-center">
@@ -95,6 +98,7 @@ const StatusComponent = ({
                 src={`${
                   "https://api.sofascore.app/api/v1/team/" + awayId + "/image"
                 }`}
+                className="pt-6 w-[120px]"
               ></img>
             </div>
             <div

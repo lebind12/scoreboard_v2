@@ -3,7 +3,7 @@ import { ScoreComponentProps } from "../types/propsType";
 import useContextMenu from "../hooks/contextMenuHook";
 import { useState } from "react";
 import useInterval from "../hooks/intervalHook";
-import { useScoreContext } from "../context/ScoreboardContext";
+import { useScoreContext, useTimeContext } from "../context/ScoreboardContext";
 
 const ScoreComponent = ({
   homeName,
@@ -14,8 +14,9 @@ const ScoreComponent = ({
 }: ScoreComponentProps) => {
   // TODO
   //
-  const { HomeScore, AwayScore, setHomeScore, setAwayScore } =
+  const { HomeScore, AwayScore, injuryTime, setHomeScore, setAwayScore } =
     useScoreContext();
+  const { currentMinute, setCurrentMinute } = useTimeContext();
   const [time, setTime] = useState("00:00");
   const [second, setSecond] = useState(0);
   const [minute, setMinute] = useState(0);
@@ -39,6 +40,7 @@ const ScoreComponent = ({
   useInterval(() => {
     if (second + 1 >= 60) {
       setMinute(minute + 1);
+      setCurrentMinute(minute + 1);
       setSecond(0);
     } else {
       setSecond(second + 1);
@@ -83,7 +85,8 @@ const ScoreComponent = ({
           </button>
         </div>
       </div>
-      <div className="flex w-full justify-center">
+      <div className="flex w-full">
+        <div className="w-5/12"></div>
         <div className="flex w-1/6 h-full items-center rounded-lg">
           <span
             id="Timer"
@@ -95,16 +98,16 @@ const ScoreComponent = ({
           >
             {makeMinute(minute)}:{makeSecond(second)}
           </span>
-          <h2
-            className="text-3xl h-full items-center font-bold bg-[#FFC901] text-white p-2 rounded-r-lg animate__animated animate__slideInLeft"
-            style={{
-              textShadow:
-                "-1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black",
-            }}
-          >
-            +9
-          </h2>
         </div>
+        <span
+          className="grid pl-2 pr-2 text-xl h-full items-center font-bold bg-[#FFC901] text-white rounded-r-lg animate__animated animate__slideInLeft"
+          style={{
+            textShadow:
+              "-1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black",
+          }}
+        >
+          +{injuryTime}
+        </span>
         {/* <div className="flex w-full text-4xl items-center justify-center font-['Freesentation-9Black']">
           <input className="bg-transparent w-full text-center"></input>
         </div> */}

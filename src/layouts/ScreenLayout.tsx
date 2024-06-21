@@ -86,6 +86,8 @@ const ScreenLayout = ({
             awayId={awayId}
             matchId={matchId}
             naverId={naverId}
+            homeName={home}
+            awayName={away}
             id={id}
           />
         </div>

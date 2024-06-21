@@ -11,6 +11,8 @@ import {
 } from "../types/apiReturnType";
 import StatisticsComponent from "./StatisticsComponent";
 import "../styles/animate.css";
+import topImage from "../assets/4_top.png";
+import Ban from "../assets/Ban.png";
 
 const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
   const defaultGoalkeeperStatistics = {
@@ -109,7 +111,6 @@ const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
   const [playerBirthYear, setPlayerBirthYear] = useState(0);
 
   const unixToDate = (unixTime: number) => {
-    console.log(unixTime);
     let myDate = new Date(unixTime * 1000);
     return myDate.getFullYear();
   };
@@ -158,6 +159,7 @@ const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
     <div className="flex w-full h-full items-end justify-center">
       <div className="flex flex-col w-5/6 h-5/6 outline-offset-[-3px] outline-none outline-[#02074B] outline-8 rounded-xl flag_background">
         {/* 상단 */}
+        <img className="absolute w-5/6" src={topImage}></img>
         <div className="flex flex-col w-full min-h-[200px]">
           <div className="flex w-full h-full">
             <div className="grid w-full items-center justify-center">
@@ -167,11 +169,11 @@ const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
                   pId.toString() +
                   "/image"
                 }
-                className="rounded-full"
+                className="pt-2 w-[120px] rounded-full"
               ></img>
             </div>
           </div>
-          <div className="flex w-full ">
+          <div className="flex w-full">
             <div className="flex flex-col w-full items-center justify-center text-xl font-['Freesentation-9Black'] text-white bg-[#05096C]  drop-shadow-[2px_0_0px_rgba(255,255,255,1)]">
               <span>{playerBirthYear}년생</span>
             </div>

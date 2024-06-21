@@ -30,6 +30,8 @@ export interface CommentComponentProps {
   awayId: number;
   matchId: number;
   naverId: string;
+  homeName: string;
+  awayName: string;
   id: number;
 }
 

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { PlayerComponentProps } from "../types/propsType";
 import API from "../utils/apis/api/api";
 import { usePlayerContext } from "../context/ScoreboardContext";
+import playerSubstitution from "../assets/playerSubstitution.png";
+import Ban from "../assets/Ban.png";
 
 const PlayerComponent = ({
   teamId,
@@ -78,15 +80,21 @@ const PlayerComponent = ({
               }
               className="w-[32px] object-center"
             ></img>
+            <img src={Ban} className="absolute w-10 hidden"></img>
             <span
               className="absolute text-lg font-['TAEBAEKfont'] drop-shadow-[0_4.2px_2.2px_rgba(0,0,0,0.2)]"
               style={{ color: backColor }}
             >
               {playerNumber.toString()}
             </span>
-            <div className="relative hidden">
-              <div className="absolute -top-[16px] -left-6 text-[10px] text-yellow-400 bg-yellow-400 z-10">
+            <div className="relative">
+              <div className="absolute -top-[16px] -left-6 text-[10px] text-yellow-400 bg-yellow-400 z-10 hidden">
                 !!!
+              </div>
+            </div>
+            <div className="relative">
+              <div className="absolute left-4 bottom-2 w-[16px] h-[16px] z-10 hidden">
+                <img src={playerSubstitution}></img>
               </div>
             </div>
             <span
@@ -132,15 +140,21 @@ const PlayerComponent = ({
               }
               className="w-[32px] object-center"
             ></img>
+            <img src={Ban} className="absolute w-10 hidden"></img>
             <span
               className="absolute text-lg font-['TAEBAEKfont'] drop-shadow-[0_4.2px_2.2px_rgba(0,0,0,0.2)]"
               style={{ color: backColor }}
             >
               {playerNumber.toString()}
             </span>
-            <div className="relative hidden">
-              <div className="absolute -top-[16px] -left-6 text-[10px] text-yellow-400 bg-yellow-400 z-10">
+            <div className="relative">
+              <div className="absolute -top-[16px] -left-6 text-[10px] text-yellow-400 bg-yellow-400 z-10 hidden">
                 !!!
+              </div>
+            </div>
+            <div className="relative">
+              <div className="absolute left-4 bottom-2 w-[16px] h-[16px] z-10 hidden">
+                <img src={playerSubstitution}></img>
               </div>
             </div>
             <span

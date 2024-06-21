@@ -5,9 +5,6 @@ const PlayerStatisticDetailComponent = ({
   name,
   value,
 }: PlayerStatisticDetailComponentProps) => {
-  useEffect(() => {
-    console.log(value);
-  }, [value]);
   return (
     <div className="flex w-full h-full">
       <span className="w-full">{name}</span>

@@ -6,6 +6,8 @@ import {
   TeamFormationComponentProps,
 } from "../types/propsType";
 import PlayerComponent from "./PlayerComponent";
+import { usePlayerLineUpContext } from "../context/ScoreboardContext";
+import API from "../utils/apis/api/api";
 
 const TeamFormationComponent = ({
   teamName,
@@ -19,6 +21,15 @@ const TeamFormationComponent = ({
 }: TeamFormationComponentProps) => {
   const [lineupByFormation, setLineupByFormation] = useState<Array<any>>([]);
   const [loaded, setLoaded] = useState<boolean>(false);
+  const {
+    HomeLineUpIDMatch,
+    AwayLineUpIDMatch,
+    setHomeLineUpIDMatch,
+    setAwayLineUpIDMatch,
+  } = usePlayerLineUpContext();
+  interface PlayerDetailContextType {
+    [key: string]: string;
+  }
 
   const makeLineup = (lineup: Array<any>, formation: string): Array<any> => {
     let idx = 0;
@@ -39,8 +50,42 @@ const TeamFormationComponent = ({
   useEffect(() => {
     if (isHome) {
       setLineupByFormation(makeLineup(teamLineup, teamFormation));
+      let test: PlayerDetailContextType = {};
+      for (let i = 0; i < teamLineup.length; i++) {
+        let playerId = teamLineup[i].player.id.toString();
+        API.get("/player/id", {
+          params: {
+            player_id: playerId,
+          },
+        })
+          .then((res) => {
+            test[playerId] = res.data.familyname;
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+      setHomeLineUpIDMatch(test);
+      console.log(test, HomeLineUpIDMatch);
     } else {
       setLineupByFormation(makeLineup(teamLineup, teamFormation).reverse());
+      let test: PlayerDetailContextType = {};
+      for (let i = 0; i < teamLineup.length; i++) {
+        let playerId = teamLineup[i].player.id.toString();
+        API.get("/player/id", {
+          params: {
+            player_id: playerId,
+          },
+        })
+          .then((res) => {
+            test[playerId] = res.data.familyname;
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+      setAwayLineUpIDMatch(test);
+      console.log(test, AwayLineUpIDMatch);
     }
   }, [teamFormation]);
 
