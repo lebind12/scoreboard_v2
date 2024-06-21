@@ -19,7 +19,7 @@ const BottomLayout = ({
   return (
     <div className="flex w-full h-full overflow-hidden">
       <div className="w-1/4 bg-[#00ff00]"></div>
-      <div className="justify-center items-center w-1/2 bg-[#00ff00] pt-4">
+      <div className="justify-center items-center w-1/2 bg-[#00ff00]">
         <ScoreComponent
           homeName={homeName}
           awayName={awayName}

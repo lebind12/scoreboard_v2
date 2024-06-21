@@ -71,7 +71,7 @@ const ScoreComponent = ({
   }, 2000);
 
   return (
-    <div className="flex flex-col w-full h-[50px]">
+    <div className="flex flex-col w-full h-[50px] mt-2">
       <div className="flex h-full items-center">
         <div className="w-full h-full">
           <button
@@ -95,7 +95,9 @@ const ScoreComponent = ({
             />
           </button>
         </div>
-        <div className="h-full border-l-2 border-[#0D35B2]"></div>
+        <div className="flex text-[#05096C] bg-white h-full text-3xl">
+          <span className="items-center">|</span>
+        </div>
         <div className="w-full h-full">
           <button className="w-full h-full">
             <TeamComponent
@@ -118,9 +120,19 @@ const ScoreComponent = ({
             {makeMinute(minute)}:{makeSecond(second)}
           </span>
         </div>
-        <span className="grid pl-2 pr-2 text-xl h-full items-center font-bold bg-[#FFC901] text-black rounded-r-lg animate__animated animate__slideInLeft">
-          +{injuryTime}
-        </span>
+        <button
+          onClick={() => {
+            let time = prompt("추가시간 입력. 단위는 '분'입니다");
+            if (time !== null) {
+              setInjuryTime(parseInt(time));
+            }
+          }}
+        >
+          <span className="grid pl-2 pr-2 text-xl h-full items-center font-bold bg-[#FFC901] text-black rounded-r-lg animate__animated animate__slideInLeft">
+            +{injuryTime}
+          </span>
+        </button>
+
         {/* <div className="flex w-full text-4xl items-center justify-center font-['Freesentation-9Black']">
           <input className="bg-transparent w-full text-center"></input>
         </div> */}
