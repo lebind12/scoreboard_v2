@@ -4,6 +4,7 @@ import useContextMenu from "../hooks/contextMenuHook";
 import { useState } from "react";
 import useInterval from "../hooks/intervalHook";
 import { useScoreContext, useTimeContext } from "../context/ScoreboardContext";
+import sofaAPI from "../utils/apis/api/sofaApi";
 
 const ScoreComponent = ({
   homeName,
@@ -46,6 +47,18 @@ const ScoreComponent = ({
       setSecond(second + 1);
     }
   }, 1000);
+
+  useInterval(() => {
+    sofaAPI
+      .get("/event/" + matchId.toString())
+      .then((res) => {
+        setHomeScore(res.data.event.homeScore.current);
+        setAwayScore(res.data.event.awayScore.current);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, 2000);
 
   return (
     <div className="flex flex-col w-full h-[50px]">
