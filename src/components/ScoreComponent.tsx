@@ -96,7 +96,7 @@ const ScoreComponent = ({
           </button>
         </div>
         <div className="h-full border-l-2 border-[#0D35B2]"></div>
-        <div className="w-full h-full bg-amber-900">
+        <div className="w-full h-full">
           <button className="w-full h-full">
             <TeamComponent
               teamName={awayName}

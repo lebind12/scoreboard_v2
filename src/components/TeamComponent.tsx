@@ -14,14 +14,14 @@ const TeamComponent = ({
     <>
       {isHome ? (
         <div className="flex w-full h-full">
-          <div className="relative left- w-1/6 bg-[#05096C] overflow-hidden">
+          <div className="relative left-6 w-1/6 bg-transparent overflow-hidden">
             <img
               src={`${
                 "https://api.sofascore.app/api/v1/team/" +
                 teamId.toString() +
                 "/image"
               }`}
-              className="absolute w-[100px] object-center -top-4"
+              className="absolute w-[100px] object-center -top-4 right-3"
             ></img>
           </div>
           <div className="flex flex-1 justify-center w-4/6 h-full text-white bg-[#133DDA] font-['ONE-Mobile-POP'] text-4xl items-center text-center">
@@ -40,14 +40,14 @@ const TeamComponent = ({
             {teamName}
           </div>
 
-          <div className="relative w-1/6 h-full bg-[#05096C] overflow-hidden ">
+          <div className="relative right-6 w-1/6 h-full bg-transparent overflow-hidden ">
             <img
               src={`${
                 "https://api.sofascore.app/api/v1/team/" +
                 teamId.toString() +
                 "/image"
               }`}
-              className="absolute w-[100px] object-center -top-4 z-10"
+              className="absolute w-[100px] object-center -top-4 z-10 left-3"
             ></img>
           </div>
         </div>
