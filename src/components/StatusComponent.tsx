@@ -101,33 +101,12 @@ const StatusComponent = ({
                 className="pt-6 w-[120px]"
               ></img>
             </div>
-            <div
-              className="absolute top-12 left-1/2 -translate-x-1/2 -translate-y-1/2 font-['MoveSans-Bold'] text-6xl "
-              style={{
-                textShadow:
-                  "-3px -3px 0 white, 3px -3px 0 white, -3px 3px 0 white, 3px 3px 0 white",
-              }}
-            >
-              VS
-            </div>
           </div>
           <div className="flex w-full ">
-            <div
-              className="flex flex-col w-full bg-[#05096C] items-center justify-center text-4xl font-['Freesentation-9Black'] drop-shadow-[2px_0_0px_rgba(255,255,255,1)]"
-              style={{
-                textShadow:
-                  "-2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white",
-              }}
-            >
+            <div className="flex flex-col w-full bg-[#05096C] items-center text-white justify-center text-4xl font-['Freesentation-9Black'] drop-shadow-[2px_0_0px_rgba(255,255,255,1)]">
               {home}
             </div>
-            <div
-              className="flex flex-col w-full bg-[#05096C] items-center justify-center text-4xl font-['Freesentation-9Black']"
-              style={{
-                textShadow:
-                  "-2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white",
-              }}
-            >
+            <div className="flex flex-col w-full bg-[#05096C] items-center text-white justify-center text-4xl font-['Freesentation-9Black']">
               {away}
             </div>
           </div>

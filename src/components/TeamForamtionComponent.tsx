@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import FieldBoard from "../assets/FieldBoard.png";
+import FieldBoard from "../assets/FieldBoard_2.png";
 import {
   LineupDetail,
   PlayerDetail,

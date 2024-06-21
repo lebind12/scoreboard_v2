@@ -7,7 +7,7 @@ module.exports = {
         // prettier-ignore
         "test": "url('assets/4.png')",
         // prettier-ignore
-        "board": "url('assets/FieldBoard.png')",
+        "board": "url('assets/FieldBoard_2.png')",
         // prettier-ignore
         "board-top" : "url('assets/4_top.png')",
       },

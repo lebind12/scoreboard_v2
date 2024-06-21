@@ -97,13 +97,7 @@ const PlayerComponent = ({
                 <img src={playerSubstitution}></img>
               </div>
             </div>
-            <span
-              className="font-['MangoDdobak-B'] text-pretty text-center"
-              style={{
-                textShadow:
-                  "-0.5px -0.5px 0 white, 0.5px -0.5px 0 white, -0.5px 0.5px 0 white, 0.5px 0.5px 0 white",
-              }}
-            >
+            <span className="font-['ONE-Mobile-Title'] text-pretty text-center">
               {playerName}
             </span>
           </button>
@@ -157,13 +151,7 @@ const PlayerComponent = ({
                 <img src={playerSubstitution}></img>
               </div>
             </div>
-            <span
-              className="font-['MangoDdobak-B'] text-pretty text-center"
-              style={{
-                textShadow:
-                  "-0.5px -0.5px 0 white, 0.5px -0.5px 0 white, -0.5px 0.5px 0 white, 0.5px 0.5px 0 white",
-              }}
-            >
+            <span className="font-['ONE-Mobile-Title'] text-pretty text-center">
               {playerName}
             </span>
           </button>
