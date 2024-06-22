@@ -176,7 +176,8 @@ export const makeComment = (
     )?.childNodes[0].childNodes[5].textContent;
     comment.detail = playerName + " 퇴장. 레드카드를 받습니다.";
   } else if (relayData.type === "scoreChange") {
-    comment.title = " 득점!";
+    if (relayData.text.includes("Own Goal")) comment.title = " 자책골!";
+    else comment.title = " 득점!";
     if (relayData.isHome) {
       comment.title = homeName + comment.title;
       comment.flag = homeName;
@@ -187,7 +188,9 @@ export const makeComment = (
     let playerName = document.getElementById(
       "player" + relayData.player.id.toString()
     )?.childNodes[0].childNodes[5].textContent;
-    comment.detail = playerName + "가 득점을 기록합니다. ";
+    if (relayData.text.includes("Own Goal"))
+      comment.detail = " 가 자책골을 기록합니다.";
+    else comment.detail = playerName + "가 득점을 기록합니다. ";
     if (Object.hasOwn(relayData, "assist1")) {
       let playerName1 = document.getElementById(
         "player" + relayData.assist1.id.toString()
