@@ -149,8 +149,8 @@ export const makeComment = (
       "player" + relayData.player.id.toString()
     )?.childNodes[0].childNodes[5].textContent;
     comment.detail = playerName + "의 슈팅, 그러나 빗나갑니다.";
-  } else if (relayData.type === "shotOffTarget") {
-    comment.title = " 결정적 슈팅";
+  } else if (relayData.type === "yellowCard") {
+    comment.title = " 경고";
     if (relayData.isHome) {
       comment.title = homeName + comment.title;
       comment.flag = homeName;
@@ -161,7 +161,20 @@ export const makeComment = (
     let playerName = document.getElementById(
       "player" + relayData.player.id.toString()
     )?.childNodes[0].childNodes[5].textContent;
-    comment.detail = playerName + "의 슈팅, 그러나 빗나갑니다.";
+    comment.detail = playerName + " 경고. 옐로우카드를 받습니다.";
+  } else if (relayData.type === "redCard") {
+    comment.title = " 경고";
+    if (relayData.isHome) {
+      comment.title = homeName + comment.title;
+      comment.flag = homeName;
+    } else {
+      comment.title = awayName + comment.title;
+      comment.flag = awayName;
+    }
+    let playerName = document.getElementById(
+      "player" + relayData.player.id.toString()
+    )?.childNodes[0].childNodes[5].textContent;
+    comment.detail = playerName + " 퇴장. 레드카드를 받습니다.";
   } else if (relayData.type === "scoreChange") {
     comment.title = " 득점!";
     if (relayData.isHome) {
