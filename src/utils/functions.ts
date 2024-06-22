@@ -187,12 +187,13 @@ export const makeComment = (
     let playerName = document.getElementById(
       "player" + relayData.player.id.toString()
     )?.childNodes[0].childNodes[5].textContent;
-    comment.detail = playerName + "가 득점을 기록합니다.";
-    if ("assist1" in relayData) {
-      let playerName = document.getElementById(
+    comment.detail = playerName + "가 득점을 기록합니다. ";
+    if (Object.hasOwn(relayData, "assist1")) {
+      let playerName1 = document.getElementById(
         "player" + relayData.assist1.id.toString()
       )?.childNodes[0].childNodes[5].textContent;
-      comment.detail = comment.detail + playerName + "의 어시스트";
+      if (relayData.player.id !== relayData.assist1.id)
+        comment.detail = comment.detail + playerName1 + "의 어시스트";
     }
   } else if (relayData.type === "substitution") {
     comment.title = " 교체";

@@ -88,7 +88,7 @@ const ScreenLayout = ({
       </div>
       <div className="w-1/2 h-full bg-[#00ff00]">
         <div className="h-3/4"></div>
-        <div className="flex justify-center items-center w-full h-1/4">
+        <div className="flex pl-8 justify-center items-center w-full h-1/4">
           <CommentComponent
             homeId={homeId}
             awayId={awayId}

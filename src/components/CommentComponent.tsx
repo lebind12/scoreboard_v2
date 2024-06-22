@@ -157,7 +157,7 @@ const CommentComponent = ({
   return (
     <div
       id="commentObject"
-      className="flex justify-center items-center flex-col h-full w-full animate__animated animate__backOutDown"
+      className="flex justify-center items-center flex-col h-full w-full  animate__animated animate__backOutDown"
     >
       <div className="flex flex-col rounded-xl h-1/2 justify-center items-center w-5/6 -outline-offset-2 outline-none outline-8 outline-black">
         <div
