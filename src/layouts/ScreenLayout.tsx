@@ -62,11 +62,19 @@ const ScreenLayout = ({
           id="GameStatistics"
           className="w-full h-full items-center go_toward_animation"
         >
-          <StatusComponent
-            homeId={homeId}
-            awayId={awayId}
+          <FormationScreenComponent
             home={home}
             away={away}
+            homeId={homeId}
+            awayId={awayId}
+            homeLineup={homePlayers}
+            awayLineup={awayPlayers}
+            homeFormation={homeFormation}
+            awayFormation={awayFormation}
+            homeTextColor={homeTextColor}
+            awayTextColor={awayTextColor}
+            homeGoalkeeperTextColor={homeGoalkeeperTextColor}
+            awayGoalkeeperTextColor={awayGoalkeeperTextColor}
             matchId={matchId}
           />
         </div>
@@ -92,20 +100,14 @@ const ScreenLayout = ({
           />
         </div>
       </div>
-      <div className="flex flex-1 w-1/4 h-full items-center animate__animated animate__backInRight bg-[#00ff00]">
-        <FormationScreenComponent
-          home={home}
-          away={away}
+
+      <div className="flex flex-col flex-1 w-1/4 h-full items-center animate__animated animate__backInRight bg-[#00ff00]">
+        <div className="w-full h-1/2 -mb-32 bg-transparent"></div>
+        <StatusComponent
           homeId={homeId}
           awayId={awayId}
-          homeLineup={homePlayers}
-          awayLineup={awayPlayers}
-          homeFormation={homeFormation}
-          awayFormation={awayFormation}
-          homeTextColor={homeTextColor}
-          awayTextColor={awayTextColor}
-          homeGoalkeeperTextColor={homeGoalkeeperTextColor}
-          awayGoalkeeperTextColor={awayGoalkeeperTextColor}
+          home={home}
+          away={away}
           matchId={matchId}
         />
       </div>

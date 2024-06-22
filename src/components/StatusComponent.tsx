@@ -28,14 +28,15 @@ const StatusComponent = ({
 
   const statMatchMap: { [key: string]: string } = {
     "Ball possession": "볼 점유율",
-    "Expected goals": "예상득점",
+    "Expected goals": "기대득점",
     "Big chances": "빅 찬스",
     "Total shots": "전체 슈팅",
-    "Goalkeeper saves": "골키퍼 선방",
+    "Goalkeeper saves": "유효 슈팅",
     "Corner kicks": "코너킥",
     // prettier-ignore
     "Fouls": "파울",
     "Yellow cards": "옐로우카드",
+    "Shots on target": "유효슈팅",
   };
   const [gameStatistics, setGameStatistics] = useState<Array<StatusDetail>>([]);
 
@@ -79,18 +80,18 @@ const StatusComponent = ({
   }, [matchId]);
 
   return (
-    <div className="flex w-full h-full items-center justify-center animate__animated animate__backInLeft ">
-      <div className="flex flex-col w-5/6 h-5/6 bg-transparent outline-offset-[-3px] outline-none outline-[#05096C] outline-8 rounded-xl flag_background">
+    <div className="flex w-full h-3/5 items-end justify-center animate__animated animate__backInLeft ">
+      <div className="flex flex-col w-5/6 h-full bg-transparent outline-offset-[-3px] outline-none outline-[#05096C] outline-8 rounded-xl flag_background">
         {/* 상단 */}
         <img className="absolute w-5/6" src={topImage}></img>
-        <div className="flex flex-col w-full min-h-[200px] z-10">
+        <div className="flex flex-col w-full min-h-[170px] z-10">
           <div className="flex w-full h-full bg-transparent">
             <div className="grid w-full bg-transparent items-center justify-center ">
               <img
                 src={`${
                   "https://api.sofascore.app/api/v1/team/" + homeId + "/image"
                 }`}
-                className="pt-6 w-[120px]"
+                className="pt-6 w-[100px]"
               ></img>
             </div>
             <div className="grid w-full bg-transparent items-center justify-center">
@@ -98,7 +99,7 @@ const StatusComponent = ({
                 src={`${
                   "https://api.sofascore.app/api/v1/team/" + awayId + "/image"
                 }`}
-                className="pt-6 w-[120px]"
+                className="pt-6 w-[100px]"
               ></img>
             </div>
           </div>

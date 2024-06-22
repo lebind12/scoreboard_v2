@@ -8,7 +8,7 @@ const StatusGraphComponent = ({
   awayStatGrade,
 }: StatusGraphComponentProps) => {
   return (
-    <div className="flex w-full max-h-10 h-full text-xl items-center text-white">
+    <div className="flex w-full max-h-10 h-full text-lg items-center text-white">
       <div className="w-full text-right justify-center">{homeStat}</div>
       <div className=""></div>
       <div className="w-full text-center">{statName}</div>

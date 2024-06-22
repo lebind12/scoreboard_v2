@@ -18,22 +18,20 @@ const MainLayout = () => {
     if (matchId != 99) {
       let params = { match_id: matchId };
       let test = API.get("/match/id", { params });
-      console.log(
-        test.then((res) => {
-          if (res.status == 200) {
-            console.log(res.data);
-            setHome(res.data.home);
-            setAway(res.data.away);
-            setHomeId(res.data.homeid);
-            setAwayId(res.data.awayid);
-            setSofaMatchId(res.data.sofascoredid);
-            setId(res.data.id);
-            setNaverId(res.data.naverid);
-          } else {
-            console.log("Cannot use Backend 1");
-          }
-        })
-      );
+      test.then((res) => {
+        if (res.status == 200) {
+          console.log(res.data);
+          setHome(res.data.home);
+          setAway(res.data.away);
+          setHomeId(res.data.homeid);
+          setAwayId(res.data.awayid);
+          setSofaMatchId(res.data.sofascoredid);
+          setId(res.data.id);
+          setNaverId(res.data.naverid);
+        } else {
+          console.log("Cannot use Backend 1");
+        }
+      });
     }
   }, [matchId]);
 

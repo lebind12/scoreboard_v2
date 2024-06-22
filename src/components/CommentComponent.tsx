@@ -68,6 +68,7 @@ const CommentComponent = ({
       },
     })
       .then((res) => {
+        console.log("Data polling ", messageQueue);
         if (isLoaded && res.data.comments.length > idx.current) {
           let textRelayData = res.data.comments.reverse();
           setMessageQueue([
@@ -96,8 +97,10 @@ const CommentComponent = ({
   }, 10000);
 
   useInterval(async () => {
+    console.log("Make Event ", messageQueue);
     if (messageQueue.length > 0) {
       let commentObject = makeComment(homeName, awayName, messageQueue[0]);
+      setMessageQueue(messageQueue.slice(1));
       if (commentObject.flag !== "No Data") {
         console.log("Comment data Received.");
         setMessageTitle(commentObject.title);
@@ -110,7 +113,6 @@ const CommentComponent = ({
           elem?.classList.remove("animate__backInUp");
           elem?.classList.add("animate__backOutDown");
         }, 6000);
-        setMessageQueue(messageQueue.slice(1));
       }
     }
   }, 10000);
