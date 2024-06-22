@@ -42,7 +42,8 @@ const TeamFormationComponent = ({
         playersByFormation.push(lineup[idx]);
         idx += 1;
       }
-      lineupFormation.push(playersByFormation);
+      if (isHome) lineupFormation.push(playersByFormation);
+      else lineupFormation.push(playersByFormation.reverse());
     }
     return lineupFormation;
   };
