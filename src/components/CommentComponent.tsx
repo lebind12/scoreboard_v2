@@ -27,9 +27,10 @@ const CommentComponent = ({
   >([]);
   const [messageTitle, setMessageTitle] = useState("");
   const [messageDetail, setMessageDetail] = useState("");
+  const [matchHistory, setMetchHistory] =
+    useState<Array<{ time: number; [key: string]: any }>>();
   const [flag, setFlag] = useState("");
 
-  const { currentMinute } = useTimeContext();
   const { HomeLineUpIDMatch, AwayLineUpIDMatch } = usePlayerLineUpContext();
   const idx = useRef(0);
   // TODO
@@ -45,22 +46,10 @@ const CommentComponent = ({
     })
       .then((res) => {
         if (res.data.comments.length > 0) {
-          let textRelayData = res.data.comments.reverse();
-          // 현재 시간
-          for (let i = 0; i < textRelayData.length; i++) {
-            console.log(textRelayData[i]);
-            makeComment(
-              homeName,
-              awayName,
-              textRelayData[i],
-              HomeLineUpIDMatch,
-              AwayLineUpIDMatch
-            );
-            // event 처리, 맨 마지막 idx까지 데이터들을 전부 화면에 적용해줌.
-          }
+          let textRelayData = res.data.comments;
+          setMetchHistory(res.data.comments.reverse());
           // 마지막 코멘트는 애니메이션. 메세지큐에 추가해줌.
           setMessageQueue([textRelayData[textRelayData.length - 1]]);
-          // setMessageQueue(textRelayData.slice());
           idx.current = textRelayData.length;
           setIsLoaded(true);
         }
@@ -69,6 +58,22 @@ const CommentComponent = ({
         console.log(err);
       });
   }, [matchId]);
+
+  useEffect(() => {
+    if (typeof matchHistory !== "undefined") {
+      setTimeout(() => {
+        for (let i = 0; i < matchHistory.length; i++) {
+          makeComment(
+            homeName,
+            awayName,
+            matchHistory[i],
+            HomeLineUpIDMatch,
+            AwayLineUpIDMatch
+          );
+        }
+      }, 5000);
+    }
+  }, [matchHistory]);
 
   useInterval(() => {
     sofaAPI("/event/" + matchId.toString() + "/comments", {
@@ -79,7 +84,7 @@ const CommentComponent = ({
       },
     })
       .then((res) => {
-        console.log("Data polling ", messageQueue);
+        // console.log("Data polling ", messageQueue);
         if (isLoaded && res.data.comments.length > idx.current) {
           let textRelayData = res.data.comments.reverse();
           setMessageQueue([
@@ -91,9 +96,6 @@ const CommentComponent = ({
           let textRelayData = res.data.comments.reverse();
           // 현재 시간
           for (let i = 0; i < textRelayData.length; i++) {
-            if (textRelayData[i].time > currentMinute) {
-              break;
-            }
             // event 처리, 맨 마지막 idx까지 데이터들을 전부 화면에 적용해줌.
           }
           // 마지막 코멘트는 애니메이션. 메세지큐에 추가해줌.
@@ -108,7 +110,7 @@ const CommentComponent = ({
   }, 10000);
 
   useInterval(async () => {
-    console.log("Make Event ", messageQueue);
+    // console.log("Make Event ", messageQueue);
     if (messageQueue.length > 0) {
       let commentObject = makeComment(
         homeName,

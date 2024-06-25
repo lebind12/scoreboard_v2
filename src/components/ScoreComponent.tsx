@@ -95,7 +95,7 @@ const ScoreComponent = ({
       .catch((err) => {
         console.log(err);
       });
-  }, 2000);
+  }, 5000);
 
   return (
     <div className="flex flex-col w-full h-[50px] mt-2">

@@ -13,6 +13,7 @@ export const changePlayer = async (
     elem.childNodes[4].childNodes[0].classList.remove("hidden");
     elem.childNodes[5].textContent = newPlayerName;
     elem.id = "player" + newPlayerId.toString();
+    console.log(newPlayerName, currentPlayerId, newPlayerId);
   } catch {}
   return;
 };
@@ -22,6 +23,7 @@ export const banPlayer = (playerId: number) => {
     let elem: any = document.getElementById("player" + playerId.toString())
       ?.childNodes[0].childNodes[1];
     elem.classList.remove("hidden");
+    console.log(playerId);
   } catch {}
   return;
 };
@@ -31,6 +33,7 @@ export const unBanPlayer = (playerId: number) => {
     let elem: any = document.getElementById("player" + playerId.toString())
       ?.childNodes[0].childNodes[1];
     elem.classList.add("hidden");
+    console.log(playerId);
   } catch {}
 
   return;
@@ -41,6 +44,7 @@ export const warnedPlayer = (playerId: number) => {
     let elem: any = document.getElementById("player" + playerId.toString())
       ?.childNodes[0].childNodes[3].childNodes[0];
     elem.classList.remove("hidden");
+    console.log(playerId);
   } catch {}
 };
 
@@ -271,6 +275,7 @@ export const makeComment = (
       awayLineup,
       relayData.isHome
     );
+    console.log(playerName1, playerName2, relayData);
     changePlayer(relayData.playerOut.id, relayData.playerIn.id, playerName1);
     comment.detail = comment.detail + playerName2 + " 나갑니다";
   } else if (relayData.type === "penaltyScored") {

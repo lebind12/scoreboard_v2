@@ -28,14 +28,6 @@ const ScreenLayout = ({
   const [awayTextColor, setAwayTextColor] = useState("");
   const [homeGoalkeeperTextColor, setHomeGoalkeeperTextColor] = useState("");
   const [awayGoalkeeperTextColor, setAwayGoalkeeperTextColor] = useState("");
-  const [homeNameCode, setHomeNameCode] = useState("");
-  const [awayNameCode, setAwayNameCode] = useState("");
-  const {
-    HomeLineUpIDMatch,
-    AwayLineUpIDMatch,
-    setHomeLineUpIDMatch,
-    setAwayLineUpIDMatch,
-  } = usePlayerLineUpContext();
 
   useEffect(() => {
     let url =
