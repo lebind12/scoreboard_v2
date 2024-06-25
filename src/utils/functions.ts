@@ -1,7 +1,3 @@
-import sofaAPI from "./apis/api/sofaApi";
-import API from "./apis/api/api";
-import { usePlayerLineUpContext } from "../context/ScoreboardContext";
-
 interface PlayerDetailContext {
   [key: string]: string;
 }
@@ -10,32 +6,42 @@ export const changePlayer = async (
   newPlayerId: number,
   newPlayerName: string
 ) => {
-  let elem: any = document.getElementById("player" + currentPlayerId.toString())
-    ?.childNodes[0];
-  elem.childNodes[4].childNodes[0].classList.remove("hidden");
-  elem.childNodes[5].textContent = newPlayerName;
-  elem.id = "player" + newPlayerId.toString();
+  try {
+    let elem: any = document.getElementById(
+      "player" + currentPlayerId.toString()
+    )?.childNodes[0];
+    elem.childNodes[4].childNodes[0].classList.remove("hidden");
+    elem.childNodes[5].textContent = newPlayerName;
+    elem.id = "player" + newPlayerId.toString();
+  } catch {}
   return;
 };
 
 export const banPlayer = (playerId: number) => {
-  let elem: any = document.getElementById("player" + playerId.toString())
-    ?.childNodes[0].childNodes[1];
-  elem.classList.remove("hidden");
+  try {
+    let elem: any = document.getElementById("player" + playerId.toString())
+      ?.childNodes[0].childNodes[1];
+    elem.classList.remove("hidden");
+  } catch {}
   return;
 };
 
 export const unBanPlayer = (playerId: number) => {
-  let elem: any = document.getElementById("player" + playerId.toString())
-    ?.childNodes[0].childNodes[1];
-  elem.classList.add("hidden");
+  try {
+    let elem: any = document.getElementById("player" + playerId.toString())
+      ?.childNodes[0].childNodes[1];
+    elem.classList.add("hidden");
+  } catch {}
+
   return;
 };
 
 export const warnedPlayer = (playerId: number) => {
-  let elem: any = document.getElementById("player" + playerId.toString())
-    ?.childNodes[0].childNodes[3].childNodes[0];
-  elem.classList.remove("hidden");
+  try {
+    let elem: any = document.getElementById("player" + playerId.toString())
+      ?.childNodes[0].childNodes[3].childNodes[0];
+    elem.classList.remove("hidden");
+  } catch {}
 };
 
 const isHome = (ishome: boolean) => {
@@ -194,6 +200,7 @@ export const makeComment = (
       awayLineup,
       relayData.isHome
     );
+    warnedPlayer(relayData.player.id);
     comment.detail = playerName + " 경고. 옐로우카드를 받습니다.";
   } else if (relayData.type === "redCard") {
     comment.title = " 경고";
@@ -210,6 +217,7 @@ export const makeComment = (
       awayLineup,
       relayData.isHome
     );
+    banPlayer(relayData.player.id);
     comment.detail = playerName + " 퇴장. 레드카드를 받습니다.";
   } else if (relayData.type === "scoreChange") {
     if (relayData.text.includes("Own Goal")) comment.title = " 자책골!";

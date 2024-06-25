@@ -55,7 +55,7 @@ const CommentComponent = ({
           }
           // 마지막 코멘트는 애니메이션. 메세지큐에 추가해줌.
           setMessageQueue([textRelayData[textRelayData.length - 1]]);
-          // setMessageQueue(textRelayData.slice(63));
+          // setMessageQueue(textRelayData.slice());
           idx.current = textRelayData.length;
           setIsLoaded(true);
         }
