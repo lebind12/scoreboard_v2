@@ -236,7 +236,7 @@ export const makeComment = (
       relayData.isHome
     );
     if (relayData.text.includes("Own Goal"))
-      comment.detail = " 가 자책골을 기록합니다.";
+      comment.detail = playerName + " 가 자책골을 기록합니다.";
     else comment.detail = playerName + "가 득점을 기록합니다. ";
     if (Object.hasOwn(relayData, "assist1")) {
       let playerName1 = getPlayerName(
