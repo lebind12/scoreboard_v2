@@ -1,10 +1,15 @@
 import TeamComponent from "./TeamComponent";
 import { ScoreComponentProps } from "../types/propsType";
 import useContextMenu from "../hooks/contextMenuHook";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useInterval from "../hooks/intervalHook";
-import { useScoreContext, useTimeContext } from "../context/ScoreboardContext";
+import {
+  usePlayerLineUpContext,
+  useScoreContext,
+  useTimeContext,
+} from "../context/ScoreboardContext";
 import sofaAPI from "../utils/apis/api/sofaApi";
+import API from "../utils/apis/api/api";
 
 const ScoreComponent = ({
   homeName,
@@ -27,6 +32,10 @@ const ScoreComponent = ({
   const [time, setTime] = useState("00:00");
   const [second, setSecond] = useState(0);
   const [minute, setMinute] = useState(0);
+  const [homeCode, setHomeCode] = useState("");
+  const [awayCode, setAwayCode] = useState("");
+  const { setAwayLineUpIDMatch, setHomeLineUpIDMatch } =
+    usePlayerLineUpContext();
 
   const makeSecond = (second: number) => {
     if (second < 10) {
@@ -43,6 +52,24 @@ const ScoreComponent = ({
       return minute.toString();
     }
   };
+  useEffect(() => {
+    sofaAPI
+      .get("/event/" + matchId.toString())
+      .then((res) => {
+        API.get("/match/lineup", {
+          params: {
+            home_code: res.data.event.homeTeam.nameCode,
+            away_code: res.data.event.awayTeam.nameCode,
+          },
+        })
+          .then((res) => {
+            setHomeLineUpIDMatch(res.data.home);
+            setAwayLineUpIDMatch(res.data.away);
+          })
+          .catch((err) => {});
+      })
+      .catch((err) => {});
+  }, [matchId]);
 
   useInterval(() => {
     if (second + 1 >= 60) {

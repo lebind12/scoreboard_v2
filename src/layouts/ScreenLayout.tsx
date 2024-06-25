@@ -8,6 +8,8 @@ import PlayerStatusComponent from "../components/PlayerStatusComponent";
 import "../styles/animate.css";
 import CommentComponent from "../components/CommentComponent";
 import statusBackground from "../assets/4.png";
+import API from "../utils/apis/api/api";
+import { usePlayerLineUpContext } from "../context/ScoreboardContext";
 
 const ScreenLayout = ({
   matchId,
@@ -26,6 +28,14 @@ const ScreenLayout = ({
   const [awayTextColor, setAwayTextColor] = useState("");
   const [homeGoalkeeperTextColor, setHomeGoalkeeperTextColor] = useState("");
   const [awayGoalkeeperTextColor, setAwayGoalkeeperTextColor] = useState("");
+  const [homeNameCode, setHomeNameCode] = useState("");
+  const [awayNameCode, setAwayNameCode] = useState("");
+  const {
+    HomeLineUpIDMatch,
+    AwayLineUpIDMatch,
+    setHomeLineUpIDMatch,
+    setAwayLineUpIDMatch,
+  } = usePlayerLineUpContext();
 
   useEffect(() => {
     let url =

@@ -4,7 +4,11 @@ import { CommentComponentProps } from "../types/propsType";
 import useInterval from "../hooks/intervalHook";
 import API from "../utils/apis/api/api";
 import eaglekopSD from "../assets/eaglekop.png";
-import { useScoreContext, useTimeContext } from "../context/ScoreboardContext";
+import {
+  usePlayerLineUpContext,
+  useScoreContext,
+  useTimeContext,
+} from "../context/ScoreboardContext";
 import sofaAPI from "../utils/apis/api/sofaApi";
 import { makeComment } from "../utils/functions";
 
@@ -26,6 +30,7 @@ const CommentComponent = ({
   const [flag, setFlag] = useState("");
 
   const { currentMinute } = useTimeContext();
+  const { HomeLineUpIDMatch, AwayLineUpIDMatch } = usePlayerLineUpContext();
   const idx = useRef(0);
   // TODO
   // 메세지 큐 구현
@@ -50,6 +55,7 @@ const CommentComponent = ({
           }
           // 마지막 코멘트는 애니메이션. 메세지큐에 추가해줌.
           setMessageQueue([textRelayData[textRelayData.length - 1]]);
+          // setMessageQueue(textRelayData.slice(63));
           idx.current = textRelayData.length;
           setIsLoaded(true);
         }
@@ -99,7 +105,13 @@ const CommentComponent = ({
   useInterval(async () => {
     console.log("Make Event ", messageQueue);
     if (messageQueue.length > 0) {
-      let commentObject = makeComment(homeName, awayName, messageQueue[0]);
+      let commentObject = makeComment(
+        homeName,
+        awayName,
+        messageQueue[0],
+        HomeLineUpIDMatch,
+        AwayLineUpIDMatch
+      );
       setMessageQueue(messageQueue.slice(1));
       if (commentObject.flag !== "No Data") {
         console.log("Comment data Received.");

@@ -31,7 +31,7 @@ const StatusComponent = ({
     "Expected goals": "기대득점",
     "Big chances": "빅 찬스",
     "Total shots": "전체 슈팅",
-    "Goalkeeper saves": "유효 슈팅",
+    "Goalkeeper saves": "골키퍼 선방",
     "Corner kicks": "코너킥",
     // prettier-ignore
     "Fouls": "파울",
