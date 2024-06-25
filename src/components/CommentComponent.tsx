@@ -48,9 +48,14 @@ const CommentComponent = ({
           let textRelayData = res.data.comments.reverse();
           // 현재 시간
           for (let i = 0; i < textRelayData.length; i++) {
-            if (textRelayData[i].time > currentMinute) {
-              break;
-            }
+            console.log(textRelayData[i]);
+            makeComment(
+              homeName,
+              awayName,
+              textRelayData[i],
+              HomeLineUpIDMatch,
+              AwayLineUpIDMatch
+            );
             // event 처리, 맨 마지막 idx까지 데이터들을 전부 화면에 적용해줌.
           }
           // 마지막 코멘트는 애니메이션. 메세지큐에 추가해줌.
