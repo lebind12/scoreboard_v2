@@ -71,7 +71,7 @@ const CommentComponent = ({
             AwayLineUpIDMatch
           );
         }
-      }, 5000);
+      }, 2000);
     }
   }, [matchHistory]);
 
@@ -94,10 +94,7 @@ const CommentComponent = ({
           idx.current = textRelayData.length;
         } else if (res.data.comments.length > 0 && !isLoaded) {
           let textRelayData = res.data.comments.reverse();
-          // 현재 시간
-          for (let i = 0; i < textRelayData.length; i++) {
-            // event 처리, 맨 마지막 idx까지 데이터들을 전부 화면에 적용해줌.
-          }
+          setMetchHistory(res.data.comments.reverse());
           // 마지막 코멘트는 애니메이션. 메세지큐에 추가해줌.
           setMessageQueue([textRelayData[textRelayData.length - 1]]);
           idx.current = textRelayData.length;

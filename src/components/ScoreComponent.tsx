@@ -52,24 +52,6 @@ const ScoreComponent = ({
       return minute.toString();
     }
   };
-  useEffect(() => {
-    sofaAPI
-      .get("/event/" + matchId.toString())
-      .then((res) => {
-        API.get("/match/lineup", {
-          params: {
-            home_code: res.data.event.homeTeam.nameCode,
-            away_code: res.data.event.awayTeam.nameCode,
-          },
-        })
-          .then((res) => {
-            setHomeLineUpIDMatch(res.data.home);
-            setAwayLineUpIDMatch(res.data.away);
-          })
-          .catch((err) => {});
-      })
-      .catch((err) => {});
-  }, [matchId]);
 
   useInterval(() => {
     if (second + 1 >= 60) {
