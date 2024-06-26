@@ -5,6 +5,7 @@ import useInterval from "../hooks/intervalHook";
 import API from "../utils/apis/api/api";
 import eaglekopSD from "../assets/eaglekop.png";
 import {
+  useFormationReadyContext,
   usePlayerLineUpContext,
   useScoreContext,
   useTimeContext,
@@ -32,6 +33,7 @@ const CommentComponent = ({
   const [flag, setFlag] = useState("");
 
   const { HomeLineUpIDMatch, AwayLineUpIDMatch } = usePlayerLineUpContext();
+  const { homeFormationReady, awayFormationReady } = useFormationReadyContext();
   const idx = useRef(0);
   // TODO
   // 메세지 큐 구현
@@ -71,7 +73,7 @@ const CommentComponent = ({
             AwayLineUpIDMatch
           );
         }
-      }, 2000);
+      }, 5000);
     }
   }, [matchHistory]);
 

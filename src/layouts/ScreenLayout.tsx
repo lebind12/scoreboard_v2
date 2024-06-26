@@ -7,9 +7,6 @@ import sofaAPI from "../utils/apis/api/sofaApi";
 import PlayerStatusComponent from "../components/PlayerStatusComponent";
 import "../styles/animate.css";
 import CommentComponent from "../components/CommentComponent";
-import statusBackground from "../assets/4.png";
-import API from "../utils/apis/api/api";
-import { usePlayerLineUpContext } from "../context/ScoreboardContext";
 
 const ScreenLayout = ({
   matchId,

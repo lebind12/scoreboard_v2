@@ -1,15 +1,9 @@
 import TeamComponent from "./TeamComponent";
 import { ScoreComponentProps } from "../types/propsType";
-import useContextMenu from "../hooks/contextMenuHook";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useInterval from "../hooks/intervalHook";
-import {
-  usePlayerLineUpContext,
-  useScoreContext,
-  useTimeContext,
-} from "../context/ScoreboardContext";
+import { useScoreContext, useTimeContext } from "../context/ScoreboardContext";
 import sofaAPI from "../utils/apis/api/sofaApi";
-import API from "../utils/apis/api/api";
 
 const ScoreComponent = ({
   homeName,
@@ -32,10 +26,6 @@ const ScoreComponent = ({
   const [time, setTime] = useState("00:00");
   const [second, setSecond] = useState(0);
   const [minute, setMinute] = useState(0);
-  const [homeCode, setHomeCode] = useState("");
-  const [awayCode, setAwayCode] = useState("");
-  const { setAwayLineUpIDMatch, setHomeLineUpIDMatch } =
-    usePlayerLineUpContext();
 
   const makeSecond = (second: number) => {
     if (second < 10) {

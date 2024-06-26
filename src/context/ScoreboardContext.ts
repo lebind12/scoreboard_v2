@@ -30,6 +30,13 @@ interface PlayerDetailContext {
   [key: string]: string;
 }
 
+interface FormationReadyContext {
+  homeFormationReady: boolean;
+  awayFormationReady: boolean;
+  setHomeFormationReady: (newState: boolean) => void;
+  setAwayFormationReady: (newState: boolean) => void;
+}
+
 interface PlayerLineUpContext {
   HomeLineUpIDMatch: PlayerDetailContext;
   AwayLineUpIDMatch: PlayerDetailContext;
@@ -71,3 +78,14 @@ export const usePlayerLineUpContext = create<PlayerLineUpContext>((set) => ({
   setAwayLineUpIDMatch: (newAwayLineUp: PlayerDetailContext) =>
     set({ AwayLineUpIDMatch: newAwayLineUp }),
 }));
+
+export const useFormationReadyContext = create<FormationReadyContext>(
+  (set) => ({
+    homeFormationReady: false,
+    awayFormationReady: false,
+    setHomeFormationReady: (newState: boolean) =>
+      set({ homeFormationReady: newState }),
+    setAwayFormationReady: (newState: boolean) =>
+      set({ awayFormationReady: newState }),
+  })
+);
