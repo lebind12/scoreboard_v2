@@ -29,21 +29,91 @@ const MatchSelectLayout = () => {
     >
       <ul>
         {matches.map((v: MatchDetail, idx) => {
-          return (
-            <li key={idx} className="bg-slate-800">
-              <button
-                className="w-full"
-                onClick={() => {
-                  setMatchId(v.id);
-                  setSelected(true);
-                }}
-              >
-                <span className="font-['Jua'] text-6xl text-zinc-50">
-                  {v.home} : {v.away}
-                </span>
-              </button>
-            </li>
-          );
+          if (idx == 36)
+            return (
+              <>
+                <li className="flex justify-center">
+                  <span className="font-['Jua'] text-3xl text-red-400">
+                    16강 대진
+                  </span>
+                </li>
+                <li key={idx} className="bg-slate-800">
+                  <button
+                    className="w-full"
+                    onClick={() => {
+                      setMatchId(v.id);
+                      setSelected(true);
+                    }}
+                  >
+                    <span className="font-['Jua'] text-6xl text-zinc-50">
+                      {v.home} : {v.away}
+                    </span>
+                  </button>
+                </li>
+              </>
+            );
+          else if (idx == 44)
+            return (
+              <>
+                <li className="flex justify-center">
+                  <span className="font-['Jua'] text-3xl text-red-400">
+                    8강 대진
+                  </span>
+                </li>
+                <li key={idx} className="bg-slate-800">
+                  <button
+                    className="w-full"
+                    onClick={() => {
+                      setMatchId(v.id);
+                      setSelected(true);
+                    }}
+                  >
+                    <span className="font-['Jua'] text-6xl text-zinc-50">
+                      {v.home} : {v.away}
+                    </span>
+                  </button>
+                </li>
+              </>
+            );
+          else if (idx == 48)
+            return (
+              <>
+                <li className="flex justify-center">
+                  <span className="font-['Jua'] text-3xl text-red-400">
+                    준결승 대진
+                  </span>
+                </li>
+                <li key={idx} className="bg-slate-800">
+                  <button
+                    className="w-full"
+                    onClick={() => {
+                      setMatchId(v.id);
+                      setSelected(true);
+                    }}
+                  >
+                    <span className="font-['Jua'] text-6xl text-zinc-50">
+                      {v.home} : {v.away}
+                    </span>
+                  </button>
+                </li>
+              </>
+            );
+          else
+            return (
+              <li key={idx} className="bg-slate-800">
+                <button
+                  className="w-full"
+                  onClick={() => {
+                    setMatchId(v.id);
+                    setSelected(true);
+                  }}
+                >
+                  <span className="font-['Jua'] text-6xl text-zinc-50">
+                    {v.home} : {v.away}
+                  </span>
+                </button>
+              </li>
+            );
         })}
       </ul>
     </div>
