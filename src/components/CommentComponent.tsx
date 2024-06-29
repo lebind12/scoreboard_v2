@@ -62,20 +62,23 @@ const CommentComponent = ({
   }, [matchId]);
 
   useEffect(() => {
+    console.log(homeFormationReady, awayFormationReady);
     if (typeof matchHistory !== "undefined") {
-      setTimeout(() => {
-        for (let i = 0; i < matchHistory.length; i++) {
-          makeComment(
-            homeName,
-            awayName,
-            matchHistory[i],
-            HomeLineUpIDMatch,
-            AwayLineUpIDMatch
-          );
-        }
-      }, 5000);
+      if (homeFormationReady && awayFormationReady) {
+        setTimeout(() => {
+          for (let i = 0; i < matchHistory.length; i++) {
+            makeComment(
+              homeName,
+              awayName,
+              matchHistory[i],
+              HomeLineUpIDMatch,
+              AwayLineUpIDMatch
+            );
+          }
+        }, 2000);
+      }
     }
-  }, [matchHistory]);
+  }, [matchHistory, homeFormationReady, awayFormationReady]);
 
   useInterval(() => {
     sofaAPI("/event/" + matchId.toString() + "/comments", {
