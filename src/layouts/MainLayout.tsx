@@ -12,6 +12,9 @@ const MainLayout = () => {
   const [awayId, setAwayId] = useState(4695);
   const [sofaMatchId, setSofaMatchId] = useState(0);
   const [naverId, setNaverId] = useState("");
+  const [homeCode, setHomeCode] = useState("");
+  const [awayCode, setAwayCode] = useState("");
+  const [stadium, setStadium] = useState("");
   const [id, setId] = useState(0);
 
   useEffect(() => {
@@ -28,6 +31,9 @@ const MainLayout = () => {
           setSofaMatchId(res.data.sofascoredid);
           setId(res.data.id);
           setNaverId(res.data.naverid);
+          setHomeCode(res.data.homenamecode);
+          setAwayCode(res.data.awaynamecode);
+          setStadium(res.data.matchstadium);
         } else {
           console.log("Cannot use Backend 1");
         }
@@ -64,6 +70,8 @@ const MainLayout = () => {
           home={home}
           away={away}
           id={id}
+          homeCode={homeCode}
+          awayCode={awayCode}
         ></ScreenLayout>
       </div>
     </div>

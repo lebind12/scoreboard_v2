@@ -22,6 +22,8 @@ const FormationScreenComponent = ({
   awayTextColor,
   homeGoalkeeperTextColor,
   awayGoalkeeperTextColor,
+  homeCode,
+  awayCode,
   matchId,
 }: FormationScreenComponentProps) => {
   const { setAwayLineUpIDMatch, setHomeLineUpIDMatch } =
@@ -30,31 +32,22 @@ const FormationScreenComponent = ({
     useFormationReadyContext();
 
   useEffect(() => {
-    sofaAPI
-      .get("/event/" + matchId.toString())
+    API.get("/match/lineup", {
+      params: {
+        home_code: homeCode,
+        away_code: awayCode,
+      },
+    })
       .then((res) => {
-        API.get("/match/lineup", {
-          params: {
-            home_code: res.data.homeTeam.nameCode,
-            away_code: res.data.awayTeam.nameCode,
-          },
-        })
-          .then((res) => {
-            if (res.data.type === "success") {
-              setHomeLineUpIDMatch(res.data.home);
-              setAwayLineUpIDMatch(res.data.away);
-              setHomeFormationReady(true);
-              setAwayFormationReady(true);
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        setHomeLineUpIDMatch(res.data.home);
+        setAwayLineUpIDMatch(res.data.away);
+        setHomeFormationReady(true);
+        setAwayFormationReady(true);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [matchId]);
+  }, [homeCode, awayCode]);
 
   return (
     <div className="flex flex-col w-[480px] h-full z-10 justify-end items-center">

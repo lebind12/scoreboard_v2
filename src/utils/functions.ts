@@ -9,11 +9,38 @@ export const changePlayer = async (
   try {
     let elem: any = document.getElementById(
       "player" + currentPlayerId.toString()
-    )?.childNodes[0];
-    elem.childNodes[4].childNodes[0].classList.remove("hidden");
-    elem.childNodes[5].textContent = newPlayerName;
+    );
+    elem.childNodes[0].childNodes[4].childNodes[0].classList.remove("hidden");
+    elem.childNodes[0].childNodes[5].textContent = newPlayerName;
     elem.id = "player" + newPlayerId.toString();
-  } catch {}
+    // 이미 교체한 적이 있다면
+    if ("substitution" in elem.classList) {
+      let substitutionOrder = "";
+      for (const data of elem.classList) {
+        if (data.includes("subs_")) {
+          substitutionOrder = data;
+          elem.classList.remove(substitutionOrder);
+          elem.classList.add(
+            substitutionOrder + "_" + currentPlayerId.toString()
+          );
+          break;
+        }
+      }
+    } else {
+      elem.classList.add("subs_" + currentPlayerId.toString());
+    }
+  } catch (err) {
+    console.error(
+      "playerId: ",
+      currentPlayerId,
+      " newPlayerId: ",
+      newPlayerId,
+      " newPlayerName: ",
+      newPlayerName,
+      " has substitution Error"
+    );
+    console.error(err);
+  }
   return;
 };
 
@@ -22,7 +49,9 @@ export const banPlayer = (playerId: number) => {
     let elem: any = document.getElementById("player" + playerId.toString())
       ?.childNodes[0].childNodes[1];
     elem.classList.remove("hidden");
-  } catch {}
+  } catch (err) {
+    console.error("playerId: ", playerId, " has banPlayer Error");
+  }
   return;
 };
 
@@ -31,7 +60,9 @@ export const unBanPlayer = (playerId: number) => {
     let elem: any = document.getElementById("player" + playerId.toString())
       ?.childNodes[0].childNodes[1];
     elem.classList.add("hidden");
-  } catch {}
+  } catch (err) {
+    console.error("playerId: ", playerId, " has unBanPlayer Error");
+  }
 
   return;
 };
@@ -41,7 +72,19 @@ export const warnedPlayer = (playerId: number) => {
     let elem: any = document.getElementById("player" + playerId.toString())
       ?.childNodes[0].childNodes[3].childNodes[0];
     elem.classList.remove("hidden");
-  } catch {}
+  } catch (err) {
+    console.error("playerId: ", playerId, " has warnedPlayer Error");
+  }
+};
+
+export const scoredPlayer = (playerId: number) => {
+  try {
+    let elem: any = document.getElementById("player" + playerId.toString())
+      ?.childNodes[0].childNodes[3].childNodes[0];
+    elem.classList.remove("hidden");
+  } catch (err) {
+    console.error("playerId: ", playerId, " has warnedPlayer Error");
+  }
 };
 
 const isHome = (ishome: boolean) => {

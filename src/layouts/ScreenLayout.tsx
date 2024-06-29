@@ -16,6 +16,8 @@ const ScreenLayout = ({
   home,
   away,
   id,
+  homeCode,
+  awayCode,
 }: ScreenLayoutProps) => {
   const [homePlayers, setHomePlayers] = useState([]);
   const [awayPlayers, setAwayPlayers] = useState([]);
@@ -74,6 +76,8 @@ const ScreenLayout = ({
             awayTextColor={awayTextColor}
             homeGoalkeeperTextColor={homeGoalkeeperTextColor}
             awayGoalkeeperTextColor={awayGoalkeeperTextColor}
+            homeCode={homeCode}
+            awayCode={awayCode}
             matchId={matchId}
           />
         </div>
