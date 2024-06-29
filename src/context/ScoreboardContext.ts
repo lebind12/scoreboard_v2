@@ -48,11 +48,13 @@ interface PlayerLineUpContext {
 interface PlayerStatus {
   id: number;
   name: string;
+  player: any;
   jerseyNumber: number;
   goalCount: number;
   isWarned: boolean;
   isBanned: boolean;
   substitution: boolean;
+  position: string;
 }
 
 interface PositionObject {
@@ -60,14 +62,34 @@ interface PositionObject {
 }
 
 interface PlayerPositionContext {
+  homeReady: boolean;
+  awayReady: boolean;
   homePosition: PositionObject;
   awayPosition: PositionObject;
   addHomePosition: (positionNumber: number, player: PlayerStatus) => void;
   addAwayPosition: (positionNumber: number, player: PlayerStatus) => void;
+  setHomeReady: (newState: boolean) => void;
+  setAwayReady: (newState: boolean) => void;
 }
+
+interface PositionNumber {
+  posNum: number;
+  isHome: boolean;
+  setPosNum: (newNumber: number) => void;
+  setHome: (newHome: boolean) => void;
+}
+
+export const usePositionNumber = create<PositionNumber>((set) => ({
+  posNum: 0,
+  isHome: true,
+  setPosNum: (newNumber: number) => set({ posNum: newNumber }),
+  setHome: (newHome: boolean) => set({ isHome: newHome }),
+}));
 
 export const usePlayerPositionContext = create<PlayerPositionContext>(
   (set) => ({
+    homeReady: false,
+    awayReady: false,
     homePosition: {
       0: [],
       1: [],
@@ -119,6 +141,14 @@ export const usePlayerPositionContext = create<PlayerPositionContext>(
         } else {
           return state;
         }
+      }),
+    setHomeReady: (newState) =>
+      set({
+        homeReady: newState,
+      }),
+    setAwayReady: (newState) =>
+      set({
+        awayReady: newState,
       }),
   })
 );

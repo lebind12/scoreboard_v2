@@ -131,10 +131,6 @@ const ScoreComponent = ({
             +{injuryTime}
           </span>
         </button>
-
-        {/* <div className="flex w-full text-4xl items-center justify-center font-['Freesentation-9Black']">
-          <input className="bg-transparent w-full text-center"></input>
-        </div> */}
       </div>
     </div>
   );

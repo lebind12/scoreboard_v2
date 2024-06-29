@@ -6,7 +6,11 @@ import {
   TeamFormationComponentProps,
 } from "../types/propsType";
 import PlayerComponent from "./PlayerComponent";
-import { usePlayerLineUpContext } from "../context/ScoreboardContext";
+import {
+  useBoardContext,
+  usePlayerLineUpContext,
+  usePlayerPositionContext,
+} from "../context/ScoreboardContext";
 import API from "../utils/apis/api/api";
 
 const TeamFormationComponent = ({
@@ -19,111 +23,116 @@ const TeamFormationComponent = ({
   teamTextColor,
   goalkeeperTextColor,
 }: TeamFormationComponentProps) => {
-  const [lineupByFormation, setLineupByFormation] = useState<Array<any>>([]);
-  const [loaded, setLoaded] = useState<boolean>(false);
-  const {
-    HomeLineUpIDMatch,
-    AwayLineUpIDMatch,
-    setHomeLineUpIDMatch,
-    setAwayLineUpIDMatch,
-  } = usePlayerLineUpContext();
-  interface PlayerDetailContextType {
-    [key: string]: string;
+  interface PlayerStatus {
+    id: number;
+    name: string;
+    player: any;
+    jerseyNumber: number;
+    goalCount: number;
+    isWarned: boolean;
+    isBanned: boolean;
+    substitution: boolean;
+    position: string;
   }
 
-  const makeLineup = (lineup: Array<any>, formation: string): Array<any> => {
-    let idx = 0;
-    let formationNumbers = ["1"].concat(formation.split("-"));
-
-    let lineupFormation = [];
-    for (let i = 0; i < formationNumbers.length; i++) {
-      let playersByFormation = [];
-      for (let j = 0; j < parseInt(formationNumbers[i]); j++) {
-        playersByFormation.push(lineup[idx]);
-        idx += 1;
-      }
-      if (isHome) lineupFormation.push(playersByFormation);
-      else lineupFormation.push(playersByFormation.reverse());
-    }
-    return lineupFormation;
-  };
+  const [formationArray, setFormationArray] = useState<Array<Array<number>>>(
+    []
+  );
+  const {
+    homePosition,
+    awayPosition,
+    addHomePosition,
+    addAwayPosition,
+    setHomeReady,
+    setAwayReady,
+  } = usePlayerPositionContext();
+  const { selected } = useBoardContext();
 
   useEffect(() => {
-    if (isHome) {
-      setLineupByFormation(makeLineup(teamLineup, teamFormation));
-      let test: PlayerDetailContextType = {};
-      for (let i = 0; i < teamLineup.length; i++) {
-        let playerId = teamLineup[i].player.id.toString();
-        API.get("/player/id", {
-          params: {
-            player_id: playerId,
-          },
-        })
-          .then((res) => {
-            test[playerId] = res.data.familyname;
-          })
-          .catch((err) => {
-            console.error(err);
+    // 팀 라인업이 로드되면
+    if (typeof teamLineup !== "undefined") {
+      if (isHome) {
+        for (let i = 0; i < 11; i++) {
+          if (typeof teamLineup[i] === "undefined") break;
+          addHomePosition(i, {
+            id: teamLineup[i].player.id,
+            name: teamLineup[i].player.name,
+            player: teamLineup[i].player,
+            jerseyNumber: teamLineup[i].jerseyNumber,
+            goalCount: 0,
+            isWarned: false,
+            isBanned: false,
+            substitution: false,
+            position: i.toString(),
           });
-      }
-      setHomeLineUpIDMatch(test);
-      console.log(test, HomeLineUpIDMatch);
-    } else {
-      setLineupByFormation(makeLineup(teamLineup, teamFormation).reverse());
-      let test: PlayerDetailContextType = {};
-      for (let i = 0; i < teamLineup.length; i++) {
-        let playerId = teamLineup[i].player.id.toString();
-        API.get("/player/id", {
-          params: {
-            player_id: playerId,
-          },
-        })
-          .then((res) => {
-            test[playerId] = res.data.familyname;
-          })
-          .catch((err) => {
-            console.error(err);
+          setHomeReady(true);
+        }
+      } else {
+        for (let i = 0; i < 11; i++) {
+          if (typeof teamLineup[i] === "undefined") break;
+          addAwayPosition(i, {
+            id: teamLineup[i].player.id,
+            name: teamLineup[i].player.name,
+            player: teamLineup[i].player,
+            jerseyNumber: teamLineup[i].jerseyNumber,
+            goalCount: 0,
+            isWarned: false,
+            isBanned: false,
+            substitution: false,
+            position: i.toString(),
           });
+          setAwayReady(true);
+        }
       }
-      setAwayLineUpIDMatch(test);
-      console.log(test, AwayLineUpIDMatch);
+    }
+  }, [teamLineup]);
+
+  useEffect(() => {
+    if (typeof teamLineup !== "undefined") {
+      let idx = 0;
+      let formation = ["1"].concat(teamFormation.split("-"));
+      let resultData = [];
+      for (let i of formation) {
+        let tempData = [];
+        for (let j = 0; j < parseInt(i); j++) {
+          tempData.push(idx);
+          idx++;
+        }
+        if (!isHome) tempData.reverse();
+        resultData.push(tempData);
+      }
+      if (!isHome) resultData.reverse();
+      setFormationArray(resultData);
+      console.log(resultData);
     }
   }, [teamFormation]);
 
-  useEffect(() => {
-    if (lineupByFormation.length > 3) {
-      console.log(lineupByFormation);
-      setLoaded(true);
-    }
-  }, [lineupByFormation]);
-
   return (
     <>
-      {loaded ? (
-        <>
-          <div className="flex flex-col justify-center items-center w-full h-full z-20">
-            {lineupByFormation.map((data: Array<LineupDetail>, key) => (
-              <div className="flex items-center w-full h-full">
-                {data.map((p: LineupDetail) => (
+      {selected ? (
+        <div className="flex flex-col w-full h-full justify-center items-center z-10">
+          {formationArray.map((rowArray: number[], key: number) => (
+            <div className="flex w-full h-full justify-center items-center">
+              {rowArray.map((positionNumber: number, key: number) => (
+                <div className="w-full h-full justify-center items-center text-center">
                   <PlayerComponent
                     teamId={teamId}
-                    playerId={p.player.id}
-                    // playerId={1111}
+                    playerId={0}
                     isHome={isHome}
                     matchId={matchId}
-                    playerTextColor={"#" + teamTextColor}
-                    goalkeeperTextColor={"#" + goalkeeperTextColor}
-                    playerNumber={parseInt(p.jerseyNumber)}
-                    // matchId={12226495}
-                    isGoaley={p.player.position}
+                    playerNumber={0}
+                    isGoaley={positionNumber.toString()}
+                    playerTextColor={teamTextColor}
+                    goalkeeperTextColor={goalkeeperTextColor}
+                    positionNumber={positionNumber}
                   ></PlayerComponent>
-                ))}
-              </div>
-            ))}
-          </div>
-        </>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
       ) : (
-        <></>
+        <div></div>
       )}
     </>
   );

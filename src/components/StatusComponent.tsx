@@ -72,7 +72,6 @@ const StatusComponent = ({
       .get(url, { headers: h })
       .then((res) => {
         setGameStatistics(res.data?.statistics[0]?.groups[0]?.statisticsItems);
-        console.log(res.data?.statistics[0]?.groups[0]?.statisticsItems);
       })
       .catch((error) => {
         console.log(error);
@@ -115,7 +114,7 @@ const StatusComponent = ({
         {/* 내용 */}
         <div className="flex flex-col h-full w-full items-center justify-center bg-transparent font-['MangoDdobak-B']">
           {typeof gameStatistics !== undefined && gameStatistics.length > 0
-            ? gameStatistics.map((res: StatusDetail) => {
+            ? gameStatistics.map((res: StatusDetail, key: number) => {
                 if (res.name in statMatchMap)
                   return (
                     <StatusGraphComponent

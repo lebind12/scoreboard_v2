@@ -1,95 +1,238 @@
 interface PlayerDetailContext {
   [key: string]: string;
 }
+
+interface APIPlayerProps {
+  name: string;
+  slug: string;
+  shortName: string;
+  position: string;
+  jerseyNumber: string;
+  userCount: number;
+  id: number;
+  marketValueCurrency: string;
+  dateOfBirthTimestamp: number;
+}
+
+interface PlayerStatus {
+  id: number;
+  name: string;
+  player: any;
+  jerseyNumber: number;
+  goalCount: number;
+  isWarned: boolean;
+  isBanned: boolean;
+  substitution: boolean;
+  position: string;
+}
+
+interface PositionObject {
+  [key: number]: PlayerStatus[];
+}
+
 export const changePlayer = async (
-  currentPlayerId: number,
-  newPlayerId: number,
-  newPlayerName: string
+  currentPlayer: APIPlayerProps,
+  newPlayer: APIPlayerProps,
+  isHome: boolean,
+  homeLineup: PlayerDetailContext,
+  awayLineup: PlayerDetailContext,
+  addHomePosition: (positionNumber: number, player: PlayerStatus) => void,
+  addAwayPosition: (positionNumber: number, player: PlayerStatus) => void
 ) => {
   try {
-    let elem: any = document.getElementById(
-      "player" + currentPlayerId.toString()
-    );
-    elem.childNodes[0].childNodes[4].childNodes[0].classList.remove("hidden");
-    elem.childNodes[0].childNodes[5].textContent = newPlayerName;
-    elem.id = "player" + newPlayerId.toString();
-    // 이미 교체한 적이 있다면
-    if ("substitution" in elem.classList) {
-      let substitutionOrder = "";
-      for (const data of elem.classList) {
-        if (data.includes("subs_")) {
-          substitutionOrder = data;
-          elem.classList.remove(substitutionOrder);
-          elem.classList.add(
-            substitutionOrder + "_" + currentPlayerId.toString()
-          );
-          break;
+    let elem = document.getElementById(currentPlayer.id.toString());
+    if (typeof elem !== "undefined") {
+      if (isHome) {
+        let positionNumber = getPositionNumber(currentPlayer, isHome);
+        if (typeof positionNumber !== "undefined") {
+          addHomePosition(parseInt(positionNumber), {
+            id: newPlayer.id,
+            name: getPlayerName(newPlayer.id, homeLineup, awayLineup, isHome),
+            player: newPlayer,
+            jerseyNumber: parseInt(newPlayer["jerseyNumber"]),
+            goalCount: 0,
+            isWarned: false,
+            isBanned: false,
+            substitution: true,
+            position: positionNumber.toString(),
+          });
+        }
+
+        if (elem) elem.id = newPlayer.id.toString();
+      } else {
+        let positionNumber = getPositionNumber(currentPlayer, isHome);
+        if (typeof positionNumber !== "undefined")
+          addAwayPosition(parseInt(positionNumber), {
+            id: newPlayer.id,
+            name: getPlayerName(newPlayer.id, homeLineup, awayLineup, isHome),
+            player: newPlayer,
+            jerseyNumber: parseInt(newPlayer["jerseyNumber"]),
+            goalCount: 0,
+            isWarned: false,
+            isBanned: false,
+            substitution: true,
+            position: positionNumber.toString(),
+          });
+        if (elem) elem.id = newPlayer.id.toString();
+      }
+    }
+  } catch (err) {
+    console.error(err);
+  }
+  return;
+};
+
+export const getPositionNumber = (player: APIPlayerProps, isHome: boolean) => {
+  try {
+    let elem = document.getElementById(player.id.toString());
+    if (isHome) {
+      if (elem) {
+        for (let data of elem.classList.value.split(" ")) {
+          if (data.includes("home_sub")) {
+            return data.split("_")[2];
+          }
         }
       }
     } else {
-      elem.classList.add("subs_" + currentPlayerId.toString());
+      if (elem) {
+        for (let data of elem.classList.value.split(" ")) {
+          if (data.includes("away_sub")) {
+            return data.split("_")[2];
+          }
+        }
+      }
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const banPlayer = (
+  player: APIPlayerProps,
+  homePosition: PositionObject,
+  awayPosition: PositionObject,
+  isHome: boolean
+) => {
+  try {
+    let elem = document.getElementById(player.id.toString());
+    if (typeof elem !== "undefined") {
+      let positionNumber = getPositionNumber(player, isHome);
+      if (isHome) {
+        if (typeof positionNumber !== "undefined") {
+          homePosition[parseInt(positionNumber)][0].isBanned = true;
+        }
+      } else {
+        if (typeof positionNumber !== "undefined") {
+          awayPosition[parseInt(positionNumber)][0].isBanned = true;
+        }
+      }
     }
   } catch (err) {
     console.error(
-      "playerId: ",
-      currentPlayerId,
-      " newPlayerId: ",
-      newPlayerId,
-      " newPlayerName: ",
-      newPlayerName,
-      " has substitution Error"
+      "banError ",
+      "player:",
+      player,
+      "homePosition:",
+      homePosition,
+      "awayPosition:",
+      awayPosition
     );
     console.error(err);
   }
   return;
 };
 
-export const banPlayer = (playerId: number) => {
+export const unBanPlayer = (
+  player: APIPlayerProps,
+  homePosition: PositionObject,
+  awayPosition: PositionObject,
+  isHome: boolean
+) => {
   try {
-    let elem: any = document.getElementById("player" + playerId.toString())
-      ?.childNodes[0].childNodes[1];
-    elem.classList.remove("hidden");
+    let elem = document.getElementById(player.id.toString());
+    if (typeof elem !== "undefined") {
+      let positionNumber = getPositionNumber(player, isHome);
+      if (isHome) {
+        if (typeof positionNumber !== "undefined") {
+          homePosition[parseInt(positionNumber)][0].isBanned = false;
+        }
+      } else {
+        if (typeof positionNumber !== "undefined") {
+          awayPosition[parseInt(positionNumber)][0].isBanned = false;
+        }
+      }
+    }
   } catch (err) {
-    console.error("playerId: ", playerId, " has banPlayer Error");
+    console.error(
+      "unbanError ",
+      "player:",
+      player,
+      "homePosition:",
+      homePosition,
+      "awayPosition:",
+      awayPosition
+    );
+    console.error(err);
   }
+
   return;
 };
 
-export const unBanPlayer = (playerId: number) => {
+export const warnedPlayer = (
+  player: APIPlayerProps,
+  homePosition: PositionObject,
+  awayPosition: PositionObject,
+  isHome: boolean
+) => {
   try {
-    let elem: any = document.getElementById("player" + playerId.toString())
-      ?.childNodes[0].childNodes[1];
-    elem.classList.add("hidden");
+    let elem = document.getElementById(player.id.toString());
+    if (typeof elem !== "undefined") {
+      let positionNumber = getPositionNumber(player, isHome);
+      if (isHome) {
+        if (typeof positionNumber !== "undefined") {
+          homePosition[parseInt(positionNumber)][0].isWarned = true;
+        }
+      } else {
+        if (typeof positionNumber !== "undefined") {
+          awayPosition[parseInt(positionNumber)][0].isWarned = true;
+        }
+      }
+    }
   } catch (err) {
-    console.error("playerId: ", playerId, " has unBanPlayer Error");
+    console.error(
+      "warnedError ",
+      "player:",
+      player,
+      "homePosition:",
+      homePosition,
+      "awayPosition:",
+      awayPosition
+    );
+    console.error(err);
   }
-
-  return;
 };
 
-export const warnedPlayer = (playerId: number) => {
+export const scoredPlayer = (
+  player: APIPlayerProps,
+  homePosition: PositionObject,
+  awayPosition: PositionObject,
+  isHome: boolean
+) => {
   try {
-    let elem: any = document.getElementById("player" + playerId.toString())
-      ?.childNodes[0].childNodes[3].childNodes[0];
-    elem.classList.remove("hidden");
-  } catch (err) {
-    console.error("playerId: ", playerId, " has warnedPlayer Error");
-  }
-};
-
-export const scoredPlayer = (playerId: number) => {
-  try {
-    let elem: any = document.getElementById("player" + playerId.toString())
-      ?.childNodes[0].childNodes[3].childNodes[0];
-    elem.classList.remove("hidden");
-  } catch (err) {
-    console.error("playerId: ", playerId, " has warnedPlayer Error");
-  }
-};
-
-const isHome = (ishome: boolean) => {
-  if (ishome) return "Home";
-  else return "Away";
+    let elem = document.getElementById(player.id.toString());
+    if (typeof elem !== "undefined") {
+      let positionNumber = getPositionNumber(player, isHome);
+      if (isHome) {
+        if (typeof positionNumber !== "undefined") {
+          homePosition[parseInt(positionNumber)][0].goalCount += 1;
+        }
+      } else {
+        if (typeof positionNumber !== "undefined") {
+          awayPosition[parseInt(positionNumber)][0].goalCount += 1;
+        }
+      }
+    }
+  } catch (err) {}
 };
 
 const getPlayerName = (
@@ -108,7 +251,11 @@ export const makeComment = (
   awayName: string,
   relayData: any,
   homeLineup: PlayerDetailContext,
-  awayLineup: PlayerDetailContext
+  awayLineup: PlayerDetailContext,
+  homePosition: PositionObject,
+  awayPosition: PositionObject,
+  addHomePosition: (positionNumber: number, player: PlayerStatus) => void,
+  addAwayPosition: (positionNumber: number, player: PlayerStatus) => void
 ) => {
   try {
     let comment = {
@@ -244,7 +391,12 @@ export const makeComment = (
         awayLineup,
         relayData.isHome
       );
-      warnedPlayer(relayData.player.id);
+      warnedPlayer(
+        relayData.player,
+        homePosition,
+        awayPosition,
+        relayData.isHome
+      );
       comment.detail = playerName + " 경고. 옐로우카드를 받습니다.";
     } else if (relayData.type === "redCard") {
       comment.title = " 경고";
@@ -261,7 +413,7 @@ export const makeComment = (
         awayLineup,
         relayData.isHome
       );
-      banPlayer(relayData.player.id);
+      banPlayer(relayData.player, homePosition, awayPosition, relayData.isHome);
       comment.detail = playerName + " 퇴장. 레드카드를 받습니다.";
     } else if (relayData.type === "scoreChange") {
       if (relayData.text.includes("Own Goal")) comment.title = " 자책골!";
@@ -315,7 +467,15 @@ export const makeComment = (
         awayLineup,
         relayData.isHome
       );
-      changePlayer(relayData.playerOut.id, relayData.playerIn.id, playerName1);
+      changePlayer(
+        relayData.playerOut,
+        relayData.playerIn,
+        relayData.isHome,
+        homeLineup,
+        awayLineup,
+        addHomePosition,
+        addAwayPosition
+      );
       comment.detail = comment.detail + playerName2 + " 나갑니다";
     } else if (relayData.type === "penaltyScored") {
       comment.title = " 승부차기 득점.";

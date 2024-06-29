@@ -52,7 +52,7 @@ const StatisticsComponent = ({
 
   return (
     <div className="flex flex-col justify-center w-full justify-center, text-center text-lg">
-      {Object.entries(statistics).map(([key, value]) => {
+      {Object.entries(statistics).map(([key, value], index: number) => {
         if (key in stasticsMatching) {
           return (
             <PlayerStatisticDetailComponent

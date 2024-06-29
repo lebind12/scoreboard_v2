@@ -7,6 +7,7 @@ import eaglekopSD from "../assets/eaglekop.png";
 import {
   useFormationReadyContext,
   usePlayerLineUpContext,
+  usePlayerPositionContext,
   useScoreContext,
   useTimeContext,
 } from "../context/ScoreboardContext";
@@ -34,6 +35,14 @@ const CommentComponent = ({
 
   const { HomeLineUpIDMatch, AwayLineUpIDMatch } = usePlayerLineUpContext();
   const { homeFormationReady, awayFormationReady } = useFormationReadyContext();
+  const {
+    homePosition,
+    awayPosition,
+    addHomePosition,
+    addAwayPosition,
+    homeReady,
+    awayReady,
+  } = usePlayerPositionContext();
   const idx = useRef(0);
   // TODO
   // 메세지 큐 구현
@@ -62,9 +71,8 @@ const CommentComponent = ({
   }, [matchId]);
 
   useEffect(() => {
-    console.log(homeFormationReady, awayFormationReady);
     if (typeof matchHistory !== "undefined") {
-      if (homeFormationReady && awayFormationReady) {
+      if (homeFormationReady && awayFormationReady && homeReady && awayReady) {
         setTimeout(() => {
           for (let i = 0; i < matchHistory.length; i++) {
             makeComment(
@@ -72,13 +80,23 @@ const CommentComponent = ({
               awayName,
               matchHistory[i],
               HomeLineUpIDMatch,
-              AwayLineUpIDMatch
+              AwayLineUpIDMatch,
+              homePosition,
+              awayPosition,
+              addHomePosition,
+              addAwayPosition
             );
           }
-        }, 2000);
+        }, 1000);
       }
     }
-  }, [matchHistory, homeFormationReady, awayFormationReady]);
+  }, [
+    matchHistory,
+    homeFormationReady,
+    awayFormationReady,
+    homeReady,
+    awayReady,
+  ]);
 
   useInterval(() => {
     sofaAPI("/event/" + matchId.toString() + "/comments", {
@@ -119,7 +137,11 @@ const CommentComponent = ({
         awayName,
         messageQueue[0],
         HomeLineUpIDMatch,
-        AwayLineUpIDMatch
+        AwayLineUpIDMatch,
+        homePosition,
+        awayPosition,
+        addHomePosition,
+        addAwayPosition
       );
       setMessageQueue(messageQueue.slice(1));
       if (commentObject.flag !== "No Data") {

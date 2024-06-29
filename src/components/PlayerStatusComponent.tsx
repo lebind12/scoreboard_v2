@@ -1,5 +1,10 @@
-import { useEffect, useState } from "react";
-import { usePlayerContext } from "../context/ScoreboardContext";
+import { useEffect, useRef, useState } from "react";
+import {
+  useBoardContext,
+  usePlayerContext,
+  usePlayerPositionContext,
+  usePositionNumber,
+} from "../context/ScoreboardContext";
 import { PlayerStatusComponentProps } from "../types/propsType";
 import sofaAPI from "../utils/apis/api/sofaApi";
 import API from "../utils/apis/api/api";
@@ -12,30 +17,8 @@ import {
 import StatisticsComponent from "./StatisticsComponent";
 import "../styles/animate.css";
 import topImage from "../assets/4_top.png";
-import Ban from "../assets/Ban.png";
 
 const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
-  const defaultGoalkeeperStatistics = {
-    totalPass: 33,
-    accuratePass: 30,
-    totalLongBalls: 7,
-    accurateLongBalls: 4,
-    aerialWon: 1,
-    duelWon: 1,
-    totalClearance: 1,
-    savedShotsFromInsideTheBox: 2,
-    saves: 2,
-    punches: 1,
-    minutesPlayed: 90,
-    touches: 37,
-    rating: 6.9,
-    possessionLostCtrl: 3,
-    ratingVersions: {
-      original: 6.9,
-      alternative: 6.6,
-    },
-    goalsPrevented: -0.25,
-  };
   const defaultForwardStatistics = {
     totalPass: 9999,
     accuratePass: 1,
@@ -60,45 +43,6 @@ const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
     },
     expectedAssists: 9999.9999,
   };
-  const defaultDefenderStatistics = {
-    totalPass: 45,
-    accuratePass: 43,
-    totalLongBalls: 3,
-    accurateLongBalls: 2,
-    totalClearance: 1,
-    outfielderBlock: 2,
-    minutesPlayed: 90,
-    touches: 50,
-    rating: 6.6,
-    possessionLostCtrl: 2,
-    ratingVersions: {
-      original: 6.6,
-      alternative: 6.6,
-    },
-  };
-  const defaultMidfielderStatistics = {
-    totalPass: 46,
-    accuratePass: 42,
-    totalLongBalls: 1,
-    aerialLost: 1,
-    aerialWon: 1,
-    duelLost: 1,
-    duelWon: 3,
-    blockedScoringAttempt: 1,
-    totalClearance: 1,
-    totalTackle: 1,
-    wasFouled: 1,
-    minutesPlayed: 90,
-    touches: 51,
-    rating: 6.8,
-    possessionLostCtrl: 4,
-    expectedGoals: 0.0167,
-    ratingVersions: {
-      original: 6.8,
-      alternative: 6.7,
-    },
-    expectedAssists: 0.0424998,
-  };
   const { pId, setPId } = usePlayerContext();
   const [playerDetail, setPlayerDetail] = useState<
     | DefenderStatistics
@@ -109,11 +53,26 @@ const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
   const [playerPosition, setPlayerPosition] = useState("");
   const [playerName, setPlayerName] = useState("");
   const [playerBirthYear, setPlayerBirthYear] = useState(0);
+  const { homePosition, awayPosition, homeReady, awayReady } =
+    usePlayerPositionContext();
+  const { posNum, isHome } = usePositionNumber();
+  const [subLength, setSubLength] = useState(0);
+  const [idx, setIdx] = useState(1);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const { selected } = useBoardContext();
 
   const unixToDate = (unixTime: number) => {
     let myDate = new Date(unixTime * 1000);
     return myDate.getFullYear();
   };
+
+  useEffect(() => {
+    if (selected) {
+      if (homeReady && awayReady) {
+        setIsLoaded(true);
+      }
+    }
+  }, [selected, homeReady, awayReady]);
 
   useEffect(() => {
     let url =
@@ -127,7 +86,6 @@ const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
       Pragma: "no-cache",
       Expires: "0",
     };
-    // let url = "event/12173506" + "/player/" + pId.toString() + "/statistics";
     sofaAPI
       .get(url, { headers: h })
       .then((res) => {
@@ -153,7 +111,26 @@ const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
         setPlayerBirthYear(unixToDate(res.data.player.dateOfBirthTimestamp));
       })
       .catch((err) => console.log(err));
+    if (isHome) {
+      setSubLength(homePosition[posNum].length);
+    } else {
+      setSubLength(awayPosition[posNum].length);
+    }
   }, [pId]);
+
+  useEffect(() => {
+    try {
+      if (isLoaded) {
+        if (isHome) {
+          setPId(homePosition[posNum][idx - 1].id);
+        } else {
+          setPId(awayPosition[posNum][idx - 1].id);
+        }
+      }
+    } catch (err) {
+      console.error(homePosition[posNum][idx]);
+    }
+  }, [idx]);
 
   return (
     <div className="flex w-full h-full items-end justify-center">
@@ -193,9 +170,23 @@ const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
           ></StatisticsComponent>
         </div>
         {/* 하단 */}
-        <div className="flex flex-col justify-center items-center w-full min-h-[70px] bg-[#05096C]">
+        <div className="flex justify-around items-center w-full min-h-[70px] bg-[#05096C]">
+          {idx > 1 ? (
+            <button
+              className="w-1/4 text-2xl text-white rounded-xl font-['TAEBAEKfont'] bg-[#062D86]"
+              onClick={() => {
+                setIdx(idx - 1);
+              }}
+            >
+              이전
+            </button>
+          ) : (
+            <button className="w-1/4 text-2xl text-white rounded-xl font-['TAEBAEKfont'] bg-[#062D86]">
+              {"    "}
+            </button>
+          )}
           <button
-            className="w-1/3 text-2xl text-white rounded-xl font-['TAEBAEKfont'] bg-[#062D86]"
+            className="w-1/4 text-2xl text-white rounded-xl font-['TAEBAEKfont'] bg-[#062D86]"
             onClick={() => {
               document
                 .getElementById("GameStatistics")
@@ -211,10 +202,22 @@ const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
                 ?.classList.add("animate__fadeOutLeftBig");
             }}
           >
-            {"  "}
             닫기
-            {"  "}
           </button>
+          {idx < subLength ? (
+            <button
+              className="w-1/4 text-2xl text-white rounded-xl font-['TAEBAEKfont'] bg-[#062D86]"
+              onClick={() => {
+                setIdx(idx + 1);
+              }}
+            >
+              다음
+            </button>
+          ) : (
+            <button className="w-1/4 text-2xl text-white rounded-xl font-['TAEBAEKfont'] bg-[#062D86]">
+              {"    "}
+            </button>
+          )}
         </div>
       </div>
     </div>

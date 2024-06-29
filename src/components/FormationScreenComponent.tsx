@@ -31,6 +31,7 @@ const FormationScreenComponent = ({
   const { setHomeFormationReady, setAwayFormationReady } =
     useFormationReadyContext();
 
+  // 이름 한글화 데이터 호출 API
   useEffect(() => {
     API.get("/match/lineup", {
       params: {
