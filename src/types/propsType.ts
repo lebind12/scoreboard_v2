@@ -53,6 +53,8 @@ export interface ScreenLayoutProps {
   home: string;
   away: string;
   id: number;
+  homeCode: string;
+  awayCode: string;
 }
 
 export interface StatusComponentProps {
@@ -84,6 +86,8 @@ export interface FormationScreenComponentProps {
   awayTextColor: string;
   homeGoalkeeperTextColor: string;
   awayGoalkeeperTextColor: string;
+  homeCode: string;
+  awayCode: string;
   matchId: number;
 }
 
@@ -107,6 +111,7 @@ export interface PlayerComponentProps {
   isGoaley: string;
   playerTextColor: string;
   goalkeeperTextColor: string;
+  positionNumber: number;
 }
 
 export interface LineupDetail {
@@ -116,6 +121,7 @@ export interface LineupDetail {
   shirtNumber: number;
   statistics: any;
   substitute: boolean;
+  positionNumber: string;
 }
 
 export interface PlayerDetail {
