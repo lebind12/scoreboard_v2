@@ -25,7 +25,7 @@ const PlayerComponent = ({
   const [playerName, setPlayerName] = useState("");
   // const [goalKeeper, setGoalKeeper] = useState(false);
   const [url, setURL] = useState("player/fancy");
-  const [backColor, setBackColor] = useState(playerTextColor);
+  const [backColor, setBackColor] = useState("");
   const { pId, setPId } = usePlayerContext();
   const { homePosition, awayPosition, homeReady, awayReady } =
     usePlayerPositionContext();
@@ -55,11 +55,15 @@ const PlayerComponent = ({
         if (homePosition[positionNumber][0].position === "G") {
           setURL("goalkeeper/fancy");
           setBackColor(goalkeeperTextColor);
+        } else {
+          setBackColor(playerTextColor);
         }
       } else {
         if (awayPosition[positionNumber][0].position === "G") {
           setURL("goalkeeper/fancy");
           setBackColor(goalkeeperTextColor);
+        } else {
+          setBackColor(playerTextColor);
         }
       }
   }, [positionNumber, isLoaded]);
@@ -111,7 +115,7 @@ const PlayerComponent = ({
                 )}
                 <span
                   className="absolute text-lg font-['TAEBAEKfont'] drop-shadow-[0_4.2px_2.2px_rgba(0,0,0,0.2)]"
-                  style={{ color: backColor }}
+                  style={{ color: "#" + backColor }}
                 >
                   {/* {playerNumber.toString()} */}
                   {homePosition[positionNumber][0].jerseyNumber}
@@ -182,7 +186,7 @@ const PlayerComponent = ({
                 )}
                 <span
                   className="absolute text-lg font-['TAEBAEKfont'] drop-shadow-[0_4.2px_2.2px_rgba(0,0,0,0.2)]"
-                  style={{ color: backColor }}
+                  style={{ color: "#" + backColor }}
                 >
                   {awayPosition[positionNumber][0].jerseyNumber}
                 </span>

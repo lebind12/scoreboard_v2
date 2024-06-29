@@ -63,7 +63,7 @@ const TeamFormationComponent = ({
             isWarned: false,
             isBanned: false,
             substitution: false,
-            position: i.toString(),
+            position: teamLineup[i].position,
           });
           setHomeReady(true);
         }
@@ -79,7 +79,7 @@ const TeamFormationComponent = ({
             isWarned: false,
             isBanned: false,
             substitution: false,
-            position: i.toString(),
+            position: teamLineup[i].position,
           });
           setAwayReady(true);
         }

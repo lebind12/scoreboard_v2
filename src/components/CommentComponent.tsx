@@ -193,10 +193,6 @@ const CommentComponent = ({
     }
   };
 
-  // 2. 메세지 목록 맨 마지막거 유지? 그냥 목록 유지
-  // 3. 10초마다 메세지 폴링. 메세지 비교 후 새로운거 각각 출력
-  // 4. 현재 메세지 목록 개수를 비교하고 새로운거 있으면 애니메이션 출력
-
   return (
     <div
       id="commentObject"
@@ -204,20 +200,16 @@ const CommentComponent = ({
     >
       <div className="flex flex-col rounded-xl h-1/2 justify-center items-center w-5/6 -outline-offset-2 outline-none outline-8 outline-black">
         <div
-          className="grid w-full h-full rounded-t-2xl items-center justify-center text-3xl font-['Jua']"
+          className="grid w-full h-full rounded-t-2xl items-center justify-center text-3xl font-['Jua'] text-yellow-300"
           style={{
-            textShadow:
-              "-1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white",
             backgroundColor: "rgba(32,128,191,1)",
           }}
         >
           {isLoaded ? messageTitle : "경기 시작 전입니다."}
         </div>
         <div
-          className="grid w-full h-full  rounded-b-2xl items-center justify-center text-2xl font-['Jua'] "
+          className="grid w-full h-full  rounded-b-2xl items-center justify-center text-2xl font-['Jua'] text-white"
           style={{
-            textShadow:
-              "-1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white",
             backgroundColor: "rgba(24,53,136,1)",
           }}
         >
