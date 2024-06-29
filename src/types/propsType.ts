@@ -111,7 +111,7 @@ export interface PlayerComponentProps {
   isGoaley: string;
   playerTextColor: string;
   goalkeeperTextColor: string;
-  positionNumber: number;
+  // positionNumber: number;
 }
 
 export interface LineupDetail {

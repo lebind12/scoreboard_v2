@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import produce from "immer";
 
 interface BoardContext {
   matchId: number;
@@ -43,6 +44,84 @@ interface PlayerLineUpContext {
   setHomeLineUpIDMatch: (newHomeLineUp: PlayerDetailContext) => void;
   setAwayLineUpIDMatch: (newAwayLineUp: PlayerDetailContext) => void;
 }
+
+interface PlayerStatus {
+  id: number;
+  name: string;
+  jerseyNumber: number;
+  goalCount: number;
+  isWarned: boolean;
+  isBanned: boolean;
+  substitution: boolean;
+}
+
+interface PositionObject {
+  [key: number]: PlayerStatus[];
+}
+
+interface PlayerPositionContext {
+  homePosition: PositionObject;
+  awayPosition: PositionObject;
+  addHomePosition: (positionNumber: number, player: PlayerStatus) => void;
+  addAwayPosition: (positionNumber: number, player: PlayerStatus) => void;
+}
+
+export const usePlayerPositionContext = create<PlayerPositionContext>(
+  (set) => ({
+    homePosition: {
+      0: [],
+      1: [],
+      2: [],
+      3: [],
+      4: [],
+      5: [],
+      6: [],
+      7: [],
+      8: [],
+      9: [],
+      10: [],
+    },
+    awayPosition: {
+      0: [],
+      1: [],
+      2: [],
+      3: [],
+      4: [],
+      5: [],
+      6: [],
+      7: [],
+      8: [],
+      9: [],
+      10: [],
+    },
+    addHomePosition: (positionNumber, player) =>
+      set((state) => {
+        if (state.homePosition[positionNumber]) {
+          return {
+            homePosition: {
+              ...state.homePosition,
+              [positionNumber]: [player, ...state.homePosition[positionNumber]],
+            },
+          };
+        } else {
+          return state;
+        }
+      }),
+    addAwayPosition: (positionNumber, player) =>
+      set((state) => {
+        if (state.awayPosition[positionNumber]) {
+          return {
+            awayPosition: {
+              ...state.awayPosition,
+              [positionNumber]: [player, ...state.awayPosition[positionNumber]],
+            },
+          };
+        } else {
+          return state;
+        }
+      }),
+  })
+);
 
 export const useBoardContext = create<BoardContext>((set) => ({
   matchId: 99,
