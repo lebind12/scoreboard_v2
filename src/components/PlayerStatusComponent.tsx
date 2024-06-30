@@ -17,7 +17,7 @@ import {
 import StatisticsComponent from "./StatisticsComponent";
 import "../styles/animate.css";
 import topImage from "../assets/4_top.png";
-import loadingImage from "../assets/LikeEffectAnimation.gif";
+import loadingImage from "../assets/LikeEffectAnimation.png";
 
 const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
   const defaultForwardStatistics = {
