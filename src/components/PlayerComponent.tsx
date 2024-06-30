@@ -28,6 +28,9 @@ const PlayerComponent = ({
   // const [goalKeeper, setGoalKeeper] = useState(false);
   const [url, setURL] = useState("player/fancy");
   const [backColor, setBackColor] = useState("");
+  const [scored, setScored] = useState(false);
+  const [warned, setWarned] = useState(false);
+  const [banned, setBanned] = useState(false);
   const { pId, setPId } = usePlayerContext();
   const { homePosition, awayPosition, homeReady, awayReady } =
     usePlayerPositionContext();
@@ -35,6 +38,43 @@ const PlayerComponent = ({
   const { selected } = useBoardContext();
   const { HomeLineUpIDMatch, AwayLineUpIDMatch } = usePlayerLineUpContext();
   const { setPosNum, setHome } = usePositionNumber();
+
+  useEffect(() => {
+    if (isLoaded) {
+      if (isHome) {
+        if (homePosition[positionNumber][0].goalCount > 0) setScored(true);
+      } else {
+        if (awayPosition[positionNumber][0].goalCount > 0) setScored(true);
+      }
+    }
+  }, [
+    homePosition[positionNumber][0]?.goalCount,
+    awayPosition[positionNumber][0]?.goalCount,
+  ]);
+
+  useEffect(() => {
+    if (isLoaded)
+      if (isHome) {
+        if (homePosition[positionNumber][0].isWarned) setWarned(true);
+      } else {
+        if (awayPosition[positionNumber][0].isWarned) setWarned(true);
+      }
+  }, [
+    homePosition[positionNumber][0]?.isWarned,
+    awayPosition[positionNumber][0]?.isWarned,
+  ]);
+
+  useEffect(() => {
+    if (isLoaded)
+      if (isHome) {
+        if (homePosition[positionNumber][0].isBanned) setWarned(true);
+      } else {
+        if (awayPosition[positionNumber][0].isBanned) setWarned(true);
+      }
+  }, [
+    homePosition[positionNumber][0]?.isBanned,
+    awayPosition[positionNumber][0]?.isBanned,
+  ]);
 
   const selectPlayer = () => {
     if (isHome) setPId(homePosition[positionNumber][0].player.id);
@@ -110,7 +150,7 @@ const PlayerComponent = ({
                   }
                   className="w-[32px] object-center"
                 ></img>
-                {homePosition[positionNumber][0].isBanned ? (
+                {banned ? (
                   <img src={Ban} className="absolute w-10"></img>
                 ) : (
                   <></>
@@ -122,7 +162,7 @@ const PlayerComponent = ({
                   {/* {playerNumber.toString()} */}
                   {homePosition[positionNumber][0].jerseyNumber}
                 </span>
-                {homePosition[positionNumber][0].isWarned ? (
+                {warned ? (
                   <div className="relative">
                     <div className="absolute -top-[16px] -left-6 text-[10px] text-yellow-400 bg-yellow-400 z-10">
                       !!!
@@ -140,7 +180,7 @@ const PlayerComponent = ({
                 ) : (
                   <></>
                 )}
-                {homePosition[positionNumber][0].goalCount > 0 ? (
+                {scored ? (
                   <div className="relative">
                     <div className="absolute right-1 bottom-3 w-[32px] h-[32px] z-20">
                       <img src={Goal}></img>
@@ -190,7 +230,7 @@ const PlayerComponent = ({
                   }
                   className="w-[32px] object-center"
                 ></img>
-                {awayPosition[positionNumber][0].isBanned ? (
+                {banned ? (
                   <img src={Ban} className="absolute w-10"></img>
                 ) : (
                   <></>
@@ -201,7 +241,7 @@ const PlayerComponent = ({
                 >
                   {awayPosition[positionNumber][0].jerseyNumber}
                 </span>
-                {awayPosition[positionNumber][0].isWarned ? (
+                {warned ? (
                   <div className="relative">
                     <div className="absolute -top-[16px] -left-6 text-[10px] text-yellow-400 bg-yellow-400 z-10">
                       !!!
@@ -219,7 +259,7 @@ const PlayerComponent = ({
                 ) : (
                   <></>
                 )}
-                {awayPosition[positionNumber][0].goalCount > 0 ? (
+                {scored ? (
                   <div className="relative">
                     <div className="absolute right-1 bottom-3 w-[32px] h-[32px] z-20">
                       <img src={Goal}></img>
