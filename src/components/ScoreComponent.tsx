@@ -24,7 +24,7 @@ const ScoreComponent = ({
   } = useScoreContext();
   const { currentMinute, setCurrentMinute } = useTimeContext();
   const [time, setTime] = useState("00:00");
-  const [isRunning, setIsRunning] = useState(true);
+  const [isRunning, setIsRunning] = useState(false);
   const [second, setSecond] = useState(0);
   const [minute, setMinute] = useState(0);
 
@@ -87,7 +87,6 @@ const ScoreComponent = ({
                 setSecond(parseInt(a[1]));
                 setMinute(parseInt(a[0]));
               }
-              setIsRunning(true);
             }}
           >
             <TeamComponent
@@ -106,7 +105,8 @@ const ScoreComponent = ({
           <button
             className="w-full h-full"
             onClick={() => {
-              setIsRunning(false);
+              if (isRunning) setIsRunning(false);
+              else setIsRunning(true);
             }}
           >
             <TeamComponent
