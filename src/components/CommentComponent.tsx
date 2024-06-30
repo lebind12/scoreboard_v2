@@ -87,7 +87,7 @@ const CommentComponent = ({
               addAwayPosition
             );
           }
-        }, 1000);
+        }, 5000);
       }
     }
   }, [

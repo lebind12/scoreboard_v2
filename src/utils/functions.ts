@@ -444,6 +444,12 @@ export const makeComment = (
         if (relayData.player.id !== relayData.assist1.id)
           comment.detail = comment.detail + playerName1 + "의 어시스트";
       }
+      scoredPlayer(
+        relayData.player,
+        homePosition,
+        awayPosition,
+        relayData.isHome
+      );
     } else if (relayData.type === "substitution") {
       comment.title = " 교체";
       if (relayData.isHome) {

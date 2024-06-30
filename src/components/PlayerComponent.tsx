@@ -10,6 +10,8 @@ import {
 } from "../context/ScoreboardContext";
 import playerSubstitution from "../assets/playerSubstitution.png";
 import Ban from "../assets/Ban.png";
+import Goal from "../assets/Goal.png";
+import useInterval from "../hooks/intervalHook";
 
 const PlayerComponent = ({
   teamId,
@@ -138,6 +140,15 @@ const PlayerComponent = ({
                 ) : (
                   <></>
                 )}
+                {homePosition[positionNumber][0].goalCount > 0 ? (
+                  <div className="relative">
+                    <div className="absolute right-1 bottom-3 w-[32px] h-[32px] z-20">
+                      <img src={Goal}></img>
+                    </div>
+                  </div>
+                ) : (
+                  <></>
+                )}
                 <span className="font-['ONE-Mobile-Title'] text-pretty text-center">
                   {HomeLineUpIDMatch[homePosition[positionNumber][0].player.id]}
                 </span>
@@ -203,6 +214,15 @@ const PlayerComponent = ({
                   <div className="relative">
                     <div className="absolute left-4 bottom-2 w-[16px] h-[16px] z-10">
                       <img src={playerSubstitution}></img>
+                    </div>
+                  </div>
+                ) : (
+                  <></>
+                )}
+                {awayPosition[positionNumber][0].goalCount > 0 ? (
+                  <div className="relative">
+                    <div className="absolute right-1 bottom-3 w-[32px] h-[32px] z-20">
+                      <img src={Goal}></img>
                     </div>
                   </div>
                 ) : (
