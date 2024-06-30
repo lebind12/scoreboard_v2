@@ -43,8 +43,10 @@ const PlayerComponent = ({
     if (isLoaded) {
       if (isHome) {
         if (homePosition[positionNumber][0].goalCount > 0) setScored(true);
+        else setScored(false);
       } else {
         if (awayPosition[positionNumber][0].goalCount > 0) setScored(true);
+        else setScored(false);
       }
     }
   }, [
@@ -56,8 +58,10 @@ const PlayerComponent = ({
     if (isLoaded)
       if (isHome) {
         if (homePosition[positionNumber][0].isWarned) setWarned(true);
+        else setWarned(false);
       } else {
         if (awayPosition[positionNumber][0].isWarned) setWarned(true);
+        else setWarned(false);
       }
   }, [
     homePosition[positionNumber][0]?.isWarned,
@@ -67,9 +71,11 @@ const PlayerComponent = ({
   useEffect(() => {
     if (isLoaded)
       if (isHome) {
-        if (homePosition[positionNumber][0].isBanned) setWarned(true);
+        if (homePosition[positionNumber][0].isBanned) setBanned(true);
+        else setBanned(false);
       } else {
-        if (awayPosition[positionNumber][0].isBanned) setWarned(true);
+        if (awayPosition[positionNumber][0].isBanned) setBanned(true);
+        else setBanned(false);
       }
   }, [
     homePosition[positionNumber][0]?.isBanned,
