@@ -24,6 +24,7 @@ const ScoreComponent = ({
   } = useScoreContext();
   const { currentMinute, setCurrentMinute } = useTimeContext();
   const [time, setTime] = useState("00:00");
+  const [isRunning, setIsRunning] = useState(true);
   const [second, setSecond] = useState(0);
   const [minute, setMinute] = useState(0);
 
@@ -43,15 +44,18 @@ const ScoreComponent = ({
     }
   };
 
-  useInterval(() => {
-    if (second + 1 >= 60) {
-      setMinute(minute + 1);
-      setCurrentMinute(minute + 1);
-      setSecond(0);
-    } else {
-      setSecond(second + 1);
-    }
-  }, 1000);
+  useInterval(
+    () => {
+      if (second + 1 >= 60) {
+        setMinute(minute + 1);
+        setCurrentMinute(minute + 1);
+        setSecond(0);
+      } else {
+        setSecond(second + 1);
+      }
+    },
+    isRunning ? 1000 : null
+  );
 
   useInterval(() => {
     sofaAPI
@@ -83,6 +87,7 @@ const ScoreComponent = ({
                 setSecond(parseInt(a[1]));
                 setMinute(parseInt(a[0]));
               }
+              setIsRunning(true);
             }}
           >
             <TeamComponent
@@ -98,7 +103,12 @@ const ScoreComponent = ({
           <span className="items-center">|</span>
         </div>
         <div className="w-full h-full">
-          <button className="w-full h-full">
+          <button
+            className="w-full h-full"
+            onClick={() => {
+              setIsRunning(false);
+            }}
+          >
             <TeamComponent
               teamName={awayName}
               matchId={matchId}
