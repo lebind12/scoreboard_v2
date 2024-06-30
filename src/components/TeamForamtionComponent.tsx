@@ -115,10 +115,6 @@ const TeamFormationComponent = ({
     }
   }, [teamFormation]);
 
-  setInterval(() => {
-    forceUpdate();
-  }, 5000);
-
   return (
     <>
       {selected ? (
