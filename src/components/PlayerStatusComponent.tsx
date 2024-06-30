@@ -17,6 +17,7 @@ import {
 import StatisticsComponent from "./StatisticsComponent";
 import "../styles/animate.css";
 import topImage from "../assets/4_top.png";
+import loadingImage from "../assets/LikeEffectAnimation.gif";
 
 const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
   const defaultForwardStatistics = {
@@ -60,6 +61,7 @@ const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
   const [idx, setIdx] = useState(1);
   const [isLoaded, setIsLoaded] = useState(false);
   const { selected } = useBoardContext();
+  const [updateLoaded, setUpdateLoaded] = useState(true);
 
   const unixToDate = (unixTime: number) => {
     let myDate = new Date(unixTime * 1000);
@@ -109,6 +111,7 @@ const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
           .then((res) => setPlayerName(res.data.familyname))
           .catch((err) => console.log(err));
         setPlayerBirthYear(unixToDate(res.data.player.dateOfBirthTimestamp));
+        setUpdateLoaded(true);
       })
       .catch((err) => console.log(err));
     if (isHome) {
@@ -137,88 +140,99 @@ const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
       <div className="flex flex-col w-5/6 h-5/6 outline-offset-[-3px] outline-none outline-[#02074B] outline-8 rounded-xl flag_background">
         {/* 상단 */}
         <img className="absolute w-5/6" src={topImage}></img>
-        <div className="flex flex-col w-full min-h-[200px]">
-          <div className="flex w-full h-full">
-            <div className="grid w-full items-center justify-center">
-              <img
-                src={
-                  "https://api.sofascore.app/api/v1/player/" +
-                  pId.toString() +
-                  "/image"
-                }
-                className="pt-2 w-[120px] rounded-full"
-              ></img>
+        {updateLoaded ? (
+          <>
+            <div className="flex flex-col w-full min-h-[200px]">
+              <div className="flex w-full h-full">
+                <div className="grid w-full items-center justify-center">
+                  <img
+                    src={
+                      "https://api.sofascore.app/api/v1/player/" +
+                      pId.toString() +
+                      "/image"
+                    }
+                    className="pt-2 w-[120px] rounded-full"
+                  ></img>
+                </div>
+              </div>
+              <div className="flex w-full">
+                <div className="flex flex-col w-full items-center justify-center text-xl font-['Freesentation-9Black'] text-white bg-[#05096C]  drop-shadow-[2px_0_0px_rgba(255,255,255,1)]">
+                  <span>{playerBirthYear}년생</span>
+                </div>
+                <div className="flex flex-col w-full items-center justify-center text-xl font-['Freesentation-9Black'] text-white bg-[#05096C]">
+                  <span>{playerName}</span>
+                </div>
+                <div className="flex flex-col w-full items-center justify-center text-xl font-['Freesentation-9Black'] text-white bg-[#05096C]  drop-shadow-[-2px_0_0px_rgba(255,255,255,1)]">
+                  <span>{playerPosition}</span>
+                </div>
+              </div>
             </div>
+            {/* 내용 */}
+            <div className="flex flex-col w-full h-full items-center justify-center font-['MangoDdobak-B'] text-white">
+              <StatisticsComponent
+                position={playerPosition}
+                statistics={playerDetail}
+              ></StatisticsComponent>
+            </div>
+            {/* 하단 */}
+            <div className="flex justify-around items-center w-full min-h-[70px] bg-[#05096C]">
+              {idx > 1 ? (
+                <button
+                  className="w-1/4 text-2xl text-white rounded-xl font-['TAEBAEKfont'] bg-[#062D86]"
+                  onClick={() => {
+                    setIdx(idx - 1);
+                    setUpdateLoaded(false);
+                  }}
+                >
+                  이전
+                </button>
+              ) : (
+                <button className="w-1/4 text-2xl text-white rounded-xl font-['TAEBAEKfont'] bg-[#062D86]">
+                  {"    "}
+                </button>
+              )}
+              <button
+                className="w-1/4 text-2xl text-white rounded-xl font-['TAEBAEKfont'] bg-[#062D86]"
+                onClick={() => {
+                  setIdx(1);
+                  document
+                    .getElementById("GameStatistics")
+                    ?.classList.remove("go_behind_animation");
+                  document
+                    .getElementById("GameStatistics")
+                    ?.classList.add("go_toward_animation");
+                  document
+                    .getElementById("PlayerStatistics")
+                    ?.classList.remove("animate__backInLeft");
+                  document
+                    .getElementById("PlayerStatistics")
+                    ?.classList.add("animate__fadeOutLeftBig");
+                }}
+              >
+                닫기
+              </button>
+              {idx < subLength ? (
+                <button
+                  className="w-1/4 text-2xl text-white rounded-xl font-['TAEBAEKfont'] bg-[#062D86]"
+                  onClick={() => {
+                    setIdx(idx + 1);
+                    setUpdateLoaded(false);
+                  }}
+                >
+                  다음
+                </button>
+              ) : (
+                <button className="w-1/4 text-2xl text-white rounded-xl font-['TAEBAEKfont'] bg-[#062D86]">
+                  {"    "}
+                </button>
+              )}
+            </div>
+          </>
+        ) : (
+          <div className="flex w-full h-full justify-center items-center">
+            <img src={loadingImage} alt="로딩이미지" className="flex w-32" />
           </div>
-          <div className="flex w-full">
-            <div className="flex flex-col w-full items-center justify-center text-xl font-['Freesentation-9Black'] text-white bg-[#05096C]  drop-shadow-[2px_0_0px_rgba(255,255,255,1)]">
-              <span>{playerBirthYear}년생</span>
-            </div>
-            <div className="flex flex-col w-full items-center justify-center text-xl font-['Freesentation-9Black'] text-white bg-[#05096C]">
-              <span>{playerName}</span>
-            </div>
-            <div className="flex flex-col w-full items-center justify-center text-xl font-['Freesentation-9Black'] text-white bg-[#05096C]  drop-shadow-[-2px_0_0px_rgba(255,255,255,1)]">
-              <span>{playerPosition}</span>
-            </div>
-          </div>
-        </div>
-        {/* 내용 */}
-        <div className="flex flex-col w-full h-full items-center justify-center font-['MangoDdobak-B'] text-white">
-          <StatisticsComponent
-            position={playerPosition}
-            statistics={playerDetail}
-          ></StatisticsComponent>
-        </div>
-        {/* 하단 */}
-        <div className="flex justify-around items-center w-full min-h-[70px] bg-[#05096C]">
-          {idx > 1 ? (
-            <button
-              className="w-1/4 text-2xl text-white rounded-xl font-['TAEBAEKfont'] bg-[#062D86]"
-              onClick={() => {
-                setIdx(idx - 1);
-              }}
-            >
-              이전
-            </button>
-          ) : (
-            <button className="w-1/4 text-2xl text-white rounded-xl font-['TAEBAEKfont'] bg-[#062D86]">
-              {"    "}
-            </button>
-          )}
-          <button
-            className="w-1/4 text-2xl text-white rounded-xl font-['TAEBAEKfont'] bg-[#062D86]"
-            onClick={() => {
-              document
-                .getElementById("GameStatistics")
-                ?.classList.remove("go_behind_animation");
-              document
-                .getElementById("GameStatistics")
-                ?.classList.add("go_toward_animation");
-              document
-                .getElementById("PlayerStatistics")
-                ?.classList.remove("animate__backInLeft");
-              document
-                .getElementById("PlayerStatistics")
-                ?.classList.add("animate__fadeOutLeftBig");
-            }}
-          >
-            닫기
-          </button>
-          {idx < subLength ? (
-            <button
-              className="w-1/4 text-2xl text-white rounded-xl font-['TAEBAEKfont'] bg-[#062D86]"
-              onClick={() => {
-                setIdx(idx + 1);
-              }}
-            >
-              다음
-            </button>
-          ) : (
-            <button className="w-1/4 text-2xl text-white rounded-xl font-['TAEBAEKfont'] bg-[#062D86]">
-              {"    "}
-            </button>
-          )}
-        </div>
+        )}
       </div>
     </div>
   );

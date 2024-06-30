@@ -7,6 +7,7 @@ import sofaAPI from "../utils/apis/api/sofaApi";
 import PlayerStatusComponent from "../components/PlayerStatusComponent";
 import "../styles/animate.css";
 import CommentComponent from "../components/CommentComponent";
+import useInterval from "../hooks/intervalHook";
 
 const ScreenLayout = ({
   matchId,
@@ -55,6 +56,30 @@ const ScreenLayout = ({
         console.log(err);
       });
   }, [matchId]);
+
+  useInterval(() => {
+    let url =
+      "https://www.sofascore.com/api/v1/event/" +
+      matchId.toString() +
+      "/lineups";
+    // let url = "https://www.sofascore.com/api/v1/event/12226495/lineups";
+    let h = {
+      "Cache-Control": "no-cache",
+      Pragma: "no-cache",
+      Expires: "0",
+    };
+    sofaAPI
+      .get(url, { headers: h })
+      .then((res) => {
+        setHomeFormation(res.data.home.formation);
+        setAwayFormation(res.data.away.formation);
+        console.log(res.data.home.formation);
+        console.log(res.data.away.formation);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, 60000);
 
   return (
     <div className="flex w-full h-full">
