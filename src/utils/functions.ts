@@ -58,7 +58,6 @@ export const changePlayer = async (
             position: positionNumber.toString(),
           });
         }
-
         if (elem) elem.id = newPlayer.id.toString();
       } else {
         let positionNumber = getPositionNumber(currentPlayer, isHome);
