@@ -65,6 +65,31 @@
   animation-fill-mode: forwards;
 }
 
+.tada_animation {
+  animation-name: _tada;
+  animation-duration: 500ms;
+  animation-fill-mode: forwards;
+  animation-delay: 1s;
+}
+
+@keyframes _tada {
+  0% {
+    scale: 500%;
+  }
+  25% {
+    scale: 50%;
+  }
+  50% {
+    scale: 200%;
+  }
+  75% {
+    scale: 75%;
+  }
+  100% {
+    scale: 100%;
+  }
+}
+
 @keyframes _go_toward {
   from {
     scale: 50%;

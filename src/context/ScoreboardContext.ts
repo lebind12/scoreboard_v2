@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import produce from "immer";
 
 interface BoardContext {
   matchId: number;
@@ -62,6 +61,7 @@ interface PositionObject {
 }
 
 interface PlayerPositionContext {
+  changeCount: number;
   homeReady: boolean;
   awayReady: boolean;
   homePosition: PositionObject;
@@ -70,6 +70,7 @@ interface PlayerPositionContext {
   addAwayPosition: (positionNumber: number, player: PlayerStatus) => void;
   setHomeReady: (newState: boolean) => void;
   setAwayReady: (newState: boolean) => void;
+  setChangeCount: () => void;
 }
 
 interface PositionNumber {
@@ -88,6 +89,7 @@ export const usePositionNumber = create<PositionNumber>((set) => ({
 
 export const usePlayerPositionContext = create<PlayerPositionContext>(
   (set) => ({
+    changeCount: 0,
     homeReady: false,
     awayReady: false,
     homePosition: {
@@ -149,6 +151,10 @@ export const usePlayerPositionContext = create<PlayerPositionContext>(
     setAwayReady: (newState) =>
       set({
         awayReady: newState,
+      }),
+    setChangeCount: () =>
+      set((state) => {
+        return { changeCount: ++state.changeCount };
       }),
   })
 );

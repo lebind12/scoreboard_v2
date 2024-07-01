@@ -32,12 +32,16 @@ const PlayerComponent = ({
   const [warned, setWarned] = useState(false);
   const [banned, setBanned] = useState(false);
   const { pId, setPId } = usePlayerContext();
-  const { homePosition, awayPosition, homeReady, awayReady } =
+  const { homePosition, awayPosition, homeReady, awayReady, changeCount } =
     usePlayerPositionContext();
   const [isLoaded, setIsLoaded] = useState(false);
   const { selected } = useBoardContext();
   const { HomeLineUpIDMatch, AwayLineUpIDMatch } = usePlayerLineUpContext();
   const { setPosNum, setHome } = usePositionNumber();
+
+  const playerStatus = isHome
+    ? homePosition[positionNumber]?.[0]
+    : awayPosition[positionNumber]?.[0];
 
   useEffect(() => {
     if (isLoaded) {
@@ -52,6 +56,7 @@ const PlayerComponent = ({
   }, [
     homePosition[positionNumber][0]?.goalCount,
     awayPosition[positionNumber][0]?.goalCount,
+    changeCount,
   ]);
 
   useEffect(() => {
@@ -66,6 +71,7 @@ const PlayerComponent = ({
   }, [
     homePosition[positionNumber][0]?.isWarned,
     awayPosition[positionNumber][0]?.isWarned,
+    changeCount,
   ]);
 
   useEffect(() => {
@@ -80,6 +86,7 @@ const PlayerComponent = ({
   }, [
     homePosition[positionNumber][0]?.isBanned,
     awayPosition[positionNumber][0]?.isBanned,
+    changeCount,
   ]);
 
   const selectPlayer = () => {
@@ -159,7 +166,7 @@ const PlayerComponent = ({
                 {banned ? (
                   <img src={Ban} className="absolute w-10"></img>
                 ) : (
-                  <></>
+                  <img src={Ban} className="absolute w-10 hidden"></img>
                 )}
                 <span
                   className="absolute text-lg font-['TAEBAEKfont'] drop-shadow-[0_4.2px_2.2px_rgba(0,0,0,0.2)]"
@@ -170,12 +177,16 @@ const PlayerComponent = ({
                 </span>
                 {warned ? (
                   <div className="relative">
-                    <div className="absolute -top-[16px] -left-6 text-[10px] text-yellow-400 bg-yellow-400 z-10">
+                    <div className="absolute -top-[16px] -left-6 text-[10px] text-yellow-400 bg-yellow-400 z-10 tada_animation">
                       !!!
                     </div>
                   </div>
                 ) : (
-                  <></>
+                  <div className="relative">
+                    <div className="absolute -top-[16px] -left-6 text-[10px] text-yellow-400 bg-yellow-400 z-10 hidden">
+                      !!!
+                    </div>
+                  </div>
                 )}
                 {homePosition[positionNumber][0].substitution ? (
                   <div className="relative">
@@ -188,12 +199,16 @@ const PlayerComponent = ({
                 )}
                 {scored ? (
                   <div className="relative">
-                    <div className="absolute right-1 bottom-3 w-[32px] h-[32px] z-20">
+                    <div className="absolute right-1 bottom-3 w-[32px] h-[32px] z-20 tada_animation">
                       <img src={Goal}></img>
                     </div>
                   </div>
                 ) : (
-                  <></>
+                  <div className="relative">
+                    <div className="absolute right-1 bottom-3 w-[32px] h-[32px] z-20 hidden">
+                      <img src={Goal}></img>
+                    </div>
+                  </div>
                 )}
                 <span className="font-['ONE-Mobile-Title'] text-pretty text-center">
                   {HomeLineUpIDMatch[homePosition[positionNumber][0].player.id]}
@@ -249,7 +264,7 @@ const PlayerComponent = ({
                 </span>
                 {warned ? (
                   <div className="relative">
-                    <div className="absolute -top-[16px] -left-6 text-[10px] text-yellow-400 bg-yellow-400 z-10">
+                    <div className="absolute -top-[16px] -left-6 text-[10px] text-yellow-400 bg-yellow-400 z-10 tada_animation">
                       !!!
                     </div>
                   </div>
@@ -267,12 +282,16 @@ const PlayerComponent = ({
                 )}
                 {scored ? (
                   <div className="relative">
-                    <div className="absolute right-1 bottom-3 w-[32px] h-[32px] z-20">
+                    <div className="absolute right-1 bottom-3 w-[32px] h-[32px] z-20 tada_animation">
                       <img src={Goal}></img>
                     </div>
                   </div>
                 ) : (
-                  <></>
+                  <div className="relative">
+                    <div className="absolute right-1 bottom-3 w-[32px] h-[32px] z-20 hidden">
+                      <img src={Goal}></img>
+                    </div>
+                  </div>
                 )}
                 <span className="font-['ONE-Mobile-Title'] text-pretty text-center">
                   {AwayLineUpIDMatch[awayPosition[positionNumber][0].player.id]}

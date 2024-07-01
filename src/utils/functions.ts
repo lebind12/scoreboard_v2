@@ -37,7 +37,8 @@ export const changePlayer = async (
   homeLineup: PlayerDetailContext,
   awayLineup: PlayerDetailContext,
   addHomePosition: (positionNumber: number, player: PlayerStatus) => void,
-  addAwayPosition: (positionNumber: number, player: PlayerStatus) => void
+  addAwayPosition: (positionNumber: number, player: PlayerStatus) => void,
+  setChangeCount: () => void
 ) => {
   try {
     let elem = document.getElementById(currentPlayer.id.toString());
@@ -75,6 +76,7 @@ export const changePlayer = async (
           });
         if (elem) elem.id = newPlayer.id.toString();
       }
+      setChangeCount();
     }
   } catch (err) {
     console.error(err);
@@ -111,7 +113,8 @@ export const banPlayer = (
   player: APIPlayerProps,
   homePosition: PositionObject,
   awayPosition: PositionObject,
-  isHome: boolean
+  isHome: boolean,
+  setChangeCount: () => void
 ) => {
   try {
     let elem = document.getElementById(player.id.toString());
@@ -126,6 +129,7 @@ export const banPlayer = (
           awayPosition[parseInt(positionNumber)][0].isBanned = true;
         }
       }
+      setChangeCount();
     }
   } catch (err) {
     console.error(
@@ -146,7 +150,8 @@ export const unBanPlayer = (
   player: APIPlayerProps,
   homePosition: PositionObject,
   awayPosition: PositionObject,
-  isHome: boolean
+  isHome: boolean,
+  setChangeCount: () => void
 ) => {
   try {
     let elem = document.getElementById(player.id.toString());
@@ -161,6 +166,7 @@ export const unBanPlayer = (
           awayPosition[parseInt(positionNumber)][0].isBanned = false;
         }
       }
+      setChangeCount();
     }
   } catch (err) {
     console.error(
@@ -182,7 +188,8 @@ export const warnedPlayer = (
   player: APIPlayerProps,
   homePosition: PositionObject,
   awayPosition: PositionObject,
-  isHome: boolean
+  isHome: boolean,
+  setChangeCount: () => void
 ) => {
   try {
     let elem = document.getElementById(player.id.toString());
@@ -197,6 +204,7 @@ export const warnedPlayer = (
           awayPosition[parseInt(positionNumber)][0].isWarned = true;
         }
       }
+      setChangeCount();
     }
   } catch (err) {
     console.error(
@@ -216,7 +224,8 @@ export const scoredPlayer = (
   player: APIPlayerProps,
   homePosition: PositionObject,
   awayPosition: PositionObject,
-  isHome: boolean
+  isHome: boolean,
+  setChangeCount: () => void
 ) => {
   try {
     let elem = document.getElementById(player.id.toString());
@@ -231,6 +240,7 @@ export const scoredPlayer = (
           awayPosition[parseInt(positionNumber)][0].goalCount += 1;
         }
       }
+      setChangeCount();
     }
   } catch (err) {}
 };
@@ -255,7 +265,8 @@ export const makeComment = (
   homePosition: PositionObject,
   awayPosition: PositionObject,
   addHomePosition: (positionNumber: number, player: PlayerStatus) => void,
-  addAwayPosition: (positionNumber: number, player: PlayerStatus) => void
+  addAwayPosition: (positionNumber: number, player: PlayerStatus) => void,
+  setChangeCount: () => void
 ) => {
   try {
     let comment = {
@@ -395,7 +406,8 @@ export const makeComment = (
         relayData.player,
         homePosition,
         awayPosition,
-        relayData.isHome
+        relayData.isHome,
+        setChangeCount
       );
       comment.detail = playerName + " 경고. 옐로우카드를 받습니다.";
     } else if (relayData.type === "redCard") {
@@ -413,7 +425,13 @@ export const makeComment = (
         awayLineup,
         relayData.isHome
       );
-      banPlayer(relayData.player, homePosition, awayPosition, relayData.isHome);
+      banPlayer(
+        relayData.player,
+        homePosition,
+        awayPosition,
+        relayData.isHome,
+        setChangeCount
+      );
       comment.detail = playerName + " 퇴장. 레드카드를 받습니다.";
     } else if (relayData.type === "scoreChange") {
       if (relayData.text.includes("Own Goal")) comment.title = " 자책골!";
@@ -448,7 +466,8 @@ export const makeComment = (
         relayData.player,
         homePosition,
         awayPosition,
-        relayData.isHome
+        relayData.isHome,
+        setChangeCount
       );
     } else if (relayData.type === "substitution") {
       comment.title = " 교체";
@@ -480,7 +499,8 @@ export const makeComment = (
         homeLineup,
         awayLineup,
         addHomePosition,
-        addAwayPosition
+        addAwayPosition,
+        setChangeCount
       );
       comment.detail = comment.detail + playerName2 + " 나갑니다";
     } else if (relayData.type === "penaltyScored") {

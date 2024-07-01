@@ -42,6 +42,7 @@ const CommentComponent = ({
     addAwayPosition,
     homeReady,
     awayReady,
+    setChangeCount,
   } = usePlayerPositionContext();
   const idx = useRef(0);
   // TODO
@@ -61,6 +62,7 @@ const CommentComponent = ({
           setMetchHistory(res.data.comments.reverse());
           // 마지막 코멘트는 애니메이션. 메세지큐에 추가해줌.
           setMessageQueue([textRelayData[textRelayData.length - 1]]);
+          //   setMessageQueue(textRelayData);
           idx.current = textRelayData.length;
           setIsLoaded(true);
         }
@@ -84,7 +86,8 @@ const CommentComponent = ({
               homePosition,
               awayPosition,
               addHomePosition,
-              addAwayPosition
+              addAwayPosition,
+              setChangeCount
             );
           }
         }, 2000);
@@ -141,7 +144,8 @@ const CommentComponent = ({
         homePosition,
         awayPosition,
         addHomePosition,
-        addAwayPosition
+        addAwayPosition,
+        setChangeCount
       );
       setMessageQueue(messageQueue.slice(1));
       if (commentObject.flag !== "No Data") {
