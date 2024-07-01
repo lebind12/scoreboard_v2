@@ -75,10 +75,10 @@ const PlayerComponent = ({
     if (isLoaded)
       if (isHome) {
         if (homePosition[positionNumber][0].substitution) setSubbed(true);
-        else setWarned(false);
+        else setSubbed(false);
       } else {
         if (awayPosition[positionNumber][0].substitution) setSubbed(true);
-        else setWarned(false);
+        else setSubbed(false);
       }
   }, [
     homePosition[positionNumber][0]?.substitution,
