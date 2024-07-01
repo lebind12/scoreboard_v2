@@ -61,7 +61,7 @@ const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
   const [idx, setIdx] = useState(1);
   const [isLoaded, setIsLoaded] = useState(false);
   const { selected } = useBoardContext();
-  const [updateLoaded, setUpdateLoaded] = useState(true);
+  const [updateLoaded, setUpdateLoaded] = useState(false);
 
   const unixToDate = (unixTime: number) => {
     let myDate = new Date(unixTime * 1000);
@@ -77,6 +77,7 @@ const PlayerStatusComponent = ({ matchId }: PlayerStatusComponentProps) => {
   }, [selected, homeReady, awayReady]);
 
   useEffect(() => {
+    setUpdateLoaded(false);
     let url =
       "event/" +
       matchId.toString() +
