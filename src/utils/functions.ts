@@ -277,11 +277,11 @@ export const makeComment = (
     if (relayData.type === "cornerKick") {
       comment.title = " 코너킥";
       if (relayData.isHome) {
-        comment.title = homeName + comment.title;
-        comment.flag = homeName;
-      } else {
         comment.title = awayName + comment.title;
         comment.flag = awayName;
+      } else {
+        comment.title = homeName + comment.title;
+        comment.flag = homeName;
       }
       let playerName = getPlayerName(
         relayData.player.id,
@@ -289,7 +289,7 @@ export const makeComment = (
         awayLineup,
         relayData.isHome
       );
-      comment.detail = playerName + " 이(가) 코너킥을 준비합니다.";
+      comment.detail = playerName + "의 마지막터치. 코너킥.";
     } else if (relayData.type === "shotSaved") {
       comment.title = " 슈팅";
       if (relayData.isHome) {
