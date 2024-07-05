@@ -409,7 +409,10 @@ export const makeComment = (
         setChangeCount
       );
       comment.detail = playerName + " 경고. 옐로우카드를 받습니다.";
-    } else if (relayData.type === "redCard") {
+    } else if (
+      relayData.type === "redCard" ||
+      relayData.type === "yellowRedCard"
+    ) {
       comment.title = " 경고";
       if (relayData.isHome) {
         comment.title = homeName + comment.title;
