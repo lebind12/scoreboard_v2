@@ -75,7 +75,7 @@ const TeamFormationComponent = ({
             id: teamLineup[i].player.id,
             name: teamLineup[i].player.name,
             player: teamLineup[i].player,
-            jerseyNumber: teamLineup[i].jerseyNumber,
+            jerseyNumber: teamLineup[i].shirtNumber.toString(),
             goalCount: 0,
             isWarned: false,
             isBanned: false,
