@@ -98,6 +98,29 @@ const MatchSelectLayout = () => {
                 </li>
               </>
             );
+          else if (idx == 50)
+            return (
+              <>
+                <li className="flex justify-center">
+                  <span className="font-['Jua'] text-3xl text-red-400">
+                    결승 대진
+                  </span>
+                </li>
+                <li key={idx} className="bg-slate-800">
+                  <button
+                    className="w-full"
+                    onClick={() => {
+                      setMatchId(v.id);
+                      setSelected(true);
+                    }}
+                  >
+                    <span className="font-['Jua'] text-6xl text-zinc-50">
+                      {v.home} : {v.away}
+                    </span>
+                  </button>
+                </li>
+              </>
+            );
           else
             return (
               <li key={idx} className="bg-slate-800">
